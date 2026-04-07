@@ -1,30 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import { PropertyCard } from "@/components/property/PropertyCard";
-import type { MockProperty } from "@/lib/mock-data";
+import { PropertyCard, type PropertyCardData } from "@/components/property/PropertyCard";
 
 const filters = [
   { label: "All", match: () => true },
-  { label: "Cabin", match: (p: MockProperty) => /cabin/i.test(p.name) },
+  { label: "Cabin", match: (p: PropertyCardData) => /cabin/i.test(p.name) },
   {
     label: "Villa / Estate",
-    match: (p: MockProperty) =>
+    match: (p: PropertyCardData) =>
       /villa|estate/i.test(p.name) || p.badge === "Estate",
   },
   {
     label: "Waterfront",
-    match: (p: MockProperty) =>
+    match: (p: PropertyCardData) =>
       p.badge === "Waterfront" ||
       p.amenities.some((a) => /lake|water|kayak/i.test(a)),
   },
   {
     label: "Hot Tub",
-    match: (p: MockProperty) => p.amenities.includes("Hot Tub"),
+    match: (p: PropertyCardData) => p.amenities.includes("Hot Tub"),
   },
   {
     label: "Pet Friendly",
-    match: (p: MockProperty) =>
+    match: (p: PropertyCardData) =>
       p.badge === "Pet Friendly" ||
       p.amenities.some((a) => /dog|pet/i.test(a)),
   },
@@ -33,7 +32,7 @@ const filters = [
 export function PropertyFilters({
   properties,
 }: {
-  properties: MockProperty[];
+  properties: PropertyCardData[];
 }) {
   const [active, setActive] = useState(0);
 

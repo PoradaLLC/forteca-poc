@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 import { AvailabilityCalendar } from "@/components/booking/AvailabilityCalendar";
-import type { MockProperty } from "@/lib/mock-data";
 import { cn, calcNights, formatPrice } from "@/lib/utils";
 
 const guestSchema = z.object({
@@ -28,8 +27,21 @@ const guestSchema = z.object({
 });
 type GuestFormValues = z.infer<typeof guestSchema>;
 
+interface BookingProperty {
+  slug: string;
+  name: string;
+  location: string;
+  bedrooms: number;
+  bathrooms: number;
+  max_guests: number;
+  base_price: number;
+  cleaning_fee: number;
+  min_nights: number;
+  gradient?: string;
+}
+
 interface Props {
-  property: MockProperty;
+  property: BookingProperty;
   initialCheckIn?: string;
   initialCheckOut?: string;
   initialGuests?: number;

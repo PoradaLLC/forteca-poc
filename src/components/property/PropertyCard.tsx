@@ -2,10 +2,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star, Users, BedDouble, Bath, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { MockProperty } from "@/lib/mock-data";
+
+export interface PropertyCardData {
+  slug: string;
+  name: string;
+  tagline: string;
+  location: string;
+  bedrooms: number;
+  bathrooms: number;
+  max_guests: number;
+  base_price: number;
+  amenities: string[];
+  images?: { src: string; alt: string }[];
+  heroImage?: string;
+  gradient?: string;
+  badge?: string;
+  rating?: number;
+  review_count?: number;
+}
 
 interface PropertyCardProps {
-  property: MockProperty;
+  property: PropertyCardData;
   className?: string;
   /** "grid" for listing page, "feature" for home page featured section */
   variant?: "grid" | "feature";
@@ -17,6 +34,7 @@ export function PropertyCard({
   variant = "grid",
 }: PropertyCardProps) {
   const isFeature = variant === "feature";
+  const heroImage = property.heroImage ?? property.images?.[0]?.src;
 
   return (
     <Link
@@ -33,9 +51,9 @@ export function PropertyCard({
           isFeature ? "h-72" : "h-56"
         )}
       >
-        {property.heroImage ? (
+        {heroImage ? (
           <Image
-            src={property.heroImage}
+            src={heroImage}
             alt={property.name}
             fill
             className="object-cover transition-transform duration-500"

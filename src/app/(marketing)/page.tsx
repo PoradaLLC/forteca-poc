@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Star, Home, BarChart3, Key, Hammer } from "lucide-react";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { NewsletterForm } from "@/components/NewsletterForm";
-import { featuredProperties } from "@/lib/mock-data";
+import { getFeaturedProperties } from "@/lib/properties";
 
 const stats = [
   { value: "13", label: "Properties" },
@@ -77,7 +77,8 @@ const amenityHighlights = [
   "Dog-Friendly",
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featuredProperties = await getFeaturedProperties();
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────────────────── */}

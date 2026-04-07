@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { properties } from "@/lib/mock-data";
+import { getProperties } from "@/lib/properties";
 import { PropertyFilters } from "@/components/property/PropertyFilters";
 import { MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Properties",
   description:
-    "Browse all 13 Forteca Estate vacation rentals in the Pocono Mountains — cabins, villas, and lakefront retreats.",
+    "Browse all Forteca Estate vacation rentals in the Pocono Mountains — cabins, villas, and lakefront retreats.",
 };
 
-export default function PropertiesPage() {
+export default async function PropertiesPage() {
+  const properties = await getProperties();
+
   return (
     <>
       {/* Header */}

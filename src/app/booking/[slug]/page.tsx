@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProperty, properties } from "@/lib/mock-data";
+import { getProperty, getPropertySlugs } from "@/lib/properties";
 import { BookingClient } from "./BookingClient";
 
 interface Props {
@@ -9,12 +9,13 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return properties.map((p) => ({ slug: p.slug }));
+  const slugs = await getPropertySlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const property = getProperty(slug);
+  const property = await getProperty(slug);
   return {
     title: property ? `Book — ${property.name}` : "Book",
   };
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BookingPage({ params, searchParams }: Props) {
   const { slug } = await params;
   const sp = await searchParams;
-  const property = getProperty(slug);
+  const property = await getProperty(slug);
   if (!property) notFound();
 
   return (

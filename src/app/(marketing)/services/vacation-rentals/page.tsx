@@ -9,7 +9,7 @@ import {
   Sparkles,
   Phone,
 } from "lucide-react";
-import { featuredProperties } from "@/lib/mock-data";
+import { getFeaturedProperties } from "@/lib/properties";
 import { PropertyCard } from "@/components/property/PropertyCard";
 
 export const metadata: Metadata = {
@@ -45,7 +45,8 @@ const features = [
   },
 ];
 
-export default function VacationRentalsPage() {
+export default async function VacationRentalsPage() {
+  const featuredProperties = await getFeaturedProperties();
   return (
     <>
       {/* Hero */}

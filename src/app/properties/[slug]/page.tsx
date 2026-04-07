@@ -13,20 +13,21 @@ import {
   Calendar,
   ExternalLink,
 } from "lucide-react";
-import { getProperty, properties } from "@/lib/mock-data";
-import { cn } from "@/lib/utils";
+import { getProperty, getPropertySlugs } from "@/lib/properties";
+import { createServiceClient } from "@/lib/supabase/server";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return properties.map((p) => ({ slug: p.slug }));
+  const slugs = await getPropertySlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const property = getProperty(slug);
+  const property = await getProperty(slug);
   if (!property) return {};
   return {
     title: property.name,
@@ -36,8 +37,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PropertyDetailPage({ params }: Props) {
   const { slug } = await params;
-  const property = getProperty(slug);
+  const property = await getProperty(slug);
   if (!property) notFound();
+
+  const heroImage = property.images?.[0]?.src;
+
+  // Fetch reviews from Supabase
+  let reviews: { author: string; quote: string; rating: number }[] = [];
+  let avgRating = 0;
+  let reviewCount = 0;
+  try {
+    const supabase = await createServiceClient();
+    const { data } = await supabase
+      .from("reviews")
+      .select("guest_name, content, rating")
+      .eq("property_id", property.id)
+      .eq("is_approved", true)
+      .order("created_at", { ascending: false })
+      .limit(10);
+    if (data && data.length > 0) {
+      reviews = data.map((r: { guest_name: string; content: string | null; rating: number }) => ({
+        author: r.guest_name,
+        quote: r.content ?? "",
+        rating: r.rating,
+      }));
+      reviewCount = data.length;
+      avgRating = data.reduce((sum: number, r: { rating: number }) => sum + r.rating, 0) / data.length;
+    }
+  } catch {
+    // Supabase not configured — no reviews
+  }
 
   const nights = 3;
   const subtotal = property.base_price * nights;
@@ -60,9 +89,9 @@ export default async function PropertyDetailPage({ params }: Props) {
 
       {/* Hero image */}
       <div className="relative h-[55vh] overflow-hidden">
-        {property.heroImage ? (
+        {heroImage ? (
           <Image
-            src={property.heroImage}
+            src={heroImage}
             alt={property.name}
             fill
             className="object-cover"
@@ -70,23 +99,13 @@ export default async function PropertyDetailPage({ params }: Props) {
             priority
           />
         ) : (
-          <div
-            className={cn(
-              "absolute inset-0 bg-gradient-to-br",
-              property.gradient
-            )}
-          />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-zinc-900 to-stone-800" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-forteca-navy/80 via-forteca-navy/10 to-transparent" />
 
         {/* Property name overlay */}
         <div className="absolute bottom-0 left-0 right-0 px-4 pb-10">
           <div className="mx-auto max-w-7xl">
-            {property.badge && (
-              <span className="mb-3 inline-block rounded-full bg-forteca-gold px-3 py-1 text-xs font-bold uppercase tracking-widest text-forteca-navy">
-                {property.badge}
-              </span>
-            )}
             <h1 className="font-serif text-4xl font-bold text-white sm:text-5xl">
               {property.name}
             </h1>
@@ -95,10 +114,12 @@ export default async function PropertyDetailPage({ params }: Props) {
                 <MapPin className="h-4 w-4 text-forteca-gold" />
                 {property.location}
               </span>
-              <span className="flex items-center gap-1.5 text-sm text-white/70">
-                <Star className="h-4 w-4 fill-forteca-gold text-forteca-gold" />
-                {property.rating} · {property.review_count} reviews
-              </span>
+              {reviewCount > 0 && (
+                <span className="flex items-center gap-1.5 text-sm text-white/70">
+                  <Star className="h-4 w-4 fill-forteca-gold text-forteca-gold" />
+                  {avgRating.toFixed(1)} · {reviewCount} reviews
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -182,7 +203,7 @@ export default async function PropertyDetailPage({ params }: Props) {
             <div className="gold-rule-left mb-8 w-24" />
 
             {/* Reviews */}
-            {property.reviews.length > 0 && (
+            {reviews.length > 0 && (
               <div>
                 <div className="mb-5 flex items-center gap-3">
                   <h2 className="font-serif text-2xl font-bold text-forteca-navy">
@@ -190,11 +211,11 @@ export default async function PropertyDetailPage({ params }: Props) {
                   </h2>
                   <span className="flex items-center gap-1 rounded-full bg-forteca-gold/10 px-3 py-1 text-sm font-bold text-forteca-gold">
                     <Star className="h-3.5 w-3.5 fill-forteca-gold" />
-                    {property.rating}
+                    {avgRating.toFixed(1)}
                   </span>
                 </div>
                 <div className="space-y-4">
-                  {property.reviews.map((review) => (
+                  {reviews.map((review) => (
                     <div
                       key={review.author}
                       className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-forteca-navy/5"
