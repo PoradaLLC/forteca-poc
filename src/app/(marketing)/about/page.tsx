@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 
 const stats = [
   { value: "2019", label: "Founded" },
-  { value: "13", label: "Properties" },
+  { value: "44", label: "Properties" },
   { value: "500+", label: "Stays Hosted" },
   { value: "4.9★", label: "Avg. Rating" },
 ];
@@ -114,7 +115,7 @@ export default function AboutPage() {
               operator in the Poconos. It was to become the best one.
             </p>
             <p>
-              Five years later, the portfolio has grown to 13 properties — each
+              Seven years later, the portfolio has grown to 44 properties — each
               one selected with the same standards, managed with the same care,
               and reviewed by guests who return season after season.
             </p>
@@ -154,27 +155,102 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Team */}
+      <section className="bg-forteca-cream px-4 py-20">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-12 text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
+              The People Behind the Properties
+            </p>
+            <h2 className="font-serif text-3xl font-bold text-forteca-navy sm:text-4xl">
+              Meet the Team
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-base text-forteca-slate">
+              A small, dedicated team that lives and works in the Poconos.
+              We know these mountains because we call them home.
+            </p>
+          </div>
+
+          {/* Group photo */}
+          <div className="relative mb-12 aspect-[21/9] overflow-hidden rounded-2xl shadow-xl">
+            <Image
+              src="/images/team/01-team-group-photo.jpg"
+              alt="Forteca Estate team"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 80vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-forteca-navy/40 to-transparent" />
+          </div>
+
+          {/* Individual team members */}
+          <div className="grid gap-8 sm:grid-cols-3">
+            {[
+              {
+                name: "Justyna Rzeszuto",
+                role: "Co-Founder & Operations",
+                image: "/images/team/02-justyna-rzeszuto-headshot.jpg",
+                bio: "Oversees property standards, guest experience, and the day-to-day operations that keep every stay seamless.",
+              },
+              {
+                name: "Lukasz Kownacki",
+                role: "Co-Founder & Growth",
+                image: "/images/team/03-lukasz-kownacki-headshot.jpg",
+                bio: "Leads acquisitions, partnerships, and the strategic growth of the Forteca portfolio across the Poconos.",
+              },
+              {
+                name: "Eryk Rachwal",
+                role: "Co-Founder & Technology",
+                image: "/images/team/04-eryk-rachwal-headshot.jpg",
+                bio: "Builds the systems and technology that power Forteca — from booking platforms to property management tools.",
+              },
+            ].map((member) => (
+              <div key={member.name} className="text-center">
+                <div className="relative mx-auto mb-5 h-48 w-48 overflow-hidden rounded-2xl shadow-lg">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-cover"
+                    sizes="192px"
+                  />
+                </div>
+                <h3 className="font-serif text-lg font-bold text-forteca-navy">
+                  {member.name}
+                </h3>
+                <p className="mt-0.5 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
+                  {member.role}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-forteca-slate">
+                  {member.bio}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
-      <section className="bg-forteca-cream px-4 py-20 text-center">
+      <section className="grain bg-forteca-navy px-4 py-20 text-center">
         <div className="mx-auto max-w-xl">
-          <h2 className="font-serif text-3xl font-bold text-forteca-navy">
+          <h2 className="font-serif text-3xl font-bold text-white">
             Come see for yourself.
           </h2>
-          <p className="mt-4 text-base text-forteca-slate">
+          <p className="mt-4 text-base text-white/50">
             Browse our full portfolio of Pocono properties and find the one
             that&apos;s right for your group.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/properties"
-              className="inline-flex items-center gap-2 rounded-full bg-forteca-navy px-7 py-3 text-sm font-bold uppercase tracking-widest text-white transition-all hover:bg-forteca-navy-light"
+              className="inline-flex items-center gap-2 rounded-full bg-forteca-gold px-7 py-3 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
             >
-              Browse Properties
+              Browse Getaways
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full border border-forteca-navy/20 px-7 py-3 text-sm font-semibold text-forteca-navy transition-colors hover:border-forteca-navy/40"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3 text-sm font-semibold text-white/80 transition-colors hover:border-white/40 hover:text-white"
             >
               Get in Touch
             </Link>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Home,
@@ -8,12 +9,13 @@ import {
   ArrowRight,
   CheckCircle,
   Phone,
+  Flame,
 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Forteca Estate offers vacation rental management, property management, real estate, and home staging across the Pocono Mountains.",
+    "Forteca Estate offers vacation rentals, property management, real estate, home staging, and custom hot tub installations across the Pocono Mountains.",
 };
 
 const services = [
@@ -22,7 +24,7 @@ const services = [
     title: "Vacation Rentals",
     tagline: "Premium stays, zero hassle",
     description:
-      "13 handpicked cabins and villas across the Pocono Mountains. Every property is professionally managed, personally vetted, and equipped with everything guests need for an unforgettable stay.",
+      "44 handpicked cabins and villas across the Pocono Mountains. Every property is professionally managed, personally vetted, and equipped with everything guests need for an unforgettable stay.",
     highlights: [
       "Hot tubs, fireplaces, game rooms & full kitchens",
       "Professionally cleaned between every stay",
@@ -30,7 +32,7 @@ const services = [
       "Book direct for the best rates",
     ],
     href: "/services/vacation-rentals",
-    gradient: "from-blue-900/20 via-forteca-navy to-forteca-navy",
+    image: "/images/brand/02-homepage-twilight-property.jpg",
   },
   {
     icon: Key,
@@ -45,7 +47,7 @@ const services = [
       "Monthly owner statements",
     ],
     href: "/services/property-management",
-    gradient: "from-emerald-900/20 via-forteca-navy to-forteca-navy",
+    image: "/images/brand/01-homepage-hero.jpg",
   },
   {
     icon: BarChart3,
@@ -60,7 +62,7 @@ const services = [
       "Post-purchase rental setup available",
     ],
     href: "/services/real-estate",
-    gradient: "from-amber-900/20 via-forteca-navy to-forteca-navy",
+    image: "/images/brand/03-newsletter-background.jpg",
   },
   {
     icon: Hammer,
@@ -75,7 +77,7 @@ const services = [
       "Photography-ready presentation",
     ],
     href: "/services/home-staging",
-    gradient: "from-rose-900/20 via-forteca-navy to-forteca-navy",
+    image: "/images/home-staging/01-hero-staged-room.jpg",
   },
 ];
 
@@ -94,7 +96,7 @@ export default function ServicesPage() {
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/50">
             From weekend getaways to long-term property investment — Forteca
-            Estate is your single trusted partner in the Pocono Mountains. Four
+            Estate is your single trusted partner in the Pocono Mountains. Five
             services, one team, complete confidence.
           </p>
         </div>
@@ -104,15 +106,21 @@ export default function ServicesPage() {
       <section className="bg-forteca-cream px-4 py-20">
         <div className="mx-auto max-w-6xl space-y-16">
           {services.map(
-            ({ icon: Icon, title, tagline, description, highlights, href }, i) => (
+            ({ title, tagline, description, highlights, href, image }, i) => (
               <div
                 key={title}
                 className={`flex flex-col gap-10 lg:flex-row lg:items-center ${i % 2 === 1 ? "lg:flex-row-reverse" : ""}`}
               >
-                {/* Visual block */}
+                {/* Image block */}
                 <div className="flex-1">
-                  <div className="grain flex aspect-[4/3] items-center justify-center rounded-2xl bg-forteca-navy shadow-xl">
-                    <Icon className="h-20 w-20 text-forteca-gold/30" />
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl">
+                    <Image
+                      src={image}
+                      alt={title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
                   </div>
                 </div>
 
@@ -154,19 +162,104 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Hot Tubs Section */}
+      <section className="grain bg-forteca-navy px-4 py-20">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col gap-10 lg:flex-row lg:items-center">
+            {/* Images grid */}
+            <div className="flex-1">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="relative col-span-2 aspect-[16/9] overflow-hidden rounded-2xl">
+                  <Image
+                    src="/images/hot-tubs/01-hero-hot-tub-outdoor.jpeg"
+                    alt="Wood-burning hot tub on outdoor deck"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+                <div className="relative aspect-square overflow-hidden rounded-xl">
+                  <Image
+                    src="/images/hot-tubs/02-hot-tub-wood-burning.jpg"
+                    alt="Wood-burning hot tub"
+                    fill
+                    className="object-cover"
+                    sizes="25vw"
+                  />
+                </div>
+                <div className="relative aspect-square overflow-hidden rounded-xl">
+                  <Image
+                    src="/images/hot-tubs/04-hot-tub-installed-deck.jpg"
+                    alt="Hot tub installed on deck"
+                    fill
+                    className="object-cover"
+                    sizes="25vw"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Text */}
+            <div className="flex-1">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-forteca-gold/10">
+                <Flame className="h-6 w-6 text-forteca-gold" />
+              </div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
+                Signature Amenity
+              </p>
+              <h2 className="font-serif text-3xl font-bold text-white">
+                Custom Hot Tub Installations
+              </h2>
+              <p className="mt-4 leading-relaxed text-white/60">
+                Hot tubs are the #1 most-searched amenity for Pocono vacation
+                rentals. We offer custom wood-burning and electric hot tub
+                installations for property owners looking to maximize their
+                booking potential and guest satisfaction.
+              </p>
+
+              <ul className="mt-6 space-y-2.5">
+                {[
+                  "Wood-burning & electric options available",
+                  "Professional installation & deck integration",
+                  "Maintenance plans for rental properties",
+                  "Proven to increase nightly rates by 20-30%",
+                  "Multiple wood & finish options to match your property",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2.5 text-sm text-white/80"
+                  >
+                    <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-forteca-gold" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <Link
+                href="/contact"
+                className="mt-8 inline-flex items-center gap-2 rounded-full bg-forteca-gold px-6 py-3 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
+              >
+                <Phone className="h-4 w-4" />
+                Get a Quote
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
-      <section className="grain bg-forteca-navy px-4 py-20 text-center">
+      <section className="bg-forteca-cream px-4 py-20 text-center">
         <div className="mx-auto max-w-2xl">
-          <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-forteca-navy sm:text-4xl">
             Not sure where to start?
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-base text-white/50">
+          <p className="mx-auto mt-4 max-w-md text-base text-forteca-slate">
             Schedule a free consultation. We&apos;ll help you figure out the
             right service — no pressure, no commitment.
           </p>
           <Link
             href="/contact"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-forteca-gold px-8 py-3.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-forteca-navy px-8 py-3.5 text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-forteca-navy-light"
           >
             <Phone className="h-4 w-4" />
             Get in Touch
