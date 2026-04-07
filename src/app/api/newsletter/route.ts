@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { createServiceClient } from "@/lib/supabase/server";
+import { createClient } from "@supabase/supabase-js";
 import { sendNewsletterWelcome } from "@/lib/email";
 import { z } from "zod";
 
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   }
 
-  const supabase = await createServiceClient();
+  const supabase = createClient(supabaseUrl, serviceKey);
 
   const { error } = await supabase.from("subscribers").upsert(
     {
