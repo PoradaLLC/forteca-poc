@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { PropertyCard } from "@/components/property/PropertyCard";
 import { properties } from "@/lib/mock-data";
+import { PropertyFilters } from "@/components/property/PropertyFilters";
 import { MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -29,57 +29,14 @@ export default function PropertiesPage() {
             cabins to a 6-bedroom estate. Every property is professionally
             managed and personally vetted.
           </p>
-
-          {/* Filter chips */}
-          <div className="mt-6 flex flex-wrap gap-2">
-            {[
-              "All",
-              "Cabin",
-              "Villa / Estate",
-              "Waterfront",
-              "Hot Tub",
-              "Pet Friendly",
-            ].map((filter, i) => (
-              <button
-                key={filter}
-                type="button"
-                className={
-                  i === 0
-                    ? "rounded-full bg-forteca-gold px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-forteca-navy"
-                    : "rounded-full border border-white/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white/60 transition-colors hover:border-white/40 hover:text-white"
-                }
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* Gold rule */}
       <div className="gold-rule" />
 
-      {/* Grid */}
-      <section className="bg-forteca-cream px-4 py-14">
-        <div className="mx-auto max-w-7xl">
-          <p className="mb-6 text-sm text-forteca-slate">
-            Showing{" "}
-            <span className="font-semibold text-forteca-navy">
-              {properties.length}
-            </span>{" "}
-            properties
-          </p>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {properties.map((property) => (
-              <PropertyCard
-                key={property.slug}
-                property={property}
-                variant="grid"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Filters + Grid */}
+      <PropertyFilters properties={properties} />
     </>
   );
 }
