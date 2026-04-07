@@ -80,11 +80,12 @@ export async function sendAdminBookingAlert(data: BookingEmailData) {
 }
 
 export async function sendNewsletterWelcome(email: string) {
+  console.log("[EMAIL] sendNewsletterWelcome called, resend client:", resend ? "initialized" : "NULL", "from:", FROM);
   if (!resend) {
     console.log("[DEV EMAIL] Newsletter welcome →", email);
     return;
   }
-  await resend.emails.send({
+  const result = await resend.emails.send({
     from: `Forteca Estate <${FROM}>`,
     to: email,
     subject: "Welcome to the Forteca List",
@@ -116,6 +117,7 @@ export async function sendNewsletterWelcome(email: string) {
       </div>
     `,
   });
+  console.log("[EMAIL] Resend response:", JSON.stringify(result));
 }
 
 export async function sendContactNotification(data: {
