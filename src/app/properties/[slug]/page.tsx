@@ -68,9 +68,7 @@ export default async function PropertyDetailPage({ params }: Props) {
     // Supabase not configured — no reviews
   }
 
-  const nights = 3;
-  const subtotal = property.base_price * nights;
-  const total = subtotal + property.cleaning_fee;
+  const bookingUrl = `https://fortecaestate.directstays.com/property/${property.slug}`;
 
   return (
     <>
@@ -249,35 +247,20 @@ export default async function PropertyDetailPage({ params }: Props) {
               </div>
               <div className="mb-5 flex items-baseline gap-1">
                 <span className="font-serif text-3xl font-bold text-white">
-                  ${property.base_price}
+                  from ${property.base_price}
                 </span>
                 <span className="text-sm text-white/50">/ night</span>
               </div>
 
-              {/* Price preview */}
-              <div className="mb-5 space-y-2 rounded-xl bg-white/5 p-4 text-sm">
-                <div className="flex justify-between text-white/60">
-                  <span>${property.base_price} × {nights} nights (est.)</span>
-                  <span>${subtotal}</span>
-                </div>
-                <div className="flex justify-between text-white/60">
-                  <span>Cleaning fee</span>
-                  <span>${property.cleaning_fee}</span>
-                </div>
-                <div className="gold-rule my-2" />
-                <div className="flex justify-between font-bold text-white">
-                  <span>Est. Total</span>
-                  <span>${total}</span>
-                </div>
-              </div>
-
-              <Link
-                href={`/booking/${property.slug}`}
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-forteca-gold py-3.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
               >
                 <Calendar className="h-4 w-4" />
-                Check Availability
-              </Link>
+                Check Availability & Book
+              </a>
 
               {property.airbnb_url && (
                 <a

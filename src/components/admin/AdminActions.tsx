@@ -9,7 +9,6 @@ import {
   updateBookingStatus,
   updatePropertyStatus,
   deleteProperty,
-  triggerIcalSync,
 } from "@/app/admin/actions";
 
 // ─── REVIEWS ──────────────────────────────────────────────────────────────────
@@ -171,25 +170,3 @@ export function DeletePropertyButton({
   );
 }
 
-// ─── ICAL SYNC ────────────────────────────────────────────────────────────────
-
-export function SyncNowButton({ syncId }: { syncId: string }) {
-  const [pending, startTransition] = useTransition();
-  return (
-    <button
-      type="button"
-      disabled={pending}
-      onClick={() => startTransition(() => triggerIcalSync(syncId))}
-      className="rounded-lg border border-white/10 bg-white/5 p-2 text-white/40 transition-colors hover:bg-white/10 hover:text-white disabled:opacity-50"
-      title="Sync now"
-    >
-      {pending ? (
-        <span className="block h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white/60" />
-      ) : (
-        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16" />
-        </svg>
-      )}
-    </button>
-  );
-}
