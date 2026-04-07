@@ -13,7 +13,7 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://js.stripe.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com",
       "frame-src https://js.stripe.com",
       "img-src 'self' https://res.cloudinary.com data: blob:",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
