@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NewsletterForm } from "@/components/NewsletterForm";
 
 const footerLinks = {
   Properties: [
@@ -80,7 +81,22 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-white/40">
+        {/* Newsletter */}
+        <div className="mt-10 border-t border-white/10 pt-8">
+          <div className="mx-auto max-w-md text-center">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
+              Stay in the loop
+            </h3>
+            <p className="mt-2 text-sm text-white/50">
+              Get exclusive deals, new property alerts, and Pocono travel tips.
+            </p>
+            <div className="mt-4">
+              <NewsletterForm variant="footer" />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 border-t border-white/10 pt-6 text-center text-xs text-white/40">
           &copy; {new Date().getFullYear()} Forteca Estate. All rights reserved.
         </div>
       </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Star, Home, BarChart3, Key, Hammer } from "lucide-react";
 import { PropertyCard } from "@/components/property/PropertyCard";
+import { NewsletterForm } from "@/components/NewsletterForm";
 import { featuredProperties } from "@/lib/mock-data";
 
 const stats = [
@@ -325,6 +326,25 @@ export default function HomePage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── NEWSLETTER ────────────────────────────────────────────────────── */}
+      <section className="border-y border-forteca-navy/10 bg-forteca-cream-dark px-4 py-16">
+        <div className="mx-auto max-w-xl text-center">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
+            Never Miss a Deal
+          </p>
+          <h2 className="font-serif text-3xl font-bold text-forteca-navy">
+            Join the Forteca List
+          </h2>
+          <p className="mx-auto mt-3 max-w-md text-base text-forteca-slate">
+            Exclusive rates, new property alerts, and Pocono travel tips —
+            delivered to your inbox. No spam, unsubscribe anytime.
+          </p>
+          <div className="mt-6">
+            <NewsletterForm variant="inline" />
           </div>
         </div>
       </section>
