@@ -95,6 +95,17 @@ export const properties: MockProperty[] = [
     reviews: [
       { author: "Priya K.", quote: "The wraparound deck is everything. We ate every meal outside. Perfect property.", rating: 5 },
     ],
+    heroImage: "/images/properties/blvck-cabin-ii/01-hero-exterior.jpg",
+    images: [
+      { src: "/images/properties/blvck-cabin-ii/01-hero-exterior.jpg", alt: "Blvck Cabin II exterior" },
+      { src: "/images/properties/blvck-cabin-ii/02-description-interior.jpg", alt: "Interior" },
+      { src: "/images/properties/blvck-cabin-ii/03-gallery-kitchen.jpg", alt: "Kitchen" },
+      { src: "/images/properties/blvck-cabin-ii/04-gallery-living-room.jpg", alt: "Living room" },
+      { src: "/images/properties/blvck-cabin-ii/05-gallery-bedroom.jpg", alt: "Bedroom" },
+      { src: "/images/properties/blvck-cabin-ii/06-gallery-bathroom.jpg", alt: "Bathroom" },
+      { src: "/images/properties/blvck-cabin-ii/07-gallery-deck.jpg", alt: "Deck" },
+      { src: "/images/properties/blvck-cabin-ii/08-gallery-exterior.jpg", alt: "Exterior view" },
+    ],
   },
   {
     slug: "blvck-cabin-iii",
@@ -117,6 +128,19 @@ export const properties: MockProperty[] = [
     review_count: 29,
     reviews: [
       { author: "Marcus W.", quote: "Brought the whole crew — 8 people, zero complaints. The game room kept us up till 2am every night.", rating: 5 },
+    ],
+    heroImage: "/images/properties/blvck-cabin-iii/01-hero-exterior.jpg",
+    images: [
+      { src: "/images/properties/blvck-cabin-iii/01-hero-exterior.jpg", alt: "Blvck Cabin III exterior" },
+      { src: "/images/properties/blvck-cabin-iii/02-gallery-living-fireplace.jpg", alt: "Living room fireplace" },
+      { src: "/images/properties/blvck-cabin-iii/04-gallery-bedroom.jpg", alt: "Bedroom" },
+      { src: "/images/properties/blvck-cabin-iii/06-gallery-kitchen.jpg", alt: "Kitchen" },
+      { src: "/images/properties/blvck-cabin-iii/08-gallery-living-room.jpg", alt: "Living room" },
+      { src: "/images/properties/blvck-cabin-iii/10-gallery-bedroom-2.jpg", alt: "Second bedroom" },
+      { src: "/images/properties/blvck-cabin-iii/12-gallery-bathroom-2.jpg", alt: "Bathroom" },
+      { src: "/images/properties/blvck-cabin-iii/17-gallery-basement-projector.jpg", alt: "Projector room" },
+      { src: "/images/properties/blvck-cabin-iii/18-gallery-deck.jpg", alt: "Deck" },
+      { src: "/images/properties/blvck-cabin-iii/25-gallery-outdoor.jpg", alt: "Outdoor area" },
     ],
   },
   {
@@ -142,6 +166,17 @@ export const properties: MockProperty[] = [
       { author: "Elena R.", quote: "Woke up to mist on the lake every morning. Words can't describe the peace of this place.", rating: 5 },
       { author: "David C.", quote: "The kayaks were a bonus we didn't expect. Kids absolutely loved it. Five stars without question.", rating: 5 },
     ],
+    heroImage: "/images/properties/blve-cabin/01-hero-exterior.jpg",
+    images: [
+      { src: "/images/properties/blve-cabin/01-hero-exterior.jpg", alt: "Blve Cabin exterior" },
+      { src: "/images/properties/blve-cabin/03-gallery-kitchen.jpg", alt: "Kitchen" },
+      { src: "/images/properties/blve-cabin/04-gallery-hot-tub.jpg", alt: "Hot tub" },
+      { src: "/images/properties/blve-cabin/05-gallery-exterior.jpg", alt: "Exterior" },
+      { src: "/images/properties/blve-cabin/06-gallery-deck.jpg", alt: "Deck" },
+      { src: "/images/properties/blve-cabin/07-gallery-living-room.jpg", alt: "Living room" },
+      { src: "/images/properties/blve-cabin/08-gallery-interior.jpg", alt: "Interior" },
+      { src: "/images/properties/blve-cabin/09-gallery-bedroom.jpg", alt: "Bedroom" },
+    ],
   },
   {
     slug: "scenic-getaway",
@@ -165,6 +200,18 @@ export const properties: MockProperty[] = [
     reviews: [
       { author: "Tanya B.", quote: "The view from the hot tub at sunset should be illegal. Honestly the most beautiful place I've ever stayed.", rating: 5 },
     ],
+    heroImage: "/images/properties/scenic-getaway/01-hero-exterior.jpeg",
+    images: [
+      { src: "/images/properties/scenic-getaway/01-hero-exterior.jpeg", alt: "Scenic Getaway exterior" },
+      { src: "/images/properties/scenic-getaway/03-gallery-interior.jpg", alt: "Interior" },
+      { src: "/images/properties/scenic-getaway/04-gallery-bedroom.jpg", alt: "Bedroom" },
+      { src: "/images/properties/scenic-getaway/05-gallery-hot-tub.jpeg", alt: "Hot tub" },
+      { src: "/images/properties/scenic-getaway/06-gallery-living-room.jpg", alt: "Living room" },
+      { src: "/images/properties/scenic-getaway/07-gallery-outdoor.jpeg", alt: "Outdoor area" },
+      { src: "/images/properties/scenic-getaway/08-gallery-kitchen.jpeg", alt: "Kitchen" },
+      { src: "/images/properties/scenic-getaway/09-gallery-deck.jpg", alt: "Deck" },
+      { src: "/images/properties/scenic-getaway/10-gallery-hot-tub-wood.jpg", alt: "Hot tub with wood" },
+    ],
   },
   {
     slug: "arctic-getaway",
@@ -187,6 +234,13 @@ export const properties: MockProperty[] = [
     review_count: 22,
     reviews: [
       { author: "Rebecca H.", quote: "We visited in January and it was absolutely magical. The hot tub in the snow is an experience I'll never forget.", rating: 5 },
+    ],
+    heroImage: "/images/properties/arctic-getaway/01-hero-exterior.jpg",
+    images: [
+      { src: "/images/properties/arctic-getaway/01-hero-exterior.jpg", alt: "Arctic Getaway exterior" },
+      { src: "/images/properties/arctic-getaway/03-gallery-exterior.jpeg", alt: "Exterior view" },
+      { src: "/images/properties/arctic-getaway/04-gallery-living-room.jpeg", alt: "Living room" },
+      { src: "/images/properties/arctic-getaway/05-gallery-bedroom.jpeg", alt: "Bedroom" },
     ],
   },
   {
@@ -212,6 +266,19 @@ export const properties: MockProperty[] = [
       { author: "The Johnson Family", quote: "Hosted 14 family members for Thanksgiving. The space was perfect — everyone had room, the kitchen handled everything, and the memories will last forever.", rating: 5 },
       { author: "Nicole P.", quote: "Rented for a bachelorette weekend. It exceeded every expectation. The theater room sealed the deal.", rating: 5 },
     ],
+    heroImage: "/images/properties/pocono-villa/01-hero-exterior.jpg",
+    images: [
+      { src: "/images/properties/pocono-villa/01-hero-exterior.jpg", alt: "Pocono Villa exterior" },
+      { src: "/images/properties/pocono-villa/02-gallery-hot-tub.jpg", alt: "Hot tub" },
+      { src: "/images/properties/pocono-villa/03-gallery-deck-view.jpg", alt: "Deck view" },
+      { src: "/images/properties/pocono-villa/04-gallery-bedroom.jpg", alt: "Bedroom" },
+      { src: "/images/properties/pocono-villa/07-gallery-living-room.jpg", alt: "Living room" },
+      { src: "/images/properties/pocono-villa/08-gallery-kitchen.jpg", alt: "Kitchen" },
+      { src: "/images/properties/pocono-villa/13-gallery-bathroom.jpg", alt: "Bathroom" },
+      { src: "/images/properties/pocono-villa/14-gallery-deck.jpg", alt: "Deck" },
+      { src: "/images/properties/pocono-villa/17-gallery-dining.jpg", alt: "Dining area" },
+      { src: "/images/properties/pocono-villa/19-gallery-fireplace.jpg", alt: "Fireplace" },
+    ],
   },
   {
     slug: "mountain-lake-getaway",
@@ -234,6 +301,13 @@ export const properties: MockProperty[] = [
     review_count: 35,
     reviews: [
       { author: "Chris M.", quote: "Morning kayak, afternoon hike, evening hot tub. The perfect loop. We did it four days straight.", rating: 5 },
+    ],
+    heroImage: "/images/properties/mountain-lake-getaway/01-hero-exterior.jpeg",
+    images: [
+      { src: "/images/properties/mountain-lake-getaway/01-hero-exterior.jpeg", alt: "Mountain Lake Getaway exterior" },
+      { src: "/images/properties/mountain-lake-getaway/02-gallery-interior.jpeg", alt: "Interior" },
+      { src: "/images/properties/mountain-lake-getaway/03-gallery-kitchen.jpeg", alt: "Kitchen" },
+      { src: "/images/properties/mountain-lake-getaway/04-gallery-outdoor.jpeg", alt: "Outdoor area" },
     ],
   },
   {
@@ -258,6 +332,19 @@ export const properties: MockProperty[] = [
     reviews: [
       { author: "Aisha T.", quote: "The most restorative weekend I've had in years. The sauna and yoga deck are incredible additions.", rating: 5 },
     ],
+    heroImage: "/images/properties/mountain-oasis/01-hero-exterior.jpg",
+    images: [
+      { src: "/images/properties/mountain-oasis/01-hero-exterior.jpg", alt: "Mountain Oasis exterior" },
+      { src: "/images/properties/mountain-oasis/02-gallery-living-room.jpg", alt: "Living room" },
+      { src: "/images/properties/mountain-oasis/03-gallery-kitchen.jpg", alt: "Kitchen" },
+      { src: "/images/properties/mountain-oasis/04-gallery-bedroom.jpg", alt: "Bedroom" },
+      { src: "/images/properties/mountain-oasis/06-gallery-deck.jpg", alt: "Deck" },
+      { src: "/images/properties/mountain-oasis/07-gallery-hot-tub.jpg", alt: "Hot tub" },
+      { src: "/images/properties/mountain-oasis/08-gallery-outdoor.jpg", alt: "Outdoor area" },
+      { src: "/images/properties/mountain-oasis/09-gallery-bathroom.jpg", alt: "Bathroom" },
+      { src: "/images/properties/mountain-oasis/11-gallery-bedroom-2.jpg", alt: "Second bedroom" },
+      { src: "/images/properties/mountain-oasis/12-gallery-fire-pit.jpg", alt: "Fire pit" },
+    ],
   },
   {
     slug: "happy-trails",
@@ -281,6 +368,14 @@ export const properties: MockProperty[] = [
     reviews: [
       { author: "The Patels", quote: "Came with kids and two dogs — everyone was happy. The trails out back kept us busy all weekend.", rating: 5 },
     ],
+    heroImage: "/images/properties/happy-trails/01-hero-exterior.jpg",
+    images: [
+      { src: "/images/properties/happy-trails/01-hero-exterior.jpg", alt: "Happy Trails exterior" },
+      { src: "/images/properties/happy-trails/02-gallery-living-room.jpg", alt: "Living room" },
+      { src: "/images/properties/happy-trails/03-gallery-bedroom.jpg", alt: "Bedroom" },
+      { src: "/images/properties/happy-trails/04-gallery-outdoor.jpg", alt: "Outdoor area" },
+      { src: "/images/properties/happy-trails/06-gallery-hot-tub.jpg", alt: "Hot tub" },
+    ],
   },
   {
     slug: "rampersad-poconos-home",
@@ -303,6 +398,16 @@ export const properties: MockProperty[] = [
     review_count: 27,
     reviews: [
       { author: "Michael B.", quote: "12 of us stayed for a long weekend reunion. Not once did it feel cramped. Fantastic property.", rating: 5 },
+    ],
+    heroImage: "/images/properties/rampersad-poconos-home/01-hero-exterior.jpeg",
+    images: [
+      { src: "/images/properties/rampersad-poconos-home/01-hero-exterior.jpeg", alt: "Rampersad Poconos Home exterior" },
+      { src: "/images/properties/rampersad-poconos-home/02-gallery-living-room.jpeg", alt: "Living room" },
+      { src: "/images/properties/rampersad-poconos-home/03-gallery-kitchen.jpeg", alt: "Kitchen" },
+      { src: "/images/properties/rampersad-poconos-home/04-gallery-bedroom.jpeg", alt: "Bedroom" },
+      { src: "/images/properties/rampersad-poconos-home/05-gallery-interior.jpeg", alt: "Interior" },
+      { src: "/images/properties/rampersad-poconos-home/06-gallery-hot-tub.jpeg", alt: "Hot tub" },
+      { src: "/images/properties/rampersad-poconos-home/07-gallery-outdoor.jpeg", alt: "Outdoor area" },
     ],
   },
   {
@@ -350,6 +455,14 @@ export const properties: MockProperty[] = [
     reviews: [
       { author: "Tom & Lisa G.", quote: "We wanted rustic charm with modern comforts and got exactly that. The river-stone fireplace alone is worth the trip.", rating: 5 },
       { author: "Monique D.", quote: "Put my phone away on day one and didn't pick it up until checkout. That says everything.", rating: 5 },
+    ],
+    heroImage: "/images/properties/rustic-heaven/01-hero-exterior.jpeg",
+    images: [
+      { src: "/images/properties/rustic-heaven/01-hero-exterior.jpeg", alt: "Rustic Heaven exterior" },
+      { src: "/images/properties/rustic-heaven/02-gallery-deck.png", alt: "Deck" },
+      { src: "/images/properties/rustic-heaven/03-gallery-interior.jpeg", alt: "Interior" },
+      { src: "/images/properties/rustic-heaven/04-gallery-outdoor.jpeg", alt: "Outdoor area" },
+      { src: "/images/properties/rustic-heaven/06-gallery-fireplace.jpeg", alt: "Fireplace" },
     ],
   },
 ];

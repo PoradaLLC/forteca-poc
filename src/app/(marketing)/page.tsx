@@ -80,10 +80,20 @@ export default function HomePage() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="grain relative flex min-h-[92vh] flex-col items-center justify-center overflow-hidden bg-forteca-navy px-4 text-center">
-        {/* Background radial glow */}
+      <section className="relative flex min-h-[92vh] flex-col items-center justify-center overflow-hidden bg-forteca-navy px-4 text-center">
+        {/* Background video */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        >
+          <source src="/images/hero.mp4" type="video/mp4" />
+        </video>
+        {/* Dark overlay for text readability */}
+        <div className="pointer-events-none absolute inset-0 bg-forteca-navy/60" />
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-1/3 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-forteca-gold/5 blur-3xl" />
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-forteca-gold/30 to-transparent" />
         </div>
 
