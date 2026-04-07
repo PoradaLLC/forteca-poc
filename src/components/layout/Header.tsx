@@ -8,10 +8,13 @@ import { MobileNav } from "./MobileNav";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/properties", label: "Properties" },
-  { href: "/about", label: "About" },
+  { href: "/properties", label: "Getaways" },
   { href: "/services", label: "Services" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "About Us" },
+  { href: "/blog", label: "Blog" },
+  { href: "/testimonials", label: "Testimonials" },
+  { href: "/contact", label: "Contact Us" },
+  { href: "/store", label: "Store" },
 ];
 
 export function Header() {
@@ -35,12 +38,12 @@ export function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-5 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-white/80 transition-colors hover:text-white"
+              className="text-sm font-medium text-white/70 transition-colors hover:text-white"
             >
               {link.label}
             </Link>
@@ -53,7 +56,7 @@ export function Header() {
             href="/properties"
             className={cn(
               "hidden rounded-md bg-forteca-gold px-4 py-2 text-sm font-semibold text-forteca-navy",
-              "transition-opacity hover:opacity-90 md:block"
+              "transition-opacity hover:opacity-90 lg:block"
             )}
           >
             Book Now
@@ -62,7 +65,7 @@ export function Header() {
             type="button"
             aria-label="Open menu"
             onClick={() => setMobileOpen(true)}
-            className="rounded-md p-2 text-white/80 hover:text-white md:hidden"
+            className="rounded-md p-2 text-white/80 hover:text-white lg:hidden"
           >
             <Menu className="h-5 w-5" />
           </button>

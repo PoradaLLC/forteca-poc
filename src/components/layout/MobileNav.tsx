@@ -49,10 +49,11 @@ export function MobileNav({ open, onClose, links }: MobileNavProps) {
                 {link.label}
               </Link>
             ))}
+            <div className="gold-rule my-2" />
             <Link
               href="/properties"
               onClick={onClose}
-              className="mt-4 rounded-md bg-forteca-gold px-4 py-2 text-center text-sm font-semibold text-forteca-navy"
+              className="mt-2 rounded-md bg-forteca-gold px-4 py-2.5 text-center text-sm font-bold uppercase tracking-widest text-forteca-navy"
             >
               Book Now
             </Link>
