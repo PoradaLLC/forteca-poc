@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { createServiceClient } from "@/lib/supabase/server";
-import { BedDouble, Bath, Users, ExternalLink, Plus, Circle } from "lucide-react";
+import { BedDouble, Bath, Users, ExternalLink, Plus } from "lucide-react";
+import { PropertyStatusSelect, DeletePropertyButton } from "@/components/admin/AdminActions";
 
 export const metadata: Metadata = { title: "Properties" };
 
@@ -11,12 +12,6 @@ export default async function AdminPropertiesPage() {
     .from("properties")
     .select("id, slug, name, tagline, bedrooms, bathrooms, max_guests, base_price, status, airbnb_url")
     .order("name");
-
-  const statusColor = {
-    active: "text-green-400",
-    inactive: "text-yellow-400",
-    maintenance: "text-red-400",
-  };
 
   return (
     <div className="p-8">
@@ -38,7 +33,7 @@ export default async function AdminPropertiesPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-white/5">
-              {["Property", "Beds / Baths / Guests", "Rate", "Status", "Links"].map((h) => (
+              {["Property", "Beds / Baths / Guests", "Rate", "Status", "Links", ""].map((h) => (
                 <th key={h} className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-widest text-white/30">
                   {h}
                 </th>
@@ -82,10 +77,7 @@ export default async function AdminPropertiesPage() {
                   ${p.base_price}<span className="text-xs text-white/40">/night</span>
                 </td>
                 <td className="px-5 py-4">
-                  <span className={`flex items-center gap-1.5 text-xs font-semibold capitalize ${statusColor[p.status as keyof typeof statusColor] ?? "text-white/40"}`}>
-                    <Circle className="h-2 w-2 fill-current" />
-                    {p.status}
-                  </span>
+                  <PropertyStatusSelect propertyId={p.id} currentStatus={p.status} />
                 </td>
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
@@ -107,6 +99,9 @@ export default async function AdminPropertiesPage() {
                       </a>
                     )}
                   </div>
+                </td>
+                <td className="px-5 py-4">
+                  <DeletePropertyButton propertyId={p.id} propertyName={p.name} />
                 </td>
               </tr>
             ))}

@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { createServiceClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
-import { Star, CheckCircle, XCircle, Sparkles } from "lucide-react";
+import { Star, CheckCircle, XCircle } from "lucide-react";
+import {
+  ApproveReviewButton,
+  RejectReviewButton,
+  ToggleFeaturedButton,
+} from "@/components/admin/AdminActions";
 
 export const metadata: Metadata = { title: "Reviews" };
 
@@ -44,7 +49,7 @@ export default async function AdminReviewsPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-white/5">
-                {["Guest", "Property", "Rating", "Review", "Source", "Featured", "Status", "Date"].map((h) => (
+                {["Guest", "Property", "Rating", "Review", "Source", "Featured", "Status", "Date", "Actions"].map((h) => (
                   <th key={h} className="whitespace-nowrap px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-widest text-white/30">
                     {h}
                   </th>
@@ -54,7 +59,7 @@ export default async function AdminReviewsPage() {
             <tbody className="divide-y divide-white/5">
               {(reviews ?? []).length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-5 py-10 text-center text-sm text-white/30">
+                  <td colSpan={9} className="px-5 py-10 text-center text-sm text-white/30">
                     No reviews yet.
                   </td>
                 </tr>
@@ -97,11 +102,7 @@ export default async function AdminReviewsPage() {
                       </span>
                     </td>
                     <td className="px-5 py-4">
-                      {r.is_featured ? (
-                        <Sparkles className="h-4 w-4 text-forteca-gold" />
-                      ) : (
-                        <span className="text-white/10">—</span>
-                      )}
+                      <ToggleFeaturedButton reviewId={r.id} isFeatured={r.is_featured} />
                     </td>
                     <td className="px-5 py-4">
                       {r.is_approved ? (
@@ -116,6 +117,14 @@ export default async function AdminReviewsPage() {
                     </td>
                     <td className="px-5 py-4 whitespace-nowrap text-xs text-white/30">
                       {formatDate(r.created_at)}
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-1.5">
+                        {!r.is_approved && (
+                          <ApproveReviewButton reviewId={r.id} />
+                        )}
+                        <RejectReviewButton reviewId={r.id} />
+                      </div>
                     </td>
                   </tr>
                   );

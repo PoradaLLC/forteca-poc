@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
 import { createServiceClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
+import { BookingStatusSelect } from "@/components/admin/AdminActions";
 
 export const metadata: Metadata = { title: "Bookings" };
-
-const statusStyles: Record<string, string> = {
-  confirmed: "bg-green-500/10 text-green-400",
-  pending:   "bg-yellow-500/10 text-yellow-400",
-  cancelled: "bg-red-500/10 text-red-400",
-  completed: "bg-blue-500/10 text-blue-400",
-};
 
 export default async function AdminBookingsPage() {
   const supabase = await createServiceClient();
@@ -81,9 +75,7 @@ export default async function AdminBookingsPage() {
                     <td className="px-5 py-4 font-semibold text-forteca-gold">${b.total_amount}</td>
                     <td className="px-5 py-4 capitalize text-white/40">{b.source}</td>
                     <td className="px-5 py-4">
-                      <span className={`rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${statusStyles[b.status] ?? "bg-white/10 text-white/40"}`}>
-                        {b.status}
-                      </span>
+                      <BookingStatusSelect bookingId={b.id} currentStatus={b.status} />
                     </td>
                     <td className="px-5 py-4 whitespace-nowrap text-xs text-white/30">
                       {formatDate(b.created_at)}

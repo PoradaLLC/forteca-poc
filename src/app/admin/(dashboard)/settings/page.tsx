@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { createServiceClient } from "@/lib/supabase/server";
-import { RefreshCw, Link2, AlertCircle } from "lucide-react";
+import { Link2, AlertCircle } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import { SyncNowButton } from "@/components/admin/AdminActions";
 
 export const metadata: Metadata = { title: "Settings" };
 
@@ -98,13 +99,7 @@ export default async function AdminSettingsPage() {
                           : "Never synced"}
                       </p>
                     </div>
-                    <button
-                      type="button"
-                      className="rounded-lg border border-white/10 bg-white/5 p-2 text-white/40 transition-colors hover:bg-white/10 hover:text-white"
-                      title="Sync now"
-                    >
-                      <RefreshCw className="h-4 w-4" />
-                    </button>
+                    <SyncNowButton syncId={sync.id} />
                   </div>
                 </div>
               </div>
