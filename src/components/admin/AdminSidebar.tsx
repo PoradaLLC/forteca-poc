@@ -5,13 +5,14 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Home,
-  CalendarDays,
   BookOpen,
   Users,
   Star,
+  FileText,
   Settings,
   LogOut,
   ChevronRight,
+  ExternalLink,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -19,8 +20,8 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/admin",            label: "Dashboard",   icon: LayoutDashboard, exact: true },
   { href: "/admin/properties", label: "Properties",  icon: Home },
+  { href: "/admin/blog",       label: "Blog",        icon: FileText },
   { href: "/admin/bookings",   label: "Bookings",    icon: BookOpen },
-  { href: "/admin/calendar",   label: "Calendar",    icon: CalendarDays },
   { href: "/admin/guests",     label: "Guests",      icon: Users },
   { href: "/admin/reviews",    label: "Reviews",     icon: Star },
   { href: "/admin/settings",   label: "Settings",    icon: Settings },
@@ -74,6 +75,19 @@ export function AdminSidebar({ userEmail }: { userEmail: string }) {
           );
         })}
       </nav>
+
+      {/* Hospitable link */}
+      <div className="px-3 pb-2">
+        <a
+          href="https://app.hospitable.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 rounded-lg bg-forteca-gold/10 px-3 py-2.5 text-sm font-medium text-forteca-gold transition-all hover:bg-forteca-gold/20"
+        >
+          <ExternalLink className="h-4 w-4 flex-shrink-0" />
+          Hospitable Dashboard
+        </a>
+      </div>
 
       {/* User + sign out */}
       <div className="border-t border-white/5 p-4">
