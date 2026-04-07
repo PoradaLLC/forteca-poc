@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* ─── Forteca Brand Tokens ───────────────────────────────────────────────── */
+:root {
+  --forteca-navy: #0d1b2a;
+  --forteca-navy-light: #1b2e45;
+  --forteca-gold: #c9a84c;
+  --forteca-gold-light: #e0c47a;
+  --forteca-cream: #f5f0e8;
+  --forteca-slate: #6b7280;
+
+  --background: var(--forteca-cream);
+  --foreground: var(--forteca-navy);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Brand colors available as Tailwind utilities */
+  --color-forteca-navy: var(--forteca-navy);
+  --color-forteca-navy-light: var(--forteca-navy-light);
+  --color-forteca-gold: var(--forteca-gold);
+  --color-forteca-gold-light: var(--forteca-gold-light);
+  --color-forteca-cream: var(--forteca-cream);
+  --color-forteca-slate: var(--forteca-slate);
+}
+
+/* ─── Base Styles ─────────────────────────────────────────────────────────── */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Focus Ring ─────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--forteca-gold);
+  outline-offset: 2px;
+}
