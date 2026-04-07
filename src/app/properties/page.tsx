@@ -32,9 +32,6 @@ export default function PropertiesPage() {
         </div>
       </section>
 
-      {/* Gold rule */}
-      <div className="gold-rule" />
-
       {/* Filters + Grid */}
       <PropertyFilters properties={properties} />
     </>
