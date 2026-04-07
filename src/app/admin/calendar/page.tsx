@@ -50,7 +50,7 @@ export default async function AdminCalendarPage({
   const selectedProperty = params.property || properties?.[0]?.id;
 
   // Fetch availability for the month
-  let availabilityMap: Record<string, { status: string; price_override: number | null; source: string }> = {};
+  const availabilityMap: Record<string, { status: string; price_override: number | null; source: string }> = {};
   if (selectedProperty) {
     const { data: availability } = await supabase
       .from("availability")

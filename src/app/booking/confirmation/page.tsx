@@ -44,7 +44,7 @@ export default async function ConfirmationPage({ searchParams }: Props) {
       checkOut: sp.checkout ?? "",
       numGuests: Number(sp.guests ?? 2),
       totalAmount: Number(sp.total ?? 0),
-      bookingId: sessionId ?? "DEV-" + Math.random().toString(36).slice(2, 9).toUpperCase(),
+      bookingId: sessionId ?? "DEV-0000000",
     };
   } else if (sessionId && stripe) {
     try {
