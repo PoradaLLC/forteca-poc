@@ -200,38 +200,10 @@ export default async function PropertyDetailPage({ params }: Props) {
                 <span className="text-sm text-white/50">/ night</span>
               </div>
 
-              {/* Date placeholders */}
-              <div className="mb-4 grid grid-cols-2 gap-2">
-                <div className="rounded-xl border border-white/15 bg-white/5 p-3">
-                  <p className="mb-0.5 text-xs text-white/40">Check-in</p>
-                  <p className="flex items-center gap-1.5 text-sm font-semibold text-white">
-                    <Calendar className="h-3.5 w-3.5 text-forteca-gold" />
-                    Select date
-                  </p>
-                </div>
-                <div className="rounded-xl border border-white/15 bg-white/5 p-3">
-                  <p className="mb-0.5 text-xs text-white/40">Check-out</p>
-                  <p className="flex items-center gap-1.5 text-sm font-semibold text-white">
-                    <Calendar className="h-3.5 w-3.5 text-forteca-gold" />
-                    Select date
-                  </p>
-                </div>
-              </div>
-
-              {/* Guests */}
-              <div className="mb-5 rounded-xl border border-white/15 bg-white/5 p-3">
-                <p className="mb-0.5 text-xs text-white/40">Guests</p>
-                <p className="flex items-center gap-1.5 text-sm font-semibold text-white">
-                  <Users className="h-3.5 w-3.5 text-forteca-gold" />2 guests
-                </p>
-              </div>
-
-              {/* Price breakdown */}
+              {/* Price preview */}
               <div className="mb-5 space-y-2 rounded-xl bg-white/5 p-4 text-sm">
                 <div className="flex justify-between text-white/60">
-                  <span>
-                    ${property.base_price} × {nights} nights
-                  </span>
+                  <span>${property.base_price} × {nights} nights (est.)</span>
                   <span>${subtotal}</span>
                 </div>
                 <div className="flex justify-between text-white/60">
@@ -240,17 +212,18 @@ export default async function PropertyDetailPage({ params }: Props) {
                 </div>
                 <div className="gold-rule my-2" />
                 <div className="flex justify-between font-bold text-white">
-                  <span>Total</span>
+                  <span>Est. Total</span>
                   <span>${total}</span>
                 </div>
               </div>
 
-              <button
-                type="button"
-                className="w-full rounded-xl bg-forteca-gold py-3.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
+              <Link
+                href={`/booking/${property.slug}`}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-forteca-gold py-3.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
               >
-                Reserve Now
-              </button>
+                <Calendar className="h-4 w-4" />
+                Check Availability
+              </Link>
 
               {property.airbnb_url && (
                 <a

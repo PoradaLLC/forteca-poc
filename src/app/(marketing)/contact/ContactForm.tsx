@@ -39,9 +39,12 @@ export function ContactForm() {
   });
 
   async function onSubmit(data: FormValues) {
-    // TODO: wire to /api/contact once backend is ready
-    await new Promise((r) => setTimeout(r, 800));
-    console.log("Contact form submission:", data);
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed to send message");
     setSubmitted(true);
     reset();
   }
