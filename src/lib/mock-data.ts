@@ -432,6 +432,14 @@ export const properties: MockProperty[] = [
     reviews: [
       { author: "Linda F.", quote: "This is exactly what a Pocono cabin should feel like. Classic, cozy, and perfectly updated. We return every winter.", rating: 5 },
     ],
+    heroImage: "/images/properties/pocono-getaway/01-hero-exterior.jpeg",
+    images: [
+      { src: "/images/properties/pocono-getaway/01-hero-exterior.jpeg", alt: "Pocono Getaway exterior" },
+      { src: "/images/properties/pocono-getaway/02-gallery-deck.png", alt: "Deck" },
+      { src: "/images/properties/pocono-getaway/03-gallery-interior.jpeg", alt: "Interior" },
+      { src: "/images/properties/pocono-getaway/04-gallery-outdoor.jpeg", alt: "Outdoor area" },
+      { src: "/images/properties/pocono-getaway/06-gallery-fireplace.jpeg", alt: "Fireplace" },
+    ],
   },
   {
     slug: "rustic-heaven",
