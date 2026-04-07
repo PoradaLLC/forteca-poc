@@ -1,0 +1,336 @@
+export interface MockProperty {
+  slug: string;
+  name: string;
+  tagline: string;
+  description: string;
+  location: string;
+  bedrooms: number;
+  bathrooms: number;
+  max_guests: number;
+  base_price: number;
+  cleaning_fee: number;
+  min_nights: number;
+  amenities: string[];
+  /** Tailwind gradient classes for placeholder image */
+  gradient: string;
+  accentColor: string;
+  badge?: string;
+  rating: number;
+  review_count: number;
+  reviews: { author: string; quote: string; rating: number }[];
+  airbnb_url?: string;
+}
+
+export const properties: MockProperty[] = [
+  {
+    slug: "blvck-cabin-i",
+    name: "Blvck Cabin I",
+    tagline: "Sleek modern retreat with private hot tub",
+    description:
+      "A meticulously designed contemporary cabin where industrial-chic meets mountain warmth. Floor-to-ceiling windows frame the forest canopy, a chef's kitchen invites long dinners, and the private cedar hot tub deck becomes your evening ritual. Perfectly suited for couples, small families, or groups wanting a luxurious base for Pocono adventures.",
+    location: "Poconos, PA",
+    bedrooms: 3,
+    bathrooms: 2,
+    max_guests: 8,
+    base_price: 250,
+    cleaning_fee: 150,
+    min_nights: 2,
+    amenities: ["Hot Tub", "WiFi", "Fireplace", "Full Kitchen", "Free Parking", "Smart TV", "Game Room", "BBQ Grill"],
+    gradient: "from-slate-950 via-zinc-900 to-stone-800",
+    accentColor: "#c9a84c",
+    badge: "Most Popular",
+    rating: 4.9,
+    review_count: 47,
+    reviews: [
+      { author: "Sarah M.", quote: "Absolutely stunning. The hot tub under the stars was pure magic. Already booked our return trip.", rating: 5 },
+      { author: "James T.", quote: "Incredibly well-appointed — felt like a boutique hotel in the woods. Spotlessly clean.", rating: 5 },
+    ],
+  },
+  {
+    slug: "blvck-cabin-ii",
+    name: "Blvck Cabin II",
+    tagline: "Sophisticated woodland escape for groups",
+    description:
+      "The second chapter of the Blvck series. More space, same uncompromising attention to design. An open-plan living area flows to a wraparound deck overlooking dense Pennsylvania hardwood forest. Gather around the stone fireplace after a day on the slopes or trails.",
+    location: "Poconos, PA",
+    bedrooms: 3,
+    bathrooms: 2,
+    max_guests: 8,
+    base_price: 260,
+    cleaning_fee: 150,
+    min_nights: 2,
+    amenities: ["Hot Tub", "WiFi", "Stone Fireplace", "Full Kitchen", "Free Parking", "Smart TV", "Deck", "Fire Pit"],
+    gradient: "from-zinc-950 via-slate-900 to-neutral-800",
+    accentColor: "#a0916e",
+    badge: undefined,
+    rating: 4.8,
+    review_count: 38,
+    reviews: [
+      { author: "Priya K.", quote: "The wraparound deck is everything. We ate every meal outside. Perfect property.", rating: 5 },
+    ],
+  },
+  {
+    slug: "blvck-cabin-iii",
+    name: "Blvck Cabin III",
+    tagline: "Private wooded sanctuary with game room",
+    description:
+      "Tucked deeper into the forest than its siblings, Blvck Cabin III delivers maximum privacy. A dedicated game room, home theater setup, and sprawling outdoor area make this the ultimate choice for friend groups or multi-generational families seeking both togetherness and space.",
+    location: "Poconos, PA",
+    bedrooms: 3,
+    bathrooms: 2,
+    max_guests: 8,
+    base_price: 270,
+    cleaning_fee: 150,
+    min_nights: 2,
+    amenities: ["Hot Tub", "WiFi", "Fireplace", "Game Room", "Home Theater", "Free Parking", "Fire Pit", "BBQ Grill"],
+    gradient: "from-neutral-950 via-stone-900 to-zinc-800",
+    accentColor: "#8a7560",
+    badge: undefined,
+    rating: 4.8,
+    review_count: 29,
+    reviews: [
+      { author: "Marcus W.", quote: "Brought the whole crew — 8 people, zero complaints. The game room kept us up till 2am every night.", rating: 5 },
+    ],
+  },
+  {
+    slug: "blve-cabin",
+    name: "Blve Cabin",
+    tagline: "Lakeside serenity with mountain panoramas",
+    description:
+      "Step off the back deck directly toward the water's edge. Blve Cabin earns its name from the breathtaking blue panoramas visible from nearly every room. The lake reflects the sky at dawn; by night, the deck is made for stargazing. An experience unlike anything else in the Poconos.",
+    location: "Poconos, PA",
+    bedrooms: 4,
+    bathrooms: 2,
+    max_guests: 10,
+    base_price: 300,
+    cleaning_fee: 175,
+    min_nights: 2,
+    amenities: ["Lake Access", "Hot Tub", "WiFi", "Kayaks", "Fireplace", "Full Kitchen", "Free Parking", "Fire Pit"],
+    gradient: "from-sky-950 via-blue-900 to-cyan-950",
+    accentColor: "#4a90b8",
+    badge: "Waterfront",
+    rating: 4.9,
+    review_count: 53,
+    reviews: [
+      { author: "Elena R.", quote: "Woke up to mist on the lake every morning. Words can't describe the peace of this place.", rating: 5 },
+      { author: "David C.", quote: "The kayaks were a bonus we didn't expect. Kids absolutely loved it. Five stars without question.", rating: 5 },
+    ],
+  },
+  {
+    slug: "scenic-getaway",
+    name: "Scenic Getaway",
+    tagline: "Elevated views, elevated living",
+    description:
+      "Perched at an elevation that commands sweeping mountain vistas, Scenic Getaway delivers on its name with panoramic views from both the interior and the expansive wraparound deck. Watch fog roll through the valleys at sunrise and the ridgeline glow amber at sunset.",
+    location: "Poconos, PA",
+    bedrooms: 4,
+    bathrooms: 2,
+    max_guests: 10,
+    base_price: 325,
+    cleaning_fee: 175,
+    min_nights: 2,
+    amenities: ["Panoramic Views", "Hot Tub", "WiFi", "Fireplace", "Full Kitchen", "Free Parking", "Deck", "Smart TV"],
+    gradient: "from-emerald-950 via-teal-900 to-green-950",
+    accentColor: "#4a7c5f",
+    badge: "Best Views",
+    rating: 4.9,
+    review_count: 41,
+    reviews: [
+      { author: "Tanya B.", quote: "The view from the hot tub at sunset should be illegal. Honestly the most beautiful place I've ever stayed.", rating: 5 },
+    ],
+  },
+  {
+    slug: "arctic-getaway",
+    name: "Arctic Getaway",
+    tagline: "Winter wonderland with year-round appeal",
+    description:
+      "Designed to embrace the cold. Thick timber walls, radiant floor heating, a stone fireplace you can feel from across the room, and a private hot tub that steams through snowfall — Arctic Getaway turns winter weekends into something extraordinary. Just as magical in summer with its lush forest backdrop.",
+    location: "Poconos, PA",
+    bedrooms: 3,
+    bathrooms: 2,
+    max_guests: 8,
+    base_price: 250,
+    cleaning_fee: 150,
+    min_nights: 2,
+    amenities: ["Hot Tub", "Radiant Heating", "WiFi", "Stone Fireplace", "Full Kitchen", "Free Parking", "Smart TV"],
+    gradient: "from-slate-800 via-blue-950 to-indigo-950",
+    accentColor: "#7090b0",
+    badge: undefined,
+    rating: 4.7,
+    review_count: 22,
+    reviews: [
+      { author: "Rebecca H.", quote: "We visited in January and it was absolutely magical. The hot tub in the snow is an experience I'll never forget.", rating: 5 },
+    ],
+  },
+  {
+    slug: "pocono-villa",
+    name: "Pocono Villa",
+    tagline: "The crown jewel — 6BR estate for grand gatherings",
+    description:
+      "The most expansive property in the Forteca portfolio. Pocono Villa is an architectural statement: soaring cathedral ceilings, a commercial-grade kitchen, a private theater room, multiple living areas, and grounds that host weddings, reunions, and milestone celebrations. If you need to impress, this is where you do it.",
+    location: "Poconos, PA",
+    bedrooms: 6,
+    bathrooms: 4,
+    max_guests: 16,
+    base_price: 550,
+    cleaning_fee: 250,
+    min_nights: 3,
+    amenities: ["Hot Tub", "Private Theater", "Commercial Kitchen", "WiFi", "Multiple Fireplaces", "Game Room", "Free Parking", "Event Space", "Fire Pit", "BBQ Grill"],
+    gradient: "from-emerald-950 via-green-900 to-teal-950",
+    accentColor: "#c9a84c",
+    badge: "Estate",
+    rating: 4.9,
+    review_count: 61,
+    reviews: [
+      { author: "The Johnson Family", quote: "Hosted 14 family members for Thanksgiving. The space was perfect — everyone had room, the kitchen handled everything, and the memories will last forever.", rating: 5 },
+      { author: "Nicole P.", quote: "Rented for a bachelorette weekend. It exceeded every expectation. The theater room sealed the deal.", rating: 5 },
+    ],
+  },
+  {
+    slug: "mountain-lake-getaway",
+    name: "Mountain Lake Getaway",
+    tagline: "Where the mountain meets the water",
+    description:
+      "A rare combination of lakefront access and mountain elevation. The property's position lets you swim, kayak, and paddleboard in the morning, then hike mountain trails in the afternoon. The expansive deck is the social heart of the property — perfect for meals, sunsets, and long summer evenings.",
+    location: "Poconos, PA",
+    bedrooms: 4,
+    bathrooms: 2,
+    max_guests: 10,
+    base_price: 350,
+    cleaning_fee: 175,
+    min_nights: 2,
+    amenities: ["Lake Access", "Kayaks", "Paddleboards", "Hot Tub", "WiFi", "Fireplace", "Full Kitchen", "Free Parking"],
+    gradient: "from-cyan-950 via-teal-900 to-blue-950",
+    accentColor: "#3a8a9e",
+    badge: "Waterfront",
+    rating: 4.8,
+    review_count: 35,
+    reviews: [
+      { author: "Chris M.", quote: "Morning kayak, afternoon hike, evening hot tub. The perfect loop. We did it four days straight.", rating: 5 },
+    ],
+  },
+  {
+    slug: "mountain-oasis",
+    name: "Mountain Oasis",
+    tagline: "Peaceful sanctuary for mindful escapes",
+    description:
+      "Some places slow time. Mountain Oasis is one of them. Designed with intention — natural materials, curated furnishings, and an outdoor living space that encourages lingering. The meditation garden and yoga deck have become guest favorites. Come to disconnect, breathe, and restore.",
+    location: "Poconos, PA",
+    bedrooms: 4,
+    bathrooms: 3,
+    max_guests: 12,
+    base_price: 375,
+    cleaning_fee: 200,
+    min_nights: 2,
+    amenities: ["Hot Tub", "Yoga Deck", "Meditation Garden", "WiFi", "Sauna", "Full Kitchen", "Free Parking", "Fireplace"],
+    gradient: "from-green-950 via-emerald-900 to-teal-950",
+    accentColor: "#5a8a6a",
+    badge: undefined,
+    rating: 4.9,
+    review_count: 44,
+    reviews: [
+      { author: "Aisha T.", quote: "The most restorative weekend I've had in years. The sauna and yoga deck are incredible additions.", rating: 5 },
+    ],
+  },
+  {
+    slug: "happy-trails",
+    name: "Happy Trails",
+    tagline: "Adventure basecamp for the whole family",
+    description:
+      "The Poconos' best trails start practically at the front door. Happy Trails is outfitted with an equipment room for bikes, kayaks, and gear; a mudroom that handles the post-adventure mess; and a warm, open kitchen for refueling. Kid-friendly, dog-friendly, adventure-first.",
+    location: "Poconos, PA",
+    bedrooms: 4,
+    bathrooms: 2,
+    max_guests: 10,
+    base_price: 300,
+    cleaning_fee: 175,
+    min_nights: 2,
+    amenities: ["Trails Access", "Equipment Room", "Hot Tub", "WiFi", "Fireplace", "Dog Friendly", "Full Kitchen", "Fire Pit"],
+    gradient: "from-amber-950 via-orange-900 to-yellow-950",
+    accentColor: "#b87a30",
+    badge: "Pet Friendly",
+    rating: 4.8,
+    review_count: 38,
+    reviews: [
+      { author: "The Patels", quote: "Came with kids and two dogs — everyone was happy. The trails out back kept us busy all weekend.", rating: 5 },
+    ],
+  },
+  {
+    slug: "rampersad-poconos-home",
+    name: "Rampersad Poconos Home",
+    tagline: "Spacious, warm, and made for big families",
+    description:
+      "Five generous bedrooms, three full bathrooms, and a layout designed for togetherness without crowding. The Rampersad Poconos Home feels like a real home — because it is. Comfortable furniture, a fully stocked kitchen, and enough outdoor space to host a proper cookout.",
+    location: "Poconos, PA",
+    bedrooms: 5,
+    bathrooms: 3,
+    max_guests: 12,
+    base_price: 400,
+    cleaning_fee: 200,
+    min_nights: 2,
+    amenities: ["Hot Tub", "WiFi", "Fireplace", "Full Kitchen", "Free Parking", "BBQ Grill", "Game Room", "Smart TV"],
+    gradient: "from-stone-950 via-neutral-900 to-warmGray-800",
+    accentColor: "#9a8070",
+    badge: undefined,
+    rating: 4.7,
+    review_count: 27,
+    reviews: [
+      { author: "Michael B.", quote: "12 of us stayed for a long weekend reunion. Not once did it feel cramped. Fantastic property.", rating: 5 },
+    ],
+  },
+  {
+    slug: "pocono-getaway",
+    name: "Pocono Getaway",
+    tagline: "Classic Pocono charm, modern comfort",
+    description:
+      "The quintessential Pocono cabin experience — log accents, a crackling fireplace, and the smell of pine in the morning air — updated with every modern comfort. Close to ski resorts, water parks, and golf courses. A reliable, beloved property that keeps guests coming back season after season.",
+    location: "Poconos, PA",
+    bedrooms: 3,
+    bathrooms: 2,
+    max_guests: 8,
+    base_price: 275,
+    cleaning_fee: 150,
+    min_nights: 2,
+    amenities: ["Hot Tub", "WiFi", "Wood Fireplace", "Full Kitchen", "Free Parking", "Smart TV", "Deck"],
+    gradient: "from-red-950 via-rose-900 to-stone-900",
+    accentColor: "#a05040",
+    badge: undefined,
+    rating: 4.8,
+    review_count: 33,
+    reviews: [
+      { author: "Linda F.", quote: "This is exactly what a Pocono cabin should feel like. Classic, cozy, and perfectly updated. We return every winter.", rating: 5 },
+    ],
+  },
+  {
+    slug: "rustic-heaven",
+    name: "Rustic Heaven",
+    tagline: "Storybook rustic retreat in perfect Pocono form",
+    description:
+      "If the word 'cozy' had an address, it would be Rustic Heaven. Hand-hewn beams, a river-stone fireplace, vintage furnishings that tell a story, and a front porch made for rocking chairs and morning coffee. The kind of place that makes you want to put your phone away and simply be.",
+    location: "Poconos, PA",
+    bedrooms: 4,
+    bathrooms: 2,
+    max_guests: 10,
+    base_price: 325,
+    cleaning_fee: 175,
+    min_nights: 2,
+    amenities: ["Hot Tub", "River-Stone Fireplace", "WiFi", "Front Porch", "Full Kitchen", "Free Parking", "Fire Pit", "Hammock"],
+    gradient: "from-amber-950 via-yellow-900 to-orange-950",
+    accentColor: "#c87a40",
+    badge: undefined,
+    rating: 4.9,
+    review_count: 49,
+    reviews: [
+      { author: "Tom & Lisa G.", quote: "We wanted rustic charm with modern comforts and got exactly that. The river-stone fireplace alone is worth the trip.", rating: 5 },
+      { author: "Monique D.", quote: "Put my phone away on day one and didn't pick it up until checkout. That says everything.", rating: 5 },
+    ],
+  },
+];
+
+export const featuredProperties = properties.filter((p) =>
+  ["blvck-cabin-i", "blve-cabin", "pocono-villa", "scenic-getaway"].includes(p.slug)
+);
+
+export function getProperty(slug: string): MockProperty | undefined {
+  return properties.find((p) => p.slug === slug);
+}
