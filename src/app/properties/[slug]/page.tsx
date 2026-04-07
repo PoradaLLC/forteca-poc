@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Star,
@@ -59,12 +60,23 @@ export default async function PropertyDetailPage({ params }: Props) {
 
       {/* Hero image */}
       <div className="relative h-[55vh] overflow-hidden">
-        <div
-          className={cn(
-            "absolute inset-0 bg-gradient-to-br",
-            property.gradient
-          )}
-        />
+        {property.heroImage ? (
+          <Image
+            src={property.heroImage}
+            alt={property.name}
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+        ) : (
+          <div
+            className={cn(
+              "absolute inset-0 bg-gradient-to-br",
+              property.gradient
+            )}
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-forteca-navy/80 via-forteca-navy/10 to-transparent" />
 
         {/* Property name overlay */}
@@ -91,6 +103,27 @@ export default async function PropertyDetailPage({ params }: Props) {
           </div>
         </div>
       </div>
+
+      {/* Photo gallery */}
+      {property.images && property.images.length > 1 && (
+        <section className="bg-forteca-cream-dark px-4 py-6">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {property.images.slice(1, 11).map((img) => (
+                <div key={img.src} className="group relative aspect-[4/3] overflow-hidden rounded-xl">
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Main content */}
       <section className="bg-forteca-cream px-4 py-12">

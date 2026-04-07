@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Star, Users, BedDouble, Bath, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -32,12 +33,22 @@ export function PropertyCard({
           isFeature ? "h-72" : "h-56"
         )}
       >
-        <div
-          className={cn(
-            "absolute inset-0 bg-gradient-to-br transition-transform duration-500",
-            property.gradient
-          )}
-        />
+        {property.heroImage ? (
+          <Image
+            src={property.heroImage}
+            alt={property.name}
+            fill
+            className="object-cover transition-transform duration-500"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          />
+        ) : (
+          <div
+            className={cn(
+              "absolute inset-0 bg-gradient-to-br transition-transform duration-500",
+              property.gradient
+            )}
+          />
+        )}
         {/* Atmospheric overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-forteca-navy/60 via-transparent to-transparent" />
 

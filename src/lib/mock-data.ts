@@ -19,6 +19,10 @@ export interface MockProperty {
   review_count: number;
   reviews: { author: string; quote: string; rating: number }[];
   airbnb_url?: string;
+  /** Real images — array of {src, alt} */
+  images?: { src: string; alt: string }[];
+  /** Hero/cover image path */
+  heroImage?: string;
 }
 
 export const properties: MockProperty[] = [
@@ -44,6 +48,29 @@ export const properties: MockProperty[] = [
     reviews: [
       { author: "Sarah M.", quote: "Absolutely stunning. The hot tub under the stars was pure magic. Already booked our return trip.", rating: 5 },
       { author: "James T.", quote: "Incredibly well-appointed — felt like a boutique hotel in the woods. Spotlessly clean.", rating: 5 },
+    ],
+    heroImage: "/images/properties/blvck-cabin-i/blvck-cabin-1-01-hero-exterior-front.jpg",
+    images: [
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-01-hero-exterior-front.jpg", alt: "Blvck Cabin I exterior front view" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-02-hero-living-room-fireplace.jpg", alt: "Living room with fireplace" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-03-hero-deck-mountain-view.jpg", alt: "Deck with mountain view" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-04-hero-deck-outdoor-seating.jpg", alt: "Deck outdoor seating" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-07-living-room-wide.jpg", alt: "Living room wide angle" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-08-living-area-couch.jpg", alt: "Living area couch" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-09-fireplace-mantle.jpg", alt: "Fireplace mantle detail" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-13-kitchen-wide.jpg", alt: "Kitchen wide view" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-14-kitchen-island.jpg", alt: "Kitchen island" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-17-dining-area.jpg", alt: "Dining area" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-18-bedroom-1.jpg", alt: "Primary bedroom" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-19-bedroom-2.jpg", alt: "Second bedroom" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-20-bedroom-3.jpg", alt: "Third bedroom" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-22-bathroom-1.jpg", alt: "Bathroom" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-25-exterior-front.jpg", alt: "Exterior front" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-26-exterior-night.jpg", alt: "Exterior at night" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-31-deck-wide-view.jpg", alt: "Deck wide view" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-33-deck-sunset.jpg", alt: "Deck at sunset" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-37-hot-tub.jpg", alt: "Private hot tub" },
+      { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-38-fire-pit.jpg", alt: "Fire pit area" },
     ],
   },
   {
