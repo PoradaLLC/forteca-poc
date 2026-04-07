@@ -17,10 +17,25 @@ export async function GET(
 
   const supabase = await createServiceClient();
 
+  // The param could be a slug or a UUID — resolve to UUID
+  let resolvedId = propertyId;
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(propertyId);
+  if (!isUuid) {
+    const { data: prop } = await supabase
+      .from("properties")
+      .select("id")
+      .eq("slug", propertyId)
+      .single();
+    if (!prop) {
+      return NextResponse.json({ blockedDates: [] });
+    }
+    resolvedId = prop.id;
+  }
+
   const { data, error } = await supabase
     .from("availability")
     .select("date, status")
-    .eq("property_id", propertyId)
+    .eq("property_id", resolvedId)
     .in("status", ["booked", "blocked", "maintenance"]);
 
   if (error) {
