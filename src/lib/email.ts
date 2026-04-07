@@ -79,6 +79,45 @@ export async function sendAdminBookingAlert(data: BookingEmailData) {
   });
 }
 
+export async function sendNewsletterWelcome(email: string) {
+  if (!resend) {
+    console.log("[DEV EMAIL] Newsletter welcome →", email);
+    return;
+  }
+  await resend.emails.send({
+    from: `Forteca Estate <${FROM}>`,
+    to: email,
+    subject: "Welcome to the Forteca List",
+    html: `
+      <div style="font-family:Georgia,serif;max-width:600px;margin:0 auto;color:#0d1b2a">
+        <div style="background:#0d1b2a;padding:32px;text-align:center">
+          <h1 style="color:#c9a84c;margin:0;font-size:24px">Forteca Estate</h1>
+          <p style="color:rgba(255,255,255,0.6);margin:8px 0 0;font-size:13px">Pocono Mountains, PA</p>
+        </div>
+        <div style="padding:40px 32px;background:#f5f0e8">
+          <h2 style="font-size:22px;margin:0 0 16px">You're on the list!</h2>
+          <p style="color:#6b7280;line-height:1.7;margin:0 0 24px">
+            Thanks for subscribing. You'll be the first to hear about exclusive deals,
+            new property additions, and Pocono travel tips.
+          </p>
+          <div style="text-align:center;margin:32px 0">
+            <a href="https://fortecaestate.com/properties"
+               style="background:#c9a84c;color:#0d1b2a;padding:14px 32px;text-decoration:none;font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;border-radius:8px;display:inline-block">
+              Browse Properties
+            </a>
+          </div>
+          <p style="font-size:13px;color:#6b7280;margin:0">
+            No spam, ever. Unsubscribe anytime by replying to this email.
+          </p>
+        </div>
+        <div style="background:#0d1b2a;padding:24px;text-align:center">
+          <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0">&copy; Forteca Estate · Pocono Mountains, PA</p>
+        </div>
+      </div>
+    `,
+  });
+}
+
 export async function sendContactNotification(data: {
   name: string;
   email: string;

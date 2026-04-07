@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
+import { sendNewsletterWelcome } from "@/lib/email";
 import { z } from "zod";
 
 const schema = z.object({
@@ -24,8 +25,8 @@ export async function POST(req: NextRequest) {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceKey) {
-    // Dev fallback — just log
     console.log("[newsletter] Subscribed (dev mode):", email);
+    await sendNewsletterWelcome(email);
     return NextResponse.json({ success: true });
   }
 
@@ -48,6 +49,11 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+
+  // Send welcome email (don't block the response if it fails)
+  sendNewsletterWelcome(email).catch((err) =>
+    console.error("[newsletter] Welcome email failed:", err)
+  );
 
   return NextResponse.json({ success: true });
 }
