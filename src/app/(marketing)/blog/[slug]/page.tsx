@@ -4,6 +4,12 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { createServiceClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
+import { BlogImageGallery } from "./BlogImageGallery";
+
+interface BlogImage {
+  url: string;
+  path: string;
+}
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -14,15 +20,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supabase = await createServiceClient();
   const { data: post } = await supabase
     .from("blog_posts")
-    .select("title, excerpt")
+    .select("title, excerpt, images")
     .eq("slug", slug)
     .eq("status", "published")
     .single();
 
   if (!post) return {};
+  const images = (post.images as BlogImage[] | null) ?? [];
   return {
     title: post.title,
     description: post.excerpt ?? undefined,
+    openGraph: images.length > 0 ? { images: [{ url: images[0].url }] } : undefined,
   };
 }
 
@@ -31,14 +39,14 @@ export default async function BlogPostPage({ params }: Props) {
   const supabase = await createServiceClient();
   const { data: post } = await supabase
     .from("blog_posts")
-    .select("id, title, slug, excerpt, content, published_at, created_at")
+    .select("id, title, slug, excerpt, content, published_at, created_at, images")
     .eq("slug", slug)
     .eq("status", "published")
     .single();
 
   if (!post) notFound();
 
-  // Simple markdown-ish rendering: bold, paragraphs, lists
+  const images = (post.images as BlogImage[] | null) ?? [];
   const paragraphs: string[] = post.content.split("\n\n").filter(Boolean);
 
   return (
@@ -66,13 +74,17 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
       </div>
 
+      {/* Image gallery */}
+      {images.length > 0 && (
+        <BlogImageGallery images={images} title={post.title} />
+      )}
+
       {/* Content */}
       <article className="bg-forteca-cream px-4 py-16">
         <div className="mx-auto max-w-3xl">
           <div className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-forteca-navy/5 sm:p-12">
             <div className="prose prose-lg max-w-none">
               {paragraphs.map((p, i) => {
-                // Check if it's a list block
                 if (p.startsWith("- ")) {
                   const items = p.split("\n").filter((l) => l.startsWith("- "));
                   return (
@@ -99,7 +111,6 @@ export default async function BlogPostPage({ params }: Props) {
                   );
                 }
 
-                // Bold headings (lines starting with **)
                 if (p.startsWith("**") && p.endsWith("**")) {
                   return (
                     <h3
@@ -111,7 +122,6 @@ export default async function BlogPostPage({ params }: Props) {
                   );
                 }
 
-                // Section headers like **Title**\nBody
                 if (p.startsWith("**")) {
                   const boldEnd = p.indexOf("**", 2);
                   if (boldEnd > 0) {
@@ -148,7 +158,6 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           </div>
 
-          {/* Back link */}
           <div className="mt-10 text-center">
             <Link
               href="/blog"

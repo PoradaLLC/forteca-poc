@@ -71,6 +71,41 @@ export async function updateBookingStatus(bookingId: string, status: string) {
 
 // ─── BLOG POSTS ───────────────────────────────────────────────────────────────
 
+export interface BlogImage {
+  url: string;
+  path: string;
+}
+
+export async function uploadBlogImage(formData: FormData): Promise<BlogImage> {
+  await requireAdmin();
+  const supabase = await createServiceClient();
+  const file = formData.get("file") as File;
+  if (!file) throw new Error("No file provided");
+
+  const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
+  const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+  const { error } = await supabase.storage
+    .from("blog-images")
+    .upload(path, file, { contentType: file.type });
+  if (error) throw new Error(error.message);
+
+  const { data: urlData } = supabase.storage
+    .from("blog-images")
+    .getPublicUrl(path);
+
+  return { url: urlData.publicUrl, path };
+}
+
+export async function deleteBlogImage(path: string) {
+  await requireAdmin();
+  const supabase = await createServiceClient();
+  const { error } = await supabase.storage
+    .from("blog-images")
+    .remove([path]);
+  if (error) throw new Error(error.message);
+}
+
 export async function createBlogPost(formData: FormData) {
   await requireAdmin();
   const supabase = await createServiceClient();
@@ -80,6 +115,8 @@ export async function createBlogPost(formData: FormData) {
   const excerpt = formData.get("excerpt") as string;
   const content = formData.get("content") as string;
   const status = (formData.get("status") as string) || "draft";
+  const imagesJson = formData.get("images") as string;
+  const images = imagesJson ? JSON.parse(imagesJson) : [];
 
   const { error } = await supabase.from("blog_posts").insert({
     title,
@@ -87,6 +124,7 @@ export async function createBlogPost(formData: FormData) {
     excerpt,
     content,
     status,
+    images,
     published_at: status === "published" ? new Date().toISOString() : null,
   });
 
@@ -104,6 +142,8 @@ export async function updateBlogPost(postId: string, formData: FormData) {
   const excerpt = formData.get("excerpt") as string;
   const content = formData.get("content") as string;
   const status = (formData.get("status") as string) || "draft";
+  const imagesJson = formData.get("images") as string;
+  const images = imagesJson ? JSON.parse(imagesJson) : [];
 
   const updates: Record<string, unknown> = {
     title,
@@ -111,11 +151,11 @@ export async function updateBlogPost(postId: string, formData: FormData) {
     excerpt,
     content,
     status,
+    images,
     updated_at: new Date().toISOString(),
   };
 
   if (status === "published") {
-    // Only set published_at if not already set
     const { data: existing } = await supabase
       .from("blog_posts")
       .select("published_at")
@@ -140,6 +180,19 @@ export async function updateBlogPost(postId: string, formData: FormData) {
 export async function deleteBlogPost(postId: string) {
   await requireAdmin();
   const supabase = await createServiceClient();
+
+  // Delete associated images from storage
+  const { data: post } = await supabase
+    .from("blog_posts")
+    .select("images")
+    .eq("id", postId)
+    .single();
+
+  if (post?.images && Array.isArray(post.images) && post.images.length > 0) {
+    const paths = (post.images as BlogImage[]).map((img) => img.path);
+    await supabase.storage.from("blog-images").remove(paths);
+  }
+
   const { error } = await supabase.from("blog_posts").delete().eq("id", postId);
   if (error) throw new Error(error.message);
   revalidatePath("/admin/blog");
