@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A step-by-step guide for an LLM (or developer) to replicate the Forteca Estate website architecture for a different business. The same tech stack, patterns, and structure — just swap the branding, data, and content.
+A step-by-step guide for an LLM (or developer) to build a production-grade business website. Based on a proven architecture that powers a 44-property vacation rental platform. The same tech stack, patterns, and structure — just swap the branding, data, and content for any business type.
 
 ## Tech Stack Summary
 
@@ -34,14 +34,15 @@ A step-by-step guide for an LLM (or developer) to replicate the Forteca Estate w
 
 When replicating for a new business:
 
-1. **Brand colors** — Change hex values in `globals.css` `:root`
-2. **Fonts** — Swap Google Fonts in `layout.tsx`
-3. **Content** — Homepage copy, about page, services, team photos
-4. **Database schema** — Adjust table columns for your domain (e.g., "properties" might become "products", "listings", "rooms")
-5. **Images** — Replace `public/images/` assets (logo, hero video, team photos, store products)
-6. **External integrations** — Replace Hospitable/DirectStays with your booking system. Replace Stripe with your payment processor.
-7. **SEO** — Update metadata, descriptions, redirects from old site URLs
-8. **Email templates** — Update branding in `email.ts` HTML templates
+1. **Brand colors** — Change hex values in `globals.css` `:root`. Every color in the site derives from these 6-7 tokens.
+2. **Fonts** — Swap Google Fonts in `layout.tsx`. Pick a serif for headings and a sans for body.
+3. **Content** — Homepage copy, about page, services, team photos. All hardcoded in page files.
+4. **Database schema** — Adjust table columns for your domain. "properties" might become "products", "listings", "rooms", "menu_items", etc. The pattern is the same.
+5. **Images** — Replace `public/images/` assets (logo, hero, team photos, store products). Upload listing images to Supabase Storage.
+6. **External integrations** — Replace Hospitable with your booking/scheduling system, or remove it. Stripe works for any payment use case.
+7. **SEO** — Update metadata, descriptions, OG images. Add 301 redirects from old site URLs if migrating.
+8. **Email templates** — Update branding in `email.ts` HTML templates (logo, colors, footer text).
+9. **Admin sidebar** — Add/remove tabs based on what your business manages. The pattern for each admin page is identical: server component fetches data, client component handles actions.
 
 ## Key Architectural Decisions
 

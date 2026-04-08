@@ -8,13 +8,13 @@ Define your brand colors as CSS custom properties in `src/app/globals.css`. This
 @import "tailwindcss";
 
 :root {
-  --brand-primary:       #0d1b2a;  /* Dark/navy — headers, admin bg */
-  --brand-primary-light: #1b2e45;  /* Hover state for primary */
-  --brand-accent:        #c9a84c;  /* Gold/accent — CTAs, highlights */
-  --brand-accent-light:  #e0c47a;  /* Hover state for accent */
-  --brand-bg:            #f5f0e8;  /* Page background — cream/off-white */
-  --brand-bg-alt:        #ede7da;  /* Alternate section background */
-  --brand-text:          #6b7280;  /* Secondary text color */
+  --brand-primary:       #______;  /* Dark color — headers, admin bg */
+  --brand-primary-light: #______;  /* Hover state for primary */
+  --brand-accent:        #______;  /* Accent — CTAs, highlights */
+  --brand-accent-light:  #______;  /* Hover state for accent */
+  --brand-bg:            #______;  /* Page background */
+  --brand-bg-alt:        #______;  /* Alternate section background */
+  --brand-text:          #6b7280;  /* Secondary text color (gray works universally) */
   --background:          var(--brand-bg);
   --foreground:          var(--brand-primary);
 }
@@ -44,7 +44,7 @@ Load two Google Fonts in the root layout — one serif for headings, one sans fo
 
 ```tsx
 // src/app/layout.tsx
-import { Playfair_Display, DM_Sans } from "next/font/google";
+import { Your_Serif_Font, Your_Sans_Font } from "next/font/google";
 
 const serif = Playfair_Display({
   subsets: ["latin"],
