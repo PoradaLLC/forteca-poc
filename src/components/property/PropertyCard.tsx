@@ -80,13 +80,17 @@ export function PropertyCard({
         )}
 
         {/* Rating */}
-        <div className="absolute bottom-4 right-4 z-10 flex items-center gap-1 rounded-full bg-black/40 px-2.5 py-1 backdrop-blur-sm">
-          <Star className="h-3 w-3 fill-forteca-gold text-forteca-gold" />
-          <span className="text-xs font-semibold text-white">
-            {property.rating}
-          </span>
-          <span className="text-xs text-white/60">({property.review_count})</span>
-        </div>
+        {property.rating != null && property.rating > 0 && (
+          <div className="absolute bottom-4 right-4 z-10 flex items-center gap-1 rounded-full bg-black/40 px-2.5 py-1 backdrop-blur-sm">
+            <Star className="h-3 w-3 fill-forteca-gold text-forteca-gold" />
+            <span className="text-xs font-semibold text-white">
+              {property.rating}
+            </span>
+            {property.review_count != null && property.review_count > 0 && (
+              <span className="text-xs text-white/60">({property.review_count})</span>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Content */}
