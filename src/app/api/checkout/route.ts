@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
   const { items } = parsed.data;
 
   // Build line items from our product catalog (don't trust client prices)
-  const lineItems: { price_data: { currency: string; product_data: { name: string; description?: string; images: string[] }; unit_amount: number }; quantity: number }[] = [];
+  const lineItems = [];
   for (const item of items) {
     const product = getProduct(item.slug);
     if (!product) {
@@ -52,11 +52,8 @@ export async function POST(req: NextRequest) {
         product_data: {
           name: product.name,
           description: item.size !== "One Size" ? `Size: ${item.size}` : undefined,
-          images: [
-            `${req.nextUrl.origin}${product.images[0].src}`,
-          ],
         },
-        unit_amount: Math.round(product.price * 100), // cents
+        unit_amount: Math.round(product.price * 100),
       },
       quantity: item.quantity,
     });
@@ -64,16 +61,13 @@ export async function POST(req: NextRequest) {
 
   const stripe = new Stripe(secretKey);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Stripe types lag behind API; ui_mode: "embedded" is valid
   const session = await stripe.checkout.sessions.create({
-    mode: "payment",
+    ui_mode: "embedded",
+    redirect_on_completion: "never",
     line_items: lineItems,
-    shipping_address_collection: {
-      allowed_countries: ["US"],
-    },
-    billing_address_collection: "required",
-    success_url: `${req.nextUrl.origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${req.nextUrl.origin}/cart`,
-  });
+    mode: "payment",
+  } as any);
 
-  return NextResponse.json({ url: session.url });
+  return NextResponse.json({ clientSecret: session.client_secret });
 }
