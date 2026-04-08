@@ -15,6 +15,7 @@ const sourceStyles: Record<string, string> = {
   airbnb: "bg-pink-500/10 text-pink-400",
   vrbo: "bg-indigo-500/10 text-indigo-400",
   google: "bg-green-500/10 text-green-400",
+  hospitable: "bg-purple-500/10 text-purple-400",
 };
 
 export default async function AdminReviewsPage() {

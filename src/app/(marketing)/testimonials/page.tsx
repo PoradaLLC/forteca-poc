@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Star, ArrowRight, Quote } from "lucide-react";
+import { createServiceClient } from "@/lib/supabase/server";
 import { properties } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
@@ -9,65 +10,70 @@ export const metadata: Metadata = {
     "Read what guests say about their Forteca Estate experience — real reviews from real stays in the Pocono Mountains.",
 };
 
-// Collect all reviews from properties + add standalone ones
-const propertyReviews = properties.flatMap((p) =>
-  p.reviews.map((r) => ({
-    ...r,
-    property: p.name,
-    propertySlug: p.slug,
-  }))
-);
+interface ReviewRow {
+  id: string;
+  guest_name: string;
+  rating: number;
+  content: string | null;
+  source: string;
+  is_featured: boolean;
+  created_at: string;
+  properties: { name: string; slug: string }[] | null;
+}
 
-const standaloneReviews = [
-  {
-    author: "Sarah & Marcus T.",
-    quote:
-      "We've stayed at three Forteca properties now — every one has been immaculate, thoughtfully stocked, and exactly as described. They've ruined other rentals for us.",
-    rating: 5,
-    property: "Blvck Cabin I · Blve Cabin · Scenic Getaway",
-    propertySlug: null,
-  },
-  {
-    author: "The Johnson Family",
-    quote:
-      "Pocono Villa was the most impressive rental I've ever seen. 14 family members, zero complaints, memories we'll talk about for decades.",
-    rating: 5,
-    property: "Pocono Villa",
-    propertySlug: "pocono-villa",
-  },
-  {
-    author: "Monique D.",
-    quote:
-      "Booked Rustic Heaven for a long weekend and ended up extending two extra nights. The kind of place that makes you forget what day it is.",
-    rating: 5,
-    property: "Rustic Heaven",
-    propertySlug: "perfect-pocono",
-  },
-  {
-    author: "David K.",
-    quote:
-      "The hot tub overlooking the trees at sunset is something I think about at least once a week. Already planning trip number four.",
-    rating: 5,
-    property: "Arctic Getaway",
-    propertySlug: "arctic-getaway",
-  },
-  {
-    author: "Lisa & Tom R.",
-    quote:
-      "We compared Forteca's direct price to Airbnb and saved over $200. Plus the communication was faster and more personal. Won't book through a platform again.",
-    rating: 5,
-    property: "Mountain Oasis",
-    propertySlug: "mountain-oasis",
-  },
-];
+const sourceLabel: Record<string, string> = {
+  airbnb: "Airbnb",
+  vrbo: "VRBO",
+  google: "Google",
+  hospitable: "Hospitable",
+  direct: "Direct",
+};
 
-const allReviews = [...standaloneReviews, ...propertyReviews];
+async function getReviews() {
+  try {
+    const supabase = await createServiceClient();
+    const { data, error } = await supabase
+      .from("reviews")
+      .select(`
+        id, guest_name, rating, content, source, is_featured, created_at,
+        properties ( name, slug )
+      `)
+      .eq("is_approved", true)
+      .order("is_featured", { ascending: false })
+      .order("created_at", { ascending: false })
+      .limit(50);
 
-// Calculate aggregate
-const avgRating =
-  allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length;
+    if (error || !data || data.length === 0) return null;
+    return data as ReviewRow[];
+  } catch {
+    return null;
+  }
+}
 
-export default function TestimonialsPage() {
+export default async function TestimonialsPage() {
+  const dbReviews = await getReviews();
+
+  // Fall back to mock data if Supabase has no reviews yet
+  const mockReviews = [
+    ...properties.flatMap((p) =>
+      p.reviews.map((r) => ({
+        id: `${p.slug}-${r.author}`,
+        guest_name: r.author,
+        rating: r.rating,
+        content: r.quote,
+        source: "direct",
+        is_featured: false,
+        created_at: new Date().toISOString(),
+        properties: [{ name: p.name, slug: p.slug }],
+      }))
+    ),
+  ];
+
+  const reviews: ReviewRow[] = dbReviews ?? mockReviews;
+
+  const avgRating =
+    reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+
   return (
     <>
       {/* Hero */}
@@ -83,7 +89,6 @@ export default function TestimonialsPage() {
             Real reviews from real stays. Nothing edited, nothing filtered.
           </p>
 
-          {/* Aggregate stats */}
           <div className="mx-auto mt-8 flex max-w-md items-center justify-center gap-8">
             <div className="text-center">
               <div className="flex items-center justify-center gap-1">
@@ -97,7 +102,7 @@ export default function TestimonialsPage() {
             <div className="h-8 w-px bg-white/10" />
             <div className="text-center">
               <span className="font-serif text-3xl font-bold text-white">
-                {allReviews.length}
+                {reviews.length}
               </span>
               <p className="mt-1 text-xs text-white/40">Reviews</p>
             </div>
@@ -116,12 +121,19 @@ export default function TestimonialsPage() {
       <section className="bg-forteca-cream px-4 py-16">
         <div className="mx-auto max-w-6xl">
           <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
-            {allReviews.map((review, i) => (
+            {reviews.map((review) => (
               <div
-                key={`${review.author}-${i}`}
+                key={review.id}
                 className="mb-6 break-inside-avoid rounded-2xl bg-white p-6 shadow-sm ring-1 ring-forteca-navy/5"
               >
-                <Quote className="mb-3 h-6 w-6 text-forteca-gold/30" />
+                <div className="mb-3 flex items-start justify-between gap-2">
+                  <Quote className="h-6 w-6 shrink-0 text-forteca-gold/30" />
+                  {review.source !== "direct" && (
+                    <span className="rounded-full bg-forteca-navy/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-forteca-slate">
+                      {sourceLabel[review.source] ?? review.source}
+                    </span>
+                  )}
+                </div>
 
                 <div className="mb-3 flex gap-0.5">
                   {Array.from({ length: review.rating }).map((_, j) => (
@@ -133,23 +145,23 @@ export default function TestimonialsPage() {
                 </div>
 
                 <blockquote className="font-serif text-base italic leading-relaxed text-forteca-navy/80">
-                  &ldquo;{review.quote}&rdquo;
+                  &ldquo;{review.content}&rdquo;
                 </blockquote>
 
                 <div className="mt-5 border-t border-forteca-navy/5 pt-4">
                   <p className="text-sm font-bold text-forteca-navy">
-                    {review.author}
+                    {review.guest_name}
                   </p>
-                  {review.propertySlug ? (
+                  {review.properties?.[0] ? (
                     <Link
-                      href={`/properties/${review.propertySlug}`}
+                      href={`/properties/${review.properties[0].slug}`}
                       className="text-xs text-forteca-gold transition-colors hover:text-forteca-gold-light"
                     >
-                      {review.property}
+                      {review.properties[0].name}
                     </Link>
                   ) : (
                     <p className="text-xs text-forteca-slate">
-                      {review.property}
+                      Forteca Estate
                     </p>
                   )}
                 </div>

@@ -94,7 +94,7 @@ export interface BookingWithDetails extends Booking {
 
 // ─── Reviews ─────────────────────────────────────────────────────────────────
 
-export type ReviewSource = "direct" | "airbnb" | "vrbo" | "google";
+export type ReviewSource = "direct" | "airbnb" | "vrbo" | "google" | "hospitable";
 
 export interface Review {
   id: string;

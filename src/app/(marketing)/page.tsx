@@ -99,20 +99,6 @@ export default async function HomePage() {
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-forteca-gold/30 to-transparent" />
         </div>
 
-        {/* Mountain silhouette */}
-        <svg
-          className="pointer-events-none absolute bottom-0 left-0 right-0 w-full opacity-10"
-          viewBox="0 0 1440 220"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M0,220 L0,140 L120,80 L240,120 L360,50 L480,100 L600,30 L720,90 L840,20 L960,80 L1080,40 L1200,100 L1320,60 L1440,110 L1440,220 Z"
-            fill="currentColor"
-            className="text-forteca-gold"
-          />
-        </svg>
-
         {/* Content */}
         <div className="relative z-10 mx-auto max-w-4xl">
           <p className="animate-fade-in mb-5 inline-flex items-center gap-2 rounded-full border border-forteca-gold/30 bg-forteca-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-forteca-gold">
@@ -164,12 +150,6 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="flex h-8 w-5 items-start justify-center rounded-full border-2 border-white/20 p-1">
-            <div className="h-1.5 w-1 rounded-full bg-forteca-gold/60" />
-          </div>
-        </div>
       </section>
 
       {/* ── STATS STRIP ──────────────────────────────────────────────────── */}
