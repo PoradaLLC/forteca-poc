@@ -104,9 +104,8 @@ export function CartView() {
             </h1>
           </div>
         </section>
-        <section className="bg-forteca-cream px-4 py-12">
-          <div className="mx-auto max-w-5xl">
-            <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5">
+        <section className="bg-white px-4 py-8">
+          <div className="mx-auto max-w-6xl">
               <EmbeddedCheckoutProvider
                 stripe={stripePromise}
                 options={{
@@ -114,9 +113,8 @@ export function CartView() {
                   onComplete: handleComplete,
                 }}
               >
-                <EmbeddedCheckout />
+                <EmbeddedCheckout className="min-h-[500px]" />
               </EmbeddedCheckoutProvider>
-            </div>
           </div>
         </section>
       </>
