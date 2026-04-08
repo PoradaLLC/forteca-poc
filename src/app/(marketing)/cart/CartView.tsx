@@ -90,7 +90,7 @@ export function CartView() {
     return (
       <>
         <section className="grain bg-forteca-navy px-4 pb-12 pt-14">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-5xl">
             <button
               type="button"
               onClick={() => setCheckoutOpen(false)}
@@ -105,7 +105,7 @@ export function CartView() {
           </div>
         </section>
         <section className="bg-forteca-cream px-4 py-12">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-5xl">
             <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5">
               <EmbeddedCheckoutProvider
                 stripe={stripePromise}
