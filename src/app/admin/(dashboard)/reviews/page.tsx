@@ -27,8 +27,7 @@ export default async function AdminReviewsPage() {
       id, guest_name, rating, content, source, is_featured, is_approved, created_at,
       properties ( name, slug )
     `)
-    .order("created_at", { ascending: false })
-    .limit(100);
+    .order("created_at", { ascending: false });
 
   const pending = (reviews ?? []).filter(
     (r: { is_approved: boolean }) => !r.is_approved

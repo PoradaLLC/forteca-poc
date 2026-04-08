@@ -3,6 +3,7 @@ import { ArrowRight, Star, Home, Key, Hammer, Flame } from "lucide-react";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { getFeaturedProperties } from "@/lib/properties";
+import { createServiceClient } from "@/lib/supabase/server";
 
 const stats = [
   { value: "44", label: "Properties" },
@@ -42,29 +43,33 @@ const services = [
   },
 ];
 
-const testimonials = [
-  {
-    quote:
-      "We've stayed at three Forteca properties now — every one has been immaculate, thoughtfully stocked, and exactly as described. They've ruined other rentals for us.",
-    author: "Sarah & Marcus T.",
-    property: "Blvck Cabin I · Blve Cabin · Scenic Getaway",
-    rating: 5,
-  },
-  {
-    quote:
-      "Pocono Villa was the most impressive rental I've ever seen. 14 family members, zero complaints, memories we'll talk about for decades.",
-    author: "The Johnson Family",
-    property: "Pocono Villa",
-    rating: 5,
-  },
-  {
-    quote:
-      "Booked Rustic Heaven for a long weekend and ended up extending two extra nights. The kind of place that makes you forget what day it is.",
-    author: "Monique D.",
-    property: "Rustic Heaven",
-    rating: 5,
-  },
-];
+async function getHomepageReviews() {
+  try {
+    const supabase = await createServiceClient();
+    const { data } = await supabase
+      .from("reviews")
+      .select("guest_name, rating, content, properties ( name )")
+      .eq("is_approved", true)
+      .order("is_featured", { ascending: false })
+      .order("created_at", { ascending: false })
+      .limit(3);
+    if (data && data.length > 0) {
+      return data.map((r: { guest_name: string; rating: number; content: string | null; properties: { name: string }[] }) => ({
+        quote: r.content ?? "",
+        author: r.guest_name,
+        property: r.properties?.[0]?.name ?? "Forteca Estate",
+        rating: r.rating,
+      }));
+    }
+  } catch {
+    // fallback below
+  }
+  return [
+    { quote: "Every property has been immaculate, thoughtfully stocked, and exactly as described.", author: "Happy Guest", property: "Forteca Estate", rating: 5 },
+    { quote: "The most impressive rental I've ever seen. Memories we'll talk about for decades.", author: "Returning Guest", property: "Forteca Estate", rating: 5 },
+    { quote: "The kind of place that makes you forget what day it is.", author: "Weekend Traveler", property: "Forteca Estate", rating: 5 },
+  ];
+}
 
 const amenityHighlights = [
   "Private Hot Tubs",
@@ -78,7 +83,10 @@ const amenityHighlights = [
 ];
 
 export default async function HomePage() {
-  const featuredProperties = await getFeaturedProperties();
+  const [featuredProperties, testimonials] = await Promise.all([
+    getFeaturedProperties(),
+    getHomepageReviews(),
+  ]);
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
