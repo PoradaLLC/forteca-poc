@@ -47,7 +47,7 @@ export default function AdminHospitablePage() {
           <span className="text-forteca-gold">fortecaestate.directstays.com</span>.
         </p>
         <a
-          href="https://app.hospitable.com"
+          href="https://my.hospitable.com/user/hello?returnUrl=%2Fdashboard"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-xl bg-forteca-gold px-6 py-3 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
@@ -78,7 +78,7 @@ export default function AdminHospitablePage() {
         <h3 className="mb-4 text-sm font-semibold text-white">Quick Links</h3>
         <div className="space-y-2">
           {[
-            { label: "Hospitable Dashboard", url: "https://app.hospitable.com" },
+            { label: "Hospitable Dashboard", url: "https://my.hospitable.com/user/hello?returnUrl=%2Fdashboard" },
             { label: "DirectStays Booking Page", url: "https://fortecaestate.directstays.com" },
           ].map(({ label, url }) => (
             <a

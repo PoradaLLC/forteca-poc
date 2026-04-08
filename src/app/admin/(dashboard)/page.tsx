@@ -92,7 +92,7 @@ export default async function AdminDashboard() {
       {/* Quick links */}
       <div className="grid gap-6 lg:grid-cols-2">
         <a
-          href="https://app.hospitable.com"
+          href="https://my.hospitable.com/user/hello?returnUrl=%2Fdashboard"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-4 rounded-2xl border border-forteca-gold/20 bg-forteca-gold/5 p-6 transition-all hover:border-forteca-gold/30 hover:bg-forteca-gold/10"

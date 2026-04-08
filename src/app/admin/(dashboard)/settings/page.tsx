@@ -27,7 +27,7 @@ export default function AdminSettingsPage() {
               </p>
             </div>
             <a
-              href="https://app.hospitable.com"
+              href="https://my.hospitable.com/user/hello?returnUrl=%2Fdashboard"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 rounded-xl bg-forteca-gold px-4 py-2.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"

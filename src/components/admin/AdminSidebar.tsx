@@ -78,7 +78,7 @@ export function AdminSidebar({ userEmail }: { userEmail: string }) {
       {/* External links */}
       <div className="space-y-1 px-3 pb-2">
         <a
-          href="https://app.hospitable.com"
+          href="https://my.hospitable.com/user/hello?returnUrl=%2Fdashboard"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-3 rounded-lg bg-forteca-gold/10 px-3 py-2.5 text-sm font-medium text-forteca-gold transition-all hover:bg-forteca-gold/20"
