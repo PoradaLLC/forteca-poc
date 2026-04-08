@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Clock, FileText } from "lucide-react";
+import { ArrowRight, FileText } from "lucide-react";
 import { createServiceClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 
