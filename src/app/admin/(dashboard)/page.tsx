@@ -6,6 +6,7 @@ import {
   FileText,
   Star,
   Mail,
+  MessageSquare,
   ArrowRight,
   TrendingUp,
 } from "lucide-react";
@@ -21,12 +22,14 @@ async function getDashboardData() {
     { count: totalSubscribers },
     { count: totalReviews },
     { count: pendingReviews },
+    { count: unreadMessages },
   ] = await Promise.all([
     supabase.from("properties").select("*", { count: "exact", head: true }).eq("status", "active"),
     supabase.from("blog_posts").select("*", { count: "exact", head: true }).eq("status", "published"),
     supabase.from("subscribers").select("*", { count: "exact", head: true }).eq("is_active", true),
     supabase.from("reviews").select("*", { count: "exact", head: true }).eq("is_approved", true),
     supabase.from("reviews").select("*", { count: "exact", head: true }).eq("is_approved", false),
+    supabase.from("contact_submissions").select("*", { count: "exact", head: true }).eq("is_read", false),
   ]);
 
   return {
@@ -35,6 +38,7 @@ async function getDashboardData() {
     totalSubscribers: totalSubscribers ?? 0,
     totalReviews: totalReviews ?? 0,
     pendingReviews: pendingReviews ?? 0,
+    unreadMessages: unreadMessages ?? 0,
   };
 }
 
@@ -75,7 +79,19 @@ export default async function AdminDashboard() {
         ))}
       </div>
 
-      {/* Pending reviews alert */}
+      {/* Alerts */}
+      {data.unreadMessages > 0 && (
+        <Link
+          href="/admin/messages"
+          className="mb-4 flex items-center gap-3 rounded-xl border border-blue-400/30 bg-blue-400/10 px-5 py-3 text-sm text-blue-400 transition-colors hover:bg-blue-400/15"
+        >
+          <MessageSquare className="h-4 w-4" />
+          <span>
+            <strong>{data.unreadMessages}</strong> unread message{data.unreadMessages !== 1 ? "s" : ""}
+          </span>
+          <ArrowRight className="ml-auto h-4 w-4" />
+        </Link>
+      )}
       {data.pendingReviews > 0 && (
         <Link
           href="/admin/reviews"

@@ -290,6 +290,30 @@ export async function sendBroadcastEmail(formData: FormData) {
   return { sent, failed, total: emails.length };
 }
 
+// ─── CONTACT MESSAGES ────────────────────────────────────────────────────────
+
+export async function toggleMessageRead(messageId: string, isRead: boolean) {
+  await requireAdmin();
+  const supabase = await createServiceClient();
+  const { error } = await supabase
+    .from("contact_submissions")
+    .update({ is_read: !isRead })
+    .eq("id", messageId);
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/messages");
+}
+
+export async function deleteMessage(messageId: string) {
+  await requireAdmin();
+  const supabase = await createServiceClient();
+  const { error } = await supabase
+    .from("contact_submissions")
+    .delete()
+    .eq("id", messageId);
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/messages");
+}
+
 // ─── PROPERTIES ───────────────────────────────────────────────────────────────
 
 export async function updatePropertyStatus(propertyId: string, status: string) {

@@ -12,6 +12,7 @@ import {
   ChevronRight,
   ExternalLink,
   Mail,
+  MessageSquare,
   CreditCard,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -22,6 +23,7 @@ const navItems = [
   { href: "/admin/properties", label: "Properties",  icon: Home },
   { href: "/admin/blog",       label: "Blog",        icon: FileText },
   { href: "/admin/newsletter", label: "Newsletter",  icon: Mail },
+  { href: "/admin/messages",   label: "Messages",    icon: MessageSquare },
   { href: "/admin/reviews",    label: "Reviews",     icon: Star },
   { href: "/admin/settings",   label: "Settings",    icon: Settings },
 ];
