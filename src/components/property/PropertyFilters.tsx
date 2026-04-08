@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { MapPin, Navigation, X, Search } from "lucide-react";
+import { MapPin, X, Search } from "lucide-react";
 import { PropertyCard, type PropertyCardData } from "@/components/property/PropertyCard";
 
 // ─── Haversine distance (miles) ──────────────────────────────────────────────
@@ -106,25 +106,6 @@ export function PropertyFilters({
     setSearching(false);
   }, [locationQuery]);
 
-  const handleUseMyLocation = useCallback(() => {
-    if (!navigator.geolocation) return;
-    setSearching(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setUserLocation({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-          label: "My Location",
-        });
-        setLocationQuery("My Location");
-        setSearching(false);
-      },
-      () => {
-        setSearching(false);
-      }
-    );
-  }, []);
-
   const clearLocation = useCallback(() => {
     setUserLocation(null);
     setLocationQuery("");
@@ -206,17 +187,6 @@ export function PropertyFilters({
                 </button>
               </div>
             </div>
-
-            {/* Use my location */}
-            <button
-              type="button"
-              onClick={handleUseMyLocation}
-              disabled={searching}
-              className="flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-2 text-xs font-semibold text-white/60 transition-colors hover:border-white/40 hover:text-white disabled:opacity-40"
-            >
-              <Navigation className="h-3.5 w-3.5" />
-              Use my location
-            </button>
 
             {/* Radius selector — only show when location is set */}
             {userLocation && (
