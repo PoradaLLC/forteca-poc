@@ -5,7 +5,6 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Home,
-  BookOpen,
   Users,
   Star,
   FileText,
@@ -13,6 +12,8 @@ import {
   LogOut,
   ChevronRight,
   ExternalLink,
+  Mail,
+  CreditCard,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -21,7 +22,7 @@ const navItems = [
   { href: "/admin",            label: "Dashboard",   icon: LayoutDashboard, exact: true },
   { href: "/admin/properties", label: "Properties",  icon: Home },
   { href: "/admin/blog",       label: "Blog",        icon: FileText },
-  { href: "/admin/bookings",   label: "Bookings",    icon: BookOpen },
+  { href: "/admin/newsletter", label: "Newsletter",  icon: Mail },
   { href: "/admin/guests",     label: "Guests",      icon: Users },
   { href: "/admin/reviews",    label: "Reviews",     icon: Star },
   { href: "/admin/settings",   label: "Settings",    icon: Settings },
@@ -76,8 +77,8 @@ export function AdminSidebar({ userEmail }: { userEmail: string }) {
         })}
       </nav>
 
-      {/* Hospitable link */}
-      <div className="px-3 pb-2">
+      {/* External links */}
+      <div className="space-y-1 px-3 pb-2">
         <a
           href="https://app.hospitable.com"
           target="_blank"
@@ -85,7 +86,16 @@ export function AdminSidebar({ userEmail }: { userEmail: string }) {
           className="flex items-center gap-3 rounded-lg bg-forteca-gold/10 px-3 py-2.5 text-sm font-medium text-forteca-gold transition-all hover:bg-forteca-gold/20"
         >
           <ExternalLink className="h-4 w-4 flex-shrink-0" />
-          Hospitable Dashboard
+          Hospitable
+        </a>
+        <a
+          href="https://dashboard.stripe.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 rounded-lg bg-blue-500/10 px-3 py-2.5 text-sm font-medium text-blue-400 transition-all hover:bg-blue-500/20"
+        >
+          <CreditCard className="h-4 w-4 flex-shrink-0" />
+          Stripe Dashboard
         </a>
       </div>
 

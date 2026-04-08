@@ -3,68 +3,38 @@ import Link from "next/link";
 import { createServiceClient } from "@/lib/supabase/server";
 import {
   Home,
-  BookOpen,
+  FileText,
   Users,
-  DollarSign,
+  Mail,
   ArrowRight,
   TrendingUp,
-  Clock,
 } from "lucide-react";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
 async function getDashboardData() {
   const supabase = await createServiceClient();
-  const now = new Date().toISOString().split("T")[0];
 
   const [
     { count: totalProperties },
-    { count: totalBookings },
+    { count: totalBlogPosts },
     { count: totalGuests },
+    { count: totalSubscribers },
     { count: pendingReviews },
-    { data: upcomingBookings },
-    { data: recentBookings },
   ] = await Promise.all([
     supabase.from("properties").select("*", { count: "exact", head: true }).eq("status", "active"),
-    supabase.from("bookings").select("*", { count: "exact", head: true }).eq("status", "confirmed"),
+    supabase.from("blog_posts").select("*", { count: "exact", head: true }).eq("status", "published"),
     supabase.from("guests").select("*", { count: "exact", head: true }),
+    supabase.from("subscribers").select("*", { count: "exact", head: true }).eq("is_active", true),
     supabase.from("reviews").select("*", { count: "exact", head: true }).eq("is_approved", false),
-    supabase
-      .from("bookings")
-      .select("id, check_in, check_out, num_guests, total_amount, status, properties(name)")
-      .eq("status", "confirmed")
-      .gte("check_in", now)
-      .order("check_in", { ascending: true })
-      .limit(5),
-    supabase
-      .from("bookings")
-      .select("id, check_in, check_out, total_amount, created_at, guests(first_name, last_name, email), properties(name)")
-      .order("created_at", { ascending: false })
-      .limit(5),
   ]);
-
-  // Revenue this month
-  const startOfMonth = new Date();
-  startOfMonth.setDate(1);
-  const { data: monthRevenue } = await supabase
-    .from("bookings")
-    .select("total_amount")
-    .eq("status", "confirmed")
-    .gte("created_at", startOfMonth.toISOString());
-
-  const revenue = (monthRevenue ?? []).reduce(
-    (sum: number, b: { total_amount: number }) => sum + (b.total_amount ?? 0),
-    0
-  );
 
   return {
     totalProperties: totalProperties ?? 0,
-    totalBookings: totalBookings ?? 0,
+    totalBlogPosts: totalBlogPosts ?? 0,
     totalGuests: totalGuests ?? 0,
+    totalSubscribers: totalSubscribers ?? 0,
     pendingReviews: pendingReviews ?? 0,
-    monthRevenue: revenue,
-    upcomingBookings: upcomingBookings ?? [],
-    recentBookings: recentBookings ?? [],
   };
 }
 
@@ -73,9 +43,9 @@ export default async function AdminDashboard() {
 
   const stats = [
     { label: "Active Properties", value: data.totalProperties, icon: Home, href: "/admin/properties", color: "text-blue-400" },
-    { label: "Confirmed Bookings", value: data.totalBookings, icon: BookOpen, href: "/admin/bookings", color: "text-green-400" },
+    { label: "Published Posts", value: data.totalBlogPosts, icon: FileText, href: "/admin/blog", color: "text-green-400" },
     { label: "Total Guests", value: data.totalGuests, icon: Users, href: "/admin/guests", color: "text-purple-400" },
-    { label: "Revenue This Month", value: `$${data.monthRevenue.toLocaleString()}`, icon: DollarSign, href: "/admin/bookings", color: "text-forteca-gold" },
+    { label: "Subscribers", value: data.totalSubscribers, icon: Mail, href: "/admin/newsletter", color: "text-forteca-gold" },
   ];
 
   return (
@@ -119,91 +89,38 @@ export default async function AdminDashboard() {
         </Link>
       )}
 
+      {/* Quick links */}
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Upcoming bookings */}
-        <div className="rounded-2xl border border-white/5 bg-white/5 p-6">
-          <div className="mb-5 flex items-center justify-between">
-            <h2 className="font-serif text-lg font-bold text-white">Upcoming Check-ins</h2>
-            <Link href="/admin/bookings" className="text-xs text-forteca-gold hover:underline">
-              View all
-            </Link>
+        <a
+          href="https://app.hospitable.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-4 rounded-2xl border border-forteca-gold/20 bg-forteca-gold/5 p-6 transition-all hover:border-forteca-gold/30 hover:bg-forteca-gold/10"
+        >
+          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-forteca-gold/15">
+            <Home className="h-6 w-6 text-forteca-gold" />
           </div>
-          {data.upcomingBookings.length === 0 ? (
-            <p className="text-sm text-white/30">No upcoming bookings.</p>
-          ) : (
-            <div className="space-y-3">
-              {data.upcomingBookings.map((b: {
-                id: string;
-                check_in: string;
-                check_out: string;
-                num_guests: number;
-                total_amount: number;
-                properties: { name: string }[];
-              }) => {
-                const property = b.properties?.[0] ?? null;
-                return (
-                <div key={b.id} className="flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3">
-                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-forteca-gold/10">
-                    <Clock className="h-4 w-4 text-forteca-gold" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="truncate text-sm font-medium text-white">
-                      {property?.name ?? "Unknown property"}
-                    </p>
-                    <p className="text-xs text-white/40">
-                      {b.check_in} → {b.check_out} · {b.num_guests} guests
-                    </p>
-                  </div>
-                  <span className="text-sm font-bold text-forteca-gold">${b.total_amount}</span>
-                </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* Recent bookings */}
-        <div className="rounded-2xl border border-white/5 bg-white/5 p-6">
-          <div className="mb-5 flex items-center justify-between">
-            <h2 className="font-serif text-lg font-bold text-white">Recent Bookings</h2>
-            <Link href="/admin/bookings" className="text-xs text-forteca-gold hover:underline">
-              View all
-            </Link>
+          <div>
+            <p className="font-serif text-lg font-bold text-white">Hospitable Dashboard</p>
+            <p className="text-sm text-white/40">Manage bookings, calendars & guests</p>
           </div>
-          {data.recentBookings.length === 0 ? (
-            <p className="text-sm text-white/30">No bookings yet.</p>
-          ) : (
-            <div className="space-y-3">
-              {data.recentBookings.map((b: {
-                id: string;
-                check_in: string;
-                check_out: string;
-                total_amount: number;
-                guests: { first_name: string; last_name: string; email: string }[];
-                properties: { name: string }[];
-              }) => {
-                const guest = b.guests?.[0] ?? null;
-                const property = b.properties?.[0] ?? null;
-                return (
-                <div key={b.id} className="flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3">
-                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-white/10">
-                    <Users className="h-4 w-4 text-white/60" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="truncate text-sm font-medium text-white">
-                      {guest ? `${guest.first_name} ${guest.last_name}` : "Guest"}
-                    </p>
-                    <p className="truncate text-xs text-white/40">
-                      {property?.name} · {b.check_in}
-                    </p>
-                  </div>
-                  <span className="text-sm font-bold text-white/70">${b.total_amount}</span>
-                </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
+          <ArrowRight className="ml-auto h-5 w-5 text-forteca-gold/50" />
+        </a>
+        <a
+          href="https://dashboard.stripe.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-4 rounded-2xl border border-blue-500/20 bg-blue-500/5 p-6 transition-all hover:border-blue-500/30 hover:bg-blue-500/10"
+        >
+          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-500/15">
+            <Mail className="h-6 w-6 text-blue-400" />
+          </div>
+          <div>
+            <p className="font-serif text-lg font-bold text-white">Stripe Dashboard</p>
+            <p className="text-sm text-white/40">Payments, payouts & financials</p>
+          </div>
+          <ArrowRight className="ml-auto h-5 w-5 text-blue-400/50" />
+        </a>
       </div>
     </div>
   );

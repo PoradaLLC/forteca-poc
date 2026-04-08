@@ -1,16 +1,35 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Clock } from "lucide-react";
-import { blogPosts } from "@/lib/mock-blog";
+import { ArrowRight, Clock, FileText } from "lucide-react";
+import { createServiceClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Travel tips, Pocono guides, and vacation rental insights from Forteca Estate.",
+    "Travel tips, vacation guides, and rental insights from Forteca Estate.",
 };
 
-export default function BlogPage() {
+interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  status: string;
+  published_at: string | null;
+  created_at: string;
+}
+
+export default async function BlogPage() {
+  const supabase = await createServiceClient();
+  const { data: posts } = await supabase
+    .from("blog_posts")
+    .select("id, slug, title, excerpt, status, published_at, created_at")
+    .eq("status", "published")
+    .order("published_at", { ascending: false });
+
+  const blogPosts = (posts ?? []) as BlogPost[];
+
   return (
     <>
       {/* Hero */}
@@ -23,7 +42,7 @@ export default function BlogPage() {
             Stories, Tips & Guides
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-base text-white/50">
-            Everything you need to plan the perfect Pocono getaway — plus
+            Everything you need to plan the perfect getaway — plus
             insights for property owners and investors.
           </p>
         </div>
@@ -32,89 +51,82 @@ export default function BlogPage() {
       {/* Posts */}
       <section className="bg-forteca-cream px-4 py-16">
         <div className="mx-auto max-w-5xl">
-          {/* Featured (first post) */}
-          {blogPosts.length > 0 && (
-            <Link
-              href={`/blog/${blogPosts[0].slug}`}
-              className="group mb-12 block overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5 transition-shadow hover:shadow-md"
-            >
-              <div
-                className={`grain flex h-64 items-end bg-gradient-to-br ${blogPosts[0].coverGradient} p-8`}
-              >
-                <div>
-                  <div className="mb-2 flex gap-2">
-                    {blogPosts[0].tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-semibold text-white"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <h2 className="font-serif text-2xl font-bold text-white sm:text-3xl">
-                    {blogPosts[0].title}
-                  </h2>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-forteca-slate">{blogPosts[0].excerpt}</p>
-                <div className="mt-4 flex items-center justify-between">
-                  <div className="flex items-center gap-4 text-xs text-forteca-slate">
-                    <span>{formatDate(blogPosts[0].publishedAt)}</span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {blogPosts[0].readTime} min read
-                    </span>
-                  </div>
-                  <span className="flex items-center gap-1 text-sm font-semibold text-forteca-gold transition-colors group-hover:text-forteca-gold-light">
-                    Read more <ArrowRight className="h-3.5 w-3.5" />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          )}
-
-          {/* Rest of posts */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {blogPosts.slice(1).map((post) => (
+          {blogPosts.length === 0 ? (
+            <div className="py-20 text-center">
+              <FileText className="mx-auto mb-4 h-12 w-12 text-forteca-navy/20" />
+              <h2 className="font-serif text-2xl font-bold text-forteca-navy">
+                Coming Soon
+              </h2>
+              <p className="mt-2 text-forteca-slate">
+                We&apos;re working on great content. Check back soon!
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* Featured (first post) */}
               <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5 transition-shadow hover:shadow-md"
+                href={`/blog/${blogPosts[0].slug}`}
+                className="group mb-12 block overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5 transition-shadow hover:shadow-md"
               >
-                <div
-                  className={`grain flex h-40 items-end bg-gradient-to-br ${post.coverGradient} p-5`}
-                >
-                  <div className="flex gap-2">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-semibold text-white"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                <div className="grain flex h-64 items-end bg-gradient-to-br from-forteca-navy via-forteca-navy/90 to-forteca-navy/70 p-8">
+                  <div>
+                    <h2 className="font-serif text-2xl font-bold text-white sm:text-3xl">
+                      {blogPosts[0].title}
+                    </h2>
                   </div>
                 </div>
-                <div className="p-5">
-                  <h3 className="font-serif text-lg font-bold text-forteca-navy group-hover:text-forteca-gold transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-forteca-slate line-clamp-2">
-                    {post.excerpt}
-                  </p>
-                  <div className="mt-4 flex items-center gap-4 text-xs text-forteca-slate">
-                    <span>{formatDate(post.publishedAt)}</span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {post.readTime} min
+                <div className="p-6">
+                  {blogPosts[0].excerpt && (
+                    <p className="text-forteca-slate">{blogPosts[0].excerpt}</p>
+                  )}
+                  <div className="mt-4 flex items-center justify-between">
+                    <div className="flex items-center gap-4 text-xs text-forteca-slate">
+                      <span>
+                        {formatDate(
+                          blogPosts[0].published_at ?? blogPosts[0].created_at
+                        )}
+                      </span>
+                    </div>
+                    <span className="flex items-center gap-1 text-sm font-semibold text-forteca-gold transition-colors group-hover:text-forteca-gold-light">
+                      Read more <ArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </div>
                 </div>
               </Link>
-            ))}
-          </div>
+
+              {/* Rest of posts */}
+              {blogPosts.length > 1 && (
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {blogPosts.slice(1).map((post) => (
+                    <Link
+                      key={post.id}
+                      href={`/blog/${post.slug}`}
+                      className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5 transition-shadow hover:shadow-md"
+                    >
+                      <div className="grain flex h-40 items-end bg-gradient-to-br from-forteca-navy via-forteca-navy/80 to-forteca-navy/60 p-5" />
+                      <div className="p-5">
+                        <h3 className="font-serif text-lg font-bold text-forteca-navy transition-colors group-hover:text-forteca-gold">
+                          {post.title}
+                        </h3>
+                        {post.excerpt && (
+                          <p className="mt-2 line-clamp-2 text-sm text-forteca-slate">
+                            {post.excerpt}
+                          </p>
+                        )}
+                        <div className="mt-4 flex items-center gap-4 text-xs text-forteca-slate">
+                          <span>
+                            {formatDate(
+                              post.published_at ?? post.created_at
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
         </div>
       </section>
     </>

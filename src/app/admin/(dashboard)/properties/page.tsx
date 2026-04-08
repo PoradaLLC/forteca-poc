@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { createServiceClient } from "@/lib/supabase/server";
 import { BedDouble, Bath, Users, ExternalLink, Plus } from "lucide-react";
-import { PropertyStatusSelect, DeletePropertyButton } from "@/components/admin/AdminActions";
+import { PropertyStatusSelect } from "@/components/admin/AdminActions";
 
 export const metadata: Metadata = { title: "Properties" };
 
@@ -33,7 +33,7 @@ export default async function AdminPropertiesPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-white/5">
-              {["Property", "Beds / Baths / Guests", "Rate", "Status", "Links", ""].map((h) => (
+              {["Property", "Beds / Baths / Guests", "Rate", "Status", "Links"].map((h) => (
                 <th key={h} className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-widest text-white/30">
                   {h}
                 </th>
@@ -99,9 +99,6 @@ export default async function AdminPropertiesPage() {
                       </a>
                     )}
                   </div>
-                </td>
-                <td className="px-5 py-4">
-                  <DeletePropertyButton propertyId={p.id} propertyName={p.name} />
                 </td>
               </tr>
             ))}

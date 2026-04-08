@@ -1,42 +1,50 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Clock } from "lucide-react";
-import { blogPosts, getBlogPost } from "@/lib/mock-blog";
+import { ArrowLeft } from "lucide-react";
+import { createServiceClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return blogPosts.map((p) => ({ slug: p.slug }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const supabase = await createServiceClient();
+  const { data: post } = await supabase
+    .from("blog_posts")
+    .select("title, excerpt")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .single();
+
   if (!post) return {};
   return {
     title: post.title,
-    description: post.excerpt,
+    description: post.excerpt ?? undefined,
   };
 }
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const supabase = await createServiceClient();
+  const { data: post } = await supabase
+    .from("blog_posts")
+    .select("id, title, slug, excerpt, content, published_at, created_at")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .single();
+
   if (!post) notFound();
 
   // Simple markdown-ish rendering: bold, paragraphs, lists
-  const paragraphs = post.content.split("\n\n").filter(Boolean);
+  const paragraphs: string[] = post.content.split("\n\n").filter(Boolean);
 
   return (
     <>
       {/* Hero */}
-      <div
-        className={`grain bg-gradient-to-br ${post.coverGradient} px-4 pb-16 pt-12`}
-      >
+      <div className="grain bg-gradient-to-br from-forteca-navy via-forteca-navy/90 to-forteca-navy/70 px-4 pb-16 pt-12">
         <div className="mx-auto max-w-3xl">
           <Link
             href="/blog"
@@ -46,30 +54,14 @@ export default async function BlogPostPage({ params }: Props) {
             All Posts
           </Link>
 
-          <div className="mb-4 flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
           <h1 className="font-serif text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
             {post.title}
           </h1>
 
           <div className="mt-6 flex items-center gap-4 text-sm text-white/60">
-            <span>{post.author}</span>
-            <span>·</span>
-            <span>{formatDate(post.publishedAt)}</span>
-            <span>·</span>
-            <span className="flex items-center gap-1">
-              <Clock className="h-3.5 w-3.5" />
-              {post.readTime} min read
-            </span>
+            <span>Forteca Estate</span>
+            <span>&middot;</span>
+            <span>{formatDate(post.published_at ?? post.created_at)}</span>
           </div>
         </div>
       </div>
