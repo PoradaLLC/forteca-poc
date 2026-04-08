@@ -97,6 +97,8 @@ export default async function HomePage() {
           muted
           loop
           playsInline
+          preload="auto"
+          poster="/images/hero-poster.jpg"
           className="pointer-events-none absolute inset-0 h-full w-full object-cover"
         >
           <source src="/images/hero.mp4" type="video/mp4" />
