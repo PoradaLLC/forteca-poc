@@ -19,6 +19,8 @@ export interface PropertyCardData {
   badge?: string;
   rating?: number;
   review_count?: number;
+  latitude?: number | null;
+  longitude?: number | null;
 }
 
 interface PropertyCardProps {
