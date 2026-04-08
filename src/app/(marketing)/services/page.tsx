@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   Home,
   Key,
-  BarChart3,
   Hammer,
   ArrowRight,
   CheckCircle,
@@ -47,22 +46,7 @@ const services = [
       "Monthly owner statements",
     ],
     href: "/services/property-management",
-    image: "/images/brand/01-homepage-hero.jpg",
-  },
-  {
-    icon: BarChart3,
-    title: "Real Estate",
-    tagline: "Buy and sell with local expertise",
-    description:
-      "The Poconos market moves fast. Our team lives, works, and invests here — giving you an insider edge whether you're buying your first cabin or building a portfolio.",
-    highlights: [
-      "Investment property analysis & ROI projections",
-      "Off-market deal sourcing",
-      "Buyer & seller representation",
-      "Post-purchase rental setup available",
-    ],
-    href: "/services/real-estate",
-    image: "/images/brand/03-newsletter-background.jpg",
+    image: "/images/brand/06-pocono-villa-exterior.jpg",
   },
   {
     icon: Hammer,
@@ -77,7 +61,7 @@ const services = [
       "Photography-ready presentation",
     ],
     href: "/services/home-staging",
-    image: "/images/home-staging/01-hero-staged-room.jpg",
+    image: "/images/brand/03-newsletter-background.jpg",
   },
 ];
 
@@ -96,7 +80,7 @@ export default function ServicesPage() {
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/50">
             From weekend getaways to long-term property investment — Forteca
-            Estate is your single trusted partner in the Pocono Mountains. Five
+            Estate is your single trusted partner in the Pocono Mountains. Four
             services, one team, complete confidence.
           </p>
         </div>

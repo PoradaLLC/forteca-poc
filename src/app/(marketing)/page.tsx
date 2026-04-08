@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Star, Home, BarChart3, Key, Hammer } from "lucide-react";
+import { ArrowRight, Star, Home, Key, Hammer, Flame } from "lucide-react";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { getFeaturedProperties } from "@/lib/properties";
@@ -27,18 +27,18 @@ const services = [
     href: "/services/property-management",
   },
   {
-    icon: BarChart3,
-    title: "Real Estate",
-    description:
-      "Buy or sell investment properties in the Poconos with a team who knows the market intimately from the inside.",
-    href: "/services/real-estate",
-  },
-  {
     icon: Hammer,
     title: "Home Staging",
     description:
       "Sell faster and for more. Our staging transforms properties — whether for the market or a premium rental listing.",
     href: "/services/home-staging",
+  },
+  {
+    icon: Flame,
+    title: "Hot Tubs",
+    description:
+      "Custom wood-burning and electric hot tub installations. The #1 amenity that boosts bookings and guest satisfaction.",
+    href: "/services",
   },
 ];
 
@@ -258,7 +258,7 @@ export default async function HomePage() {
               What We Do
             </p>
             <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
-              Full-Service Real Estate & Rentals
+              Full-Service Vacation Rentals
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base text-white/50">
               From weekend getaways to long-term property investment — Forteca

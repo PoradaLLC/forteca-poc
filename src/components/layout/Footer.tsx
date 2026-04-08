@@ -10,8 +10,8 @@ const footerLinks = {
   Services: [
     { href: "/services/vacation-rentals", label: "Vacation Rentals" },
     { href: "/services/property-management", label: "Property Management" },
-    { href: "/services/real-estate", label: "Real Estate" },
     { href: "/services/home-staging", label: "Home Staging" },
+    { href: "/services", label: "Hot Tubs" },
   ],
   Company: [
     { href: "/about", label: "About" },
