@@ -52,23 +52,6 @@ export async function toggleFeaturedReview(reviewId: string, isFeatured: boolean
   revalidatePath("/admin/reviews");
 }
 
-// ─── BOOKINGS ─────────────────────────────────────────────────────────────────
-
-export async function updateBookingStatus(bookingId: string, status: string) {
-  await requireAdmin();
-  const validStatuses = ["pending", "confirmed", "cancelled", "completed"];
-  if (!validStatuses.includes(status)) throw new Error("Invalid status");
-
-  const supabase = await createServiceClient();
-  const { error } = await supabase
-    .from("bookings")
-    .update({ status, updated_at: new Date().toISOString() })
-    .eq("id", bookingId);
-  if (error) throw new Error(error.message);
-  revalidatePath("/admin/bookings");
-  revalidatePath("/admin");
-}
-
 // ─── BLOG POSTS ───────────────────────────────────────────────────────────────
 
 export interface BlogImage {

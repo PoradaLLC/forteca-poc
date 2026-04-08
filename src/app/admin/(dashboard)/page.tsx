@@ -4,7 +4,7 @@ import { createServiceClient } from "@/lib/supabase/server";
 import {
   Home,
   FileText,
-  Users,
+  Star,
   Mail,
   ArrowRight,
   TrendingUp,
@@ -18,22 +18,22 @@ async function getDashboardData() {
   const [
     { count: totalProperties },
     { count: totalBlogPosts },
-    { count: totalGuests },
     { count: totalSubscribers },
+    { count: totalReviews },
     { count: pendingReviews },
   ] = await Promise.all([
     supabase.from("properties").select("*", { count: "exact", head: true }).eq("status", "active"),
     supabase.from("blog_posts").select("*", { count: "exact", head: true }).eq("status", "published"),
-    supabase.from("guests").select("*", { count: "exact", head: true }),
     supabase.from("subscribers").select("*", { count: "exact", head: true }).eq("is_active", true),
+    supabase.from("reviews").select("*", { count: "exact", head: true }).eq("is_approved", true),
     supabase.from("reviews").select("*", { count: "exact", head: true }).eq("is_approved", false),
   ]);
 
   return {
     totalProperties: totalProperties ?? 0,
     totalBlogPosts: totalBlogPosts ?? 0,
-    totalGuests: totalGuests ?? 0,
     totalSubscribers: totalSubscribers ?? 0,
+    totalReviews: totalReviews ?? 0,
     pendingReviews: pendingReviews ?? 0,
   };
 }
@@ -44,7 +44,7 @@ export default async function AdminDashboard() {
   const stats = [
     { label: "Active Properties", value: data.totalProperties, icon: Home, href: "/admin/properties", color: "text-blue-400" },
     { label: "Published Posts", value: data.totalBlogPosts, icon: FileText, href: "/admin/blog", color: "text-green-400" },
-    { label: "Total Guests", value: data.totalGuests, icon: Users, href: "/admin/guests", color: "text-purple-400" },
+    { label: "Reviews", value: data.totalReviews, icon: Star, href: "/admin/reviews", color: "text-purple-400" },
     { label: "Subscribers", value: data.totalSubscribers, icon: Mail, href: "/admin/newsletter", color: "text-forteca-gold" },
   ];
 
