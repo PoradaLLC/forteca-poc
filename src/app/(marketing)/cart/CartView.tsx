@@ -1,12 +1,50 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft, Lock } from "lucide-react";
+import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft, CreditCard, Loader2 } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 
 export function CartView() {
   const { items, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleCheckout() {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((i) => ({
+            slug: i.slug,
+            name: i.name,
+            size: i.size,
+            quantity: i.quantity,
+          })),
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error ?? "Something went wrong");
+        return;
+      }
+
+      if (data.url) {
+        clearCart();
+        window.location.href = data.url;
+      }
+    } catch {
+      setError("Failed to create checkout session. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -141,17 +179,33 @@ export function CartView() {
                   Shipping and taxes calculated at checkout.
                 </p>
 
-                {/* Checkout placeholder */}
+                {error && (
+                  <p className="mt-3 rounded-lg bg-red-500/10 px-4 py-2.5 text-sm text-red-600">
+                    {error}
+                  </p>
+                )}
+
+                {/* Checkout button */}
                 <button
                   type="button"
-                  disabled
-                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-forteca-navy/30 py-4 text-sm font-bold uppercase tracking-widest text-white/50"
+                  onClick={handleCheckout}
+                  disabled={loading}
+                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-forteca-gold py-4 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light disabled:opacity-60"
                 >
-                  <Lock className="h-4 w-4" />
-                  Checkout Coming Soon
+                  {loading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Redirecting to Stripe...
+                    </>
+                  ) : (
+                    <>
+                      <CreditCard className="h-4 w-4" />
+                      Checkout — ${totalPrice.toFixed(2)}
+                    </>
+                  )}
                 </button>
                 <p className="mt-2 text-center text-xs text-forteca-slate">
-                  Stripe checkout will be connected soon.
+                  Secure checkout powered by Stripe
                 </p>
 
                 {/* Clear cart */}
