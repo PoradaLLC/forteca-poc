@@ -10,6 +10,7 @@ import {
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
 import { useCart } from "@/lib/cart-context";
+import { startCheckoutSession } from "./actions";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -22,22 +23,11 @@ export function CartView() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchClientSecret = useCallback(async () => {
-    const res = await fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        items: items.map((i) => ({
-          slug: i.slug,
-          name: i.name,
-          size: i.size,
-          quantity: i.quantity,
-        })),
-      }),
-    });
-
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error ?? "Checkout failed");
-    return data.clientSecret;
+    const secret = await startCheckoutSession(
+      items.map((i) => ({ slug: i.slug, size: i.size, quantity: i.quantity }))
+    );
+    if (!secret) throw new Error("Failed to create checkout session");
+    return secret;
   }, [items]);
 
   function handleCheckout() {
