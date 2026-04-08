@@ -2,7 +2,7 @@
 
 import { useTransition, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Save, Eye, ArrowLeft, Upload, X, ImageIcon, GripVertical } from "lucide-react";
+import { Save, Eye, ArrowLeft, Upload, X, GripVertical } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import {

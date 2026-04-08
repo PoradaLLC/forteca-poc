@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft, CreditCard, Loader2, CheckCircle, ArrowRight } from "lucide-react";
+import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft, CreditCard, CheckCircle, ArrowRight } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   EmbeddedCheckoutProvider,

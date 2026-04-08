@@ -61,13 +61,15 @@ export async function POST(req: NextRequest) {
 
   const stripe = new Stripe(secretKey);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Stripe types lag behind API; ui_mode: "embedded" is valid
-  const session = await stripe.checkout.sessions.create({
-    ui_mode: "embedded",
-    redirect_on_completion: "never",
-    line_items: lineItems,
-    mode: "payment",
-  } as any);
+  const session = await stripe.checkout.sessions.create(
+    // @ts-expect-error — Stripe types don't include ui_mode: "embedded" yet but the API supports it
+    {
+      ui_mode: "embedded",
+      redirect_on_completion: "never",
+      line_items: lineItems,
+      mode: "payment",
+    }
+  );
 
   return NextResponse.json({ clientSecret: session.client_secret });
 }
