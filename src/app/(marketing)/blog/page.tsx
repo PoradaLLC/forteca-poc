@@ -80,8 +80,14 @@ export default async function BlogPage() {
                 href={`/blog/${blogPosts[0].slug}`}
                 className="group mb-12 block overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5 transition-shadow hover:shadow-md"
               >
-                <div className="relative flex h-64 items-end overflow-hidden p-8">
-                  {getThumbnail(blogPosts[0]) ? (
+                <div
+                  className={`relative flex h-64 items-end overflow-hidden p-8 ${
+                    !getThumbnail(blogPosts[0])
+                      ? "grain bg-gradient-to-br from-forteca-navy via-forteca-navy/90 to-forteca-navy/70"
+                      : ""
+                  }`}
+                >
+                  {getThumbnail(blogPosts[0]) && (
                     <>
                       <Image
                         src={getThumbnail(blogPosts[0])!}
@@ -92,8 +98,6 @@ export default async function BlogPage() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-forteca-navy/80 via-forteca-navy/30 to-transparent" />
                     </>
-                  ) : (
-                    <div className="absolute inset-0 grain bg-gradient-to-br from-forteca-navy via-forteca-navy/90 to-forteca-navy/70" />
                   )}
                   <div className="relative z-10">
                     <h2 className="font-serif text-2xl font-bold text-white sm:text-3xl">
@@ -131,8 +135,14 @@ export default async function BlogPage() {
                         href={`/blog/${post.slug}`}
                         className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5 transition-shadow hover:shadow-md"
                       >
-                        <div className="relative h-40 overflow-hidden">
-                          {thumb ? (
+                        <div
+                          className={`relative h-40 overflow-hidden ${
+                            !thumb
+                              ? "grain bg-gradient-to-br from-forteca-navy via-forteca-navy/80 to-forteca-navy/60"
+                              : ""
+                          }`}
+                        >
+                          {thumb && (
                             <>
                               <Image
                                 src={thumb}
@@ -143,8 +153,6 @@ export default async function BlogPage() {
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-forteca-navy/40 to-transparent" />
                             </>
-                          ) : (
-                            <div className="absolute inset-0 grain bg-gradient-to-br from-forteca-navy via-forteca-navy/80 to-forteca-navy/60" />
                           )}
                         </div>
                         <div className="p-5">
