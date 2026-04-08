@@ -251,6 +251,13 @@ export default async function PropertyDetailPage({ params }: Props) {
                 <span className="text-sm text-white/50">/ night</span>
               </div>
 
+              {/*
+                TODO: Replace this button with embedded Hospitable booking
+                widget (iframe) once widget codes are available. This will
+                allow guests to select dates and book without leaving the site.
+                The widget handles payments, calendar sync, and availability.
+              */}
+
               {/* Book Direct — best rate */}
               <a
                 href={bookingUrl}
