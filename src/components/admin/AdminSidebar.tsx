@@ -5,7 +5,6 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Home,
-  Users,
   Star,
   FileText,
   Settings,
@@ -23,7 +22,6 @@ const navItems = [
   { href: "/admin/properties", label: "Properties",  icon: Home },
   { href: "/admin/blog",       label: "Blog",        icon: FileText },
   { href: "/admin/newsletter", label: "Newsletter",  icon: Mail },
-  { href: "/admin/guests",     label: "Guests",      icon: Users },
   { href: "/admin/reviews",    label: "Reviews",     icon: Star },
   { href: "/admin/settings",   label: "Settings",    icon: Settings },
 ];
