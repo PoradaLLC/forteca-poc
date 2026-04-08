@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Menu, ShoppingCart } from "lucide-react";
 import { MobileNav } from "./MobileNav";
+import { useCart } from "@/lib/cart-context";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -19,6 +21,9 @@ const navLinks = [
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const { totalItems } = useCart();
+  const isStorePage = pathname.startsWith("/store") || pathname.startsWith("/cart");
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-forteca-navy/95 backdrop-blur-sm">
@@ -50,17 +55,51 @@ export function Header() {
           ))}
         </nav>
 
-        {/* CTA + mobile toggle */}
+        {/* CTA / Cart + mobile toggle */}
         <div className="flex items-center gap-3">
-          <Link
-            href="/properties"
-            className={cn(
-              "hidden rounded-md bg-forteca-gold px-4 py-2 text-sm font-semibold text-forteca-navy",
-              "transition-opacity hover:opacity-90 lg:block"
-            )}
-          >
-            Book Now
-          </Link>
+          {isStorePage ? (
+            <Link
+              href="/cart"
+              className={cn(
+                "relative hidden rounded-md bg-forteca-gold px-4 py-2 text-sm font-semibold text-forteca-navy",
+                "transition-opacity hover:opacity-90 lg:flex items-center gap-2"
+              )}
+            >
+              <ShoppingCart className="h-4 w-4" />
+              Cart
+              {totalItems > 0 && (
+                <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-forteca-navy">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+          ) : (
+            <Link
+              href="/properties"
+              className={cn(
+                "hidden rounded-md bg-forteca-gold px-4 py-2 text-sm font-semibold text-forteca-navy",
+                "transition-opacity hover:opacity-90 lg:block"
+              )}
+            >
+              Book Now
+            </Link>
+          )}
+
+          {/* Mobile: always show cart if items exist on store pages */}
+          {isStorePage && (
+            <Link
+              href="/cart"
+              className="relative rounded-md p-2 text-white/80 hover:text-white lg:hidden"
+            >
+              <ShoppingCart className="h-5 w-5" />
+              {totalItems > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-forteca-gold text-[10px] font-bold text-forteca-navy">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+          )}
+
           <button
             type="button"
             aria-label="Open menu"

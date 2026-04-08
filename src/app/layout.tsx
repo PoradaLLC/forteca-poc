@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
+import { CartProvider } from "@/lib/cart-context";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -48,7 +49,7 @@ export default function RootLayout({
       className={`${playfair.variable} ${dmSans.variable} h-full`}
     >
       <body className="flex min-h-full flex-col font-sans">
-        {children}
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

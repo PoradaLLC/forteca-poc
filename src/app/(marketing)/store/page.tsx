@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ShoppingBag, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { storeProducts } from "@/lib/store-data";
 
 export const metadata: Metadata = {
   title: "Store",
   description:
-    "Shop Forteca Estate merchandise — apparel, accessories, and branded goods.",
+    "Shop Forteca Estate merchandise — dad hats, Champion sweatshirts, and branded apparel.",
 };
 
 export default function StorePage() {
@@ -21,30 +22,51 @@ export default function StorePage() {
             The Forteca Store
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base text-white/50">
-            Rep the brand. Apparel, accessories, and gear — coming soon.
+            Rep the brand. Premium apparel with the Forteca Estate logo.
           </p>
         </div>
       </section>
 
-      {/* Coming soon */}
-      <section className="bg-forteca-cream px-4 py-24">
-        <div className="mx-auto max-w-md text-center">
-          <ShoppingBag className="mx-auto mb-6 h-16 w-16 text-forteca-navy/10" />
-          <h2 className="font-serif text-2xl font-bold text-forteca-navy">
-            Coming Soon
-          </h2>
-          <p className="mt-3 text-forteca-slate">
-            We&apos;re putting the finishing touches on our merchandise
-            collection. Sign up for our newsletter to be the first to know when
-            the store launches.
-          </p>
-          <Link
-            href="/properties"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-forteca-navy px-6 py-3 text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-forteca-navy-light"
-          >
-            Browse Getaways
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+      {/* Products */}
+      <section className="bg-forteca-cream px-4 py-16">
+        <div className="mx-auto max-w-5xl">
+          <div className="grid gap-8 sm:grid-cols-2">
+            {storeProducts.map((product) => (
+              <Link
+                key={product.slug}
+                href={`/store/${product.slug}`}
+                className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5 transition-shadow hover:shadow-md"
+              >
+                <div className="relative aspect-square overflow-hidden bg-forteca-cream-dark">
+                  <Image
+                    src={product.images[0].src}
+                    alt={product.images[0].alt}
+                    fill
+                    className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                  />
+                </div>
+                <div className="p-6">
+                  <h2 className="font-serif text-xl font-bold text-forteca-navy transition-colors group-hover:text-forteca-gold">
+                    {product.name}
+                  </h2>
+                  <p className="mt-1 text-sm text-forteca-slate line-clamp-2">
+                    {product.description}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-lg font-bold text-forteca-navy">
+                      ${product.price.toFixed(2)}
+                    </span>
+                    {product.sizes.length > 1 && (
+                      <span className="text-xs text-forteca-slate">
+                        {product.sizes.join(" · ")}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </>
