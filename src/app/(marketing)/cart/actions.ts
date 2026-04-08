@@ -33,8 +33,8 @@ export async function startCheckoutSession(items: CartItem[]) {
   });
 
   const session = await stripe.checkout.sessions.create({
-    ui_mode: "embedded" as "embedded_page",
-    redirect_on_completion: "never" as const,
+    ui_mode: "embedded_page",
+    redirect_on_completion: "never",
     line_items: lineItems,
     mode: "payment",
   });
