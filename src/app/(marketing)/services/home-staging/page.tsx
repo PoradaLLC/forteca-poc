@@ -12,7 +12,7 @@ import {
 export const metadata: Metadata = {
   title: "Home Staging",
   description:
-    "Professional home staging in the Pocono Mountains. Sell faster, rent higher — whether listing on the market or launching as a vacation rental.",
+    "Professional home staging services. Sell faster, rent higher — whether listing on the market or launching as a vacation rental.",
 };
 
 const services = [
@@ -177,7 +177,7 @@ export default function HomeStagingPage() {
           </h2>
           <p className="mx-auto mt-4 max-w-md text-base text-white/50">
             Free walkthrough and staging quote. We work with both sellers and
-            rental owners across the Poconos.
+            rental owners.
           </p>
           <Link
             href="/contact"

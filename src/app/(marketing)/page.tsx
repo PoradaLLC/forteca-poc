@@ -5,9 +5,9 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 import { getFeaturedProperties } from "@/lib/properties";
 
 const stats = [
-  { value: "13", label: "Properties" },
-  { value: "500+", label: "Happy Guests" },
-  { value: "4.9", label: "Avg. Rating" },
+  { value: "44", label: "Properties" },
+  { value: "3", label: "States" },
+  { value: "1000+", label: "Happy Guests" },
   { value: "2019", label: "Est." },
 ];
 
@@ -16,7 +16,7 @@ const services = [
     icon: Home,
     title: "Vacation Rentals",
     description:
-      "Handpicked cabins and villas across the Pocono Mountains. Every property is professionally managed and personally vetted.",
+      "Handpicked cabins and villas across Pennsylvania, New York, and Florida. Every property is professionally managed and personally vetted.",
     href: "/services/vacation-rentals",
   },
   {
@@ -117,14 +117,14 @@ export default async function HomePage() {
         <div className="relative z-10 mx-auto max-w-4xl">
           <p className="animate-fade-in mb-5 inline-flex items-center gap-2 rounded-full border border-forteca-gold/30 bg-forteca-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-forteca-gold">
             <Star className="h-3 w-3 fill-forteca-gold" />
-            Pocono Mountains · Pennsylvania
+            Pennsylvania · New York · Florida
           </p>
 
           <h1 className="animate-fade-up font-serif text-5xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Where the Mountain
+            Your Getaway
             <br />
             <span className="relative">
-              <span className="text-forteca-gold">Becomes Home</span>
+              <span className="text-forteca-gold">Starts Here</span>
               <svg
                 className="absolute -bottom-2 left-0 w-full"
                 viewBox="0 0 400 12"
@@ -143,8 +143,8 @@ export default async function HomePage() {
           </h1>
 
           <p className="animate-fade-up delay-200 mx-auto mt-8 max-w-xl text-lg leading-relaxed text-white/60">
-            13 premium properties in the Pocono Mountains. Hot tubs, fireplaces,
-            lake views — and a team that makes every stay effortless.
+            44 premium vacation rentals across Pennsylvania, New York, and Florida.
+            Hot tubs, fireplaces, lake views — and a team that makes every stay effortless.
           </p>
 
           <div className="animate-fade-up delay-300 mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -152,7 +152,7 @@ export default async function HomePage() {
               href="/properties"
               className="inline-flex items-center gap-2 rounded-full bg-forteca-gold px-8 py-3.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all duration-200 hover:bg-forteca-gold-light hover:shadow-lg hover:shadow-forteca-gold/20"
             >
-              Browse Properties
+              Browse Getaways
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
@@ -206,7 +206,7 @@ export default async function HomePage() {
               href="/properties"
               className="hidden items-center gap-2 text-sm font-semibold text-forteca-navy/70 transition-colors hover:text-forteca-navy sm:flex"
             >
-              View all 13
+              View all
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -222,7 +222,7 @@ export default async function HomePage() {
               href="/properties"
               className="inline-flex items-center gap-2 text-sm font-semibold text-forteca-navy"
             >
-              View all 13 properties
+              View all properties
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -262,7 +262,7 @@ export default async function HomePage() {
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base text-white/50">
               From weekend getaways to long-term property investment — Forteca
-              Estate is your single trusted partner in the Poconos.
+              Estate is your single trusted partner for vacation properties.
             </p>
           </div>
 
@@ -365,15 +365,15 @@ export default async function HomePage() {
             is one click away.
           </h2>
           <p className="mx-auto mt-5 max-w-md text-base text-white/50">
-            Skip the platforms. Book directly with Forteca Estate and get our
-            best rates with personal service from day one.
+            Skip the platforms. Book directly with Forteca Estate for the
+            best rates and personal service from day one.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/properties"
               className="inline-flex items-center gap-2 rounded-full bg-forteca-gold px-8 py-3.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all duration-200 hover:bg-forteca-gold-light"
             >
-              Browse All Properties
+              Browse All Getaways
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link

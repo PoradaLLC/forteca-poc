@@ -6,7 +6,7 @@ import { MapPin } from "lucide-react";
 export const metadata: Metadata = {
   title: "Properties",
   description:
-    "Browse all Forteca Estate vacation rentals in the Pocono Mountains — cabins, villas, and lakefront retreats.",
+    "Browse all Forteca Estate vacation rentals — cabins, villas, and lakefront retreats across PA, NY, and FL.",
 };
 
 export default async function PropertiesPage() {
@@ -20,16 +20,15 @@ export default async function PropertiesPage() {
           <div className="flex items-start gap-3">
             <MapPin className="mt-1 h-5 w-5 flex-shrink-0 text-forteca-gold" />
             <p className="text-sm font-semibold uppercase tracking-widest text-forteca-gold">
-              Pocono Mountains, PA
+              Pennsylvania · New York · Florida
             </p>
           </div>
           <h1 className="mt-3 font-serif text-4xl font-bold text-white sm:text-5xl">
-            All Properties
+            All Getaways
           </h1>
           <p className="mt-3 max-w-xl text-base text-white/50">
-            {properties.length} handpicked retreats — from cozy 3-bedroom
-            cabins to a 6-bedroom estate. Every property is professionally
-            managed and personally vetted.
+            {properties.length} handpicked vacation rentals across three states.
+            Every property is professionally managed and personally vetted.
           </p>
         </div>
       </section>

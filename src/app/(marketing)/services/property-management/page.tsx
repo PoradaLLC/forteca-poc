@@ -14,7 +14,7 @@ import {
 export const metadata: Metadata = {
   title: "Property Management",
   description:
-    "Full-service vacation rental management in the Pocono Mountains. Listings, guests, cleaning, maintenance — we handle everything.",
+    "Full-service vacation rental management. Listings, guests, cleaning, maintenance — we handle everything.",
 };
 
 const features = [
@@ -185,7 +185,7 @@ export default function PropertyManagementPage() {
       <section className="bg-forteca-cream px-4 py-20 text-center">
         <div className="mx-auto max-w-2xl">
           <h2 className="font-serif text-3xl font-bold text-forteca-navy">
-            Have a property in the Poconos?
+            Have a vacation rental property?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-base text-forteca-slate">
             Let&apos;s talk about what it could earn. Free property assessment,

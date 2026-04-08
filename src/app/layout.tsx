@@ -18,16 +18,19 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Forteca Estate — Pocono Vacation Rentals & Property Management",
+    default: "Forteca Estate — Vacation Rentals & Property Management",
     template: "%s | Forteca Estate",
   },
   description:
-    "Premium vacation rentals and property management services in the Pocono Mountains, PA. Book directly and save.",
+    "Premium vacation rentals and property management across Pennsylvania, New York, and Florida. Book directly and save.",
   keywords: [
-    "Poconos vacation rental",
-    "Pocono cabin rental",
-    "Poconos property management",
-    "vacation home rental Pennsylvania",
+    "vacation rental",
+    "cabin rental",
+    "property management",
+    "vacation home Pennsylvania",
+    "vacation rental New York",
+    "vacation rental Florida",
+    "Forteca Estate",
   ],
   openGraph: {
     type: "website",

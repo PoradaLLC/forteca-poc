@@ -14,7 +14,7 @@ import {
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Forteca Estate offers vacation rentals, property management, real estate, home staging, and custom hot tub installations across the Pocono Mountains.",
+    "Forteca Estate offers vacation rentals, property management, home staging, and custom hot tub installations across PA, NY, and FL.",
 };
 
 const services = [
@@ -23,7 +23,7 @@ const services = [
     title: "Vacation Rentals",
     tagline: "Premium stays, zero hassle",
     description:
-      "44 handpicked cabins and villas across the Pocono Mountains. Every property is professionally managed, personally vetted, and equipped with everything guests need for an unforgettable stay.",
+      "44 handpicked cabins and villas across Pennsylvania, New York, and Florida. Every property is professionally managed, personally vetted, and equipped for an unforgettable stay.",
     highlights: [
       "Hot tubs, fireplaces, game rooms & full kitchens",
       "Professionally cleaned between every stay",
@@ -80,7 +80,7 @@ export default function ServicesPage() {
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/50">
             From weekend getaways to long-term property investment — Forteca
-            Estate is your single trusted partner in the Pocono Mountains. Four
+            Estate is your single trusted partner for vacation properties. Four
             services, one team, complete confidence.
           </p>
         </div>
@@ -195,7 +195,7 @@ export default function ServicesPage() {
                 Custom Hot Tub Installations
               </h2>
               <p className="mt-4 leading-relaxed text-white/60">
-                Hot tubs are the #1 most-searched amenity for Pocono vacation
+                Hot tubs are the #1 most-searched amenity for vacation
                 rentals. We offer custom wood-burning and electric hot tub
                 installations for property owners looking to maximize their
                 booking potential and guest satisfaction.

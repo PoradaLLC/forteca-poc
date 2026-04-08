@@ -12,14 +12,14 @@ import {
 export const metadata: Metadata = {
   title: "About",
   description:
-    "The story behind Forteca Estate — who we are, why we do this, and what makes our Pocono properties different.",
+    "The story behind Forteca Estate — who we are, why we do this, and what makes our vacation properties different.",
 };
 
 const stats = [
   { value: "2019", label: "Founded" },
   { value: "44", label: "Properties" },
-  { value: "500+", label: "Stays Hosted" },
-  { value: "4.9★", label: "Avg. Rating" },
+  { value: "1000+", label: "Stays Hosted" },
+  { value: "3", label: "States" },
 ];
 
 const values = [
@@ -43,9 +43,9 @@ const values = [
   },
   {
     icon: Sparkles,
-    title: "The Pocono Difference",
+    title: "The Forteca Difference",
     description:
-      "We're not a platform — we're local operators who know these mountains, these roads, and these communities intimately.",
+      "We're not a platform — we're local operators who know our communities, our neighborhoods, and our guests intimately.",
   },
 ];
 
@@ -59,15 +59,15 @@ export default function AboutPage() {
             Our Story
           </p>
           <h1 className="font-serif text-5xl font-bold leading-tight text-white sm:text-6xl">
-            We Love the Poconos.
+            We Love What We Do.
             <br />
             <span className="text-forteca-gold">That&apos;s Why We&apos;re Here.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60">
             Forteca Estate was built on a simple belief: that a great stay changes
             a trip, and a great trip changes a person. Since 2019, we&apos;ve been
-            building a portfolio of mountain properties that earn that kind of
-            response — every time.
+            building a portfolio of vacation properties across Pennsylvania,
+            New York, and Florida that earn that kind of response — every time.
           </p>
         </div>
       </section>
@@ -101,7 +101,7 @@ export default function AboutPage() {
           </h2>
           <div className="space-y-5 text-base leading-relaxed text-forteca-slate">
             <p>
-              The founders of Forteca Estate spent years booking Pocono
+              The founders of Forteca Estate spent years booking vacation
               getaways for friends and family — and kept running into the same
               problem. Properties that looked beautiful online arrived with
               maintenance issues, unclear check-in instructions, and no one to
@@ -112,7 +112,7 @@ export default function AboutPage() {
               property, they built every system from scratch: the cleaning
               protocols, the guest communication workflows, the property
               inspection checklists. The goal wasn&apos;t to become the biggest
-              operator in the Poconos. It was to become the best one.
+              operator in the vacation rental space. It was to become the best one.
             </p>
             <p>
               Seven years later, the portfolio has grown to 44 properties — each
@@ -166,8 +166,8 @@ export default function AboutPage() {
               Meet the Team
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base text-forteca-slate">
-              A small, dedicated team that lives and works in the Poconos.
-              We know these mountains because we call them home.
+              A small, dedicated team passionate about hospitality.
+              We know our properties because we manage every detail personally.
             </p>
           </div>
 
@@ -196,7 +196,7 @@ export default function AboutPage() {
                 name: "Lukasz Kownacki",
                 role: "Co-Founder & Growth",
                 image: "/images/team/03-lukasz-kownacki-headshot.jpg",
-                bio: "Leads acquisitions, partnerships, and the strategic growth of the Forteca portfolio across the Poconos.",
+                bio: "Leads acquisitions, partnerships, and the strategic growth of the Forteca portfolio across multiple states.",
               },
               {
                 name: "Eryk Rachwal",
@@ -237,8 +237,8 @@ export default function AboutPage() {
             Come see for yourself.
           </h2>
           <p className="mt-4 text-base text-white/50">
-            Browse our full portfolio of Pocono properties and find the one
-            that&apos;s right for your group.
+            Browse our full portfolio of vacation properties and find the
+            one that&apos;s right for your group.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link

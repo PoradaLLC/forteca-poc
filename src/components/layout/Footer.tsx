@@ -42,7 +42,7 @@ export function Footer() {
               Forteca<span className="text-forteca-gold">Estate</span>
             </Link>
             <p className="mt-3 text-sm leading-relaxed">
-              Premium vacation rentals and property management in the Poconos.
+              Premium vacation rentals and property management across PA, NY, and FL.
             </p>
             <div className="mt-4 flex gap-4">
               {socials.map(({ href, label }) => (
@@ -88,7 +88,7 @@ export function Footer() {
               Stay in the loop
             </h3>
             <p className="mt-2 text-sm text-white/50">
-              Get exclusive deals, new property alerts, and Pocono travel tips.
+              Get exclusive deals, new property alerts, and travel tips.
             </p>
             <div className="mt-4">
               <NewsletterForm variant="footer" />

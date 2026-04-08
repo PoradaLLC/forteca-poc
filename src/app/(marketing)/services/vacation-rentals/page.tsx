@@ -15,7 +15,7 @@ import { PropertyCard } from "@/components/property/PropertyCard";
 export const metadata: Metadata = {
   title: "Vacation Rentals",
   description:
-    "13 premium vacation rental properties in the Pocono Mountains. Book direct with Forteca Estate for the best rates.",
+    "44 premium vacation rental properties across PA, NY, and FL. Book direct with Forteca Estate for the best rates.",
 };
 
 const features = [
@@ -35,7 +35,7 @@ const features = [
     icon: Clock,
     title: "24/7 Guest Support",
     description:
-      "Local team, real phone numbers. Issues get resolved in minutes, not days — because we're right here in the Poconos.",
+      "Local team, real phone numbers. Issues get resolved in minutes, not days — because we care about every guest.",
   },
   {
     icon: Sparkles,
@@ -62,9 +62,9 @@ export default async function VacationRentalsPage() {
             Vacation Rentals
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/50">
-            13 premium cabins, villas, and lakefront retreats across the Pocono
-            Mountains. Hot tubs, fireplaces, mountain views — and a team that
-            makes every stay effortless.
+            44 premium cabins, villas, and lakefront retreats across Pennsylvania,
+            New York, and Florida. Hot tubs, fireplaces, views — and a team
+            that makes every stay effortless.
           </p>
           <Link
             href="/properties"

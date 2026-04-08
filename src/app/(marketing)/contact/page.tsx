@@ -24,7 +24,7 @@ const contactDetails = [
   {
     icon: MapPin,
     label: "Area",
-    value: "Pocono Mountains, PA",
+    value: "PA · NY · FL",
     href: undefined,
   },
   {
@@ -111,7 +111,7 @@ export default function ContactPage() {
                 Interested in management services?
               </h3>
               <p className="mt-2 text-sm text-white/50">
-                We manage properties across the Poconos. Let&apos;s talk about
+                We manage properties across multiple states. Let&apos;s talk about
                 how we can maximize your investment.
               </p>
             </div>
