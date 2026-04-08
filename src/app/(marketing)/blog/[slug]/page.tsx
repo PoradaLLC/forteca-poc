@@ -47,7 +47,9 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   const images = (post.images as BlogImage[] | null) ?? [];
-  const paragraphs: string[] = post.content.split("\n\n").filter(Boolean);
+  // Normalize line endings (browsers may send \r\n) then split on blank lines
+  const normalized = post.content.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  const paragraphs: string[] = normalized.split(/\n{2,}/).filter(Boolean);
 
   return (
     <>
