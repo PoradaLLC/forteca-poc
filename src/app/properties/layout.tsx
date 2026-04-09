@@ -5,7 +5,7 @@ export default function PropertiesLayout({ children }: { children: React.ReactNo
   return (
     <>
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pt-16">{children}</main>
       <Footer />
     </>
   );

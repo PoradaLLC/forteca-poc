@@ -90,7 +90,7 @@ export default async function HomePage() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="relative flex min-h-[92vh] flex-col items-center justify-center overflow-hidden bg-forteca-navy px-4 text-center">
+      <section className="relative -mt-16 flex min-h-screen flex-col overflow-hidden bg-forteca-navy">
         {/* Background video */}
         <video
           autoPlay
@@ -103,63 +103,67 @@ export default async function HomePage() {
         >
           <source src="/images/hero.mp4" type="video/mp4" />
         </video>
-        {/* Dark overlay for text readability */}
-        <div className="pointer-events-none absolute inset-0 bg-forteca-navy/60" />
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-forteca-gold/30 to-transparent" />
-        </div>
+        {/* Dark overlay */}
+        <div className="pointer-events-none absolute inset-0 bg-black/50" />
 
-        {/* Content */}
-        <div className="relative z-10 mx-auto max-w-4xl">
-          <p className="animate-fade-in mb-5 inline-flex items-center gap-2 rounded-full border border-forteca-gold/30 bg-forteca-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-forteca-gold">
-            <Star className="h-3 w-3 fill-forteca-gold" />
-            Pennsylvania · New York · Florida
-          </p>
+        {/* Two-panel content */}
+        <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 pt-16">
+          {/* Logo / tagline */}
+          <div className="mb-12 text-center">
+            <h1 className="animate-fade-in font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+              Forteca<span className="text-forteca-gold">Estate</span>
+            </h1>
+            <p className="animate-fade-in delay-100 mt-3 text-sm tracking-widest text-white/50 uppercase">
+              Pennsylvania · New York · Florida
+            </p>
+          </div>
 
-          <h1 className="animate-fade-up font-serif text-5xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Your Getaway
-            <br />
-            <span className="relative">
-              <span className="text-forteca-gold">Starts Here</span>
-              <svg
-                className="absolute -bottom-2 left-0 w-full"
-                viewBox="0 0 400 12"
-                preserveAspectRatio="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M0,8 Q100,2 200,8 Q300,14 400,8"
-                  stroke="#c9a84c"
-                  strokeWidth="2"
-                  fill="none"
-                  strokeOpacity="0.5"
-                />
-              </svg>
-            </span>
-          </h1>
-
-          <p className="animate-fade-up delay-200 mx-auto mt-8 max-w-xl text-lg leading-relaxed text-white/60">
-            44 premium vacation rentals across Pennsylvania, New York, and Florida.
-            Hot tubs, fireplaces, lake views — and a team that makes every stay effortless.
-          </p>
-
-          <div className="animate-fade-up delay-300 mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          {/* Split panels */}
+          <div className="animate-fade-up delay-200 grid w-full max-w-4xl gap-4 sm:grid-cols-2">
+            {/* For Guests */}
             <Link
               href="/properties"
-              className="inline-flex items-center gap-2 rounded-full bg-forteca-gold px-8 py-3.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all duration-200 hover:bg-forteca-gold-light hover:shadow-lg hover:shadow-forteca-gold/20"
+              className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-8 py-16 text-center backdrop-blur-sm transition-all duration-300 hover:border-forteca-gold/40 hover:bg-white/10"
             >
-              Browse Getaways
-              <ArrowRight className="h-4 w-4" />
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-white/20 transition-colors duration-300 group-hover:border-forteca-gold/50 group-hover:bg-forteca-gold/10">
+                <Home className="h-6 w-6 text-white/70 transition-colors group-hover:text-forteca-gold" />
+              </div>
+              <h2 className="font-serif text-2xl font-bold text-white sm:text-3xl">
+                For Guests
+              </h2>
+              <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/50">
+                Browse 44 premium vacation rentals. Hot tubs, lake views, fireplaces — book direct and save.
+              </p>
+              <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-forteca-gold px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-forteca-navy transition-all duration-200 group-hover:bg-forteca-gold-light">
+                Browse Getaways
+                <ArrowRight className="h-3.5 w-3.5" />
+              </span>
             </Link>
+
+            {/* For Owners */}
             <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-3.5 text-sm font-semibold text-white/80 transition-all duration-200 hover:border-white/40 hover:text-white"
+              href="/services/property-management"
+              className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-8 py-16 text-center backdrop-blur-sm transition-all duration-300 hover:border-forteca-gold/40 hover:bg-white/10"
             >
-              Talk to Us
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-white/20 transition-colors duration-300 group-hover:border-forteca-gold/50 group-hover:bg-forteca-gold/10">
+                <Key className="h-6 w-6 text-white/70 transition-colors group-hover:text-forteca-gold" />
+              </div>
+              <h2 className="font-serif text-2xl font-bold text-white sm:text-3xl">
+                For Owners
+              </h2>
+              <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/50">
+                Full-service property management. We handle bookings, guests, maintenance — you collect revenue.
+              </p>
+              <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white/70 transition-all duration-200 group-hover:border-white/40 group-hover:text-white">
+                Learn More
+                <ArrowRight className="h-3.5 w-3.5" />
+              </span>
             </Link>
           </div>
         </div>
 
+        {/* Bottom gold line */}
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-forteca-gold/30 to-transparent" />
       </section>
 
       {/* ── STATS STRIP ──────────────────────────────────────────────────── */}

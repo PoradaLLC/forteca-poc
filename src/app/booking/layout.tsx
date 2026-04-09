@@ -5,7 +5,7 @@ export default function BookingLayout({ children }: { children: React.ReactNode 
   return (
     <>
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pt-16">{children}</main>
       <Footer />
     </>
   );

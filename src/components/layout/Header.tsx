@@ -24,9 +24,17 @@ export function Header() {
   const pathname = usePathname();
   const { totalItems } = useCart();
   const isStorePage = pathname.startsWith("/store") || pathname.startsWith("/cart");
+  const isHome = pathname === "/";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-forteca-navy/95 backdrop-blur-sm">
+    <header
+      className={cn(
+        "fixed top-0 z-50 w-full transition-colors duration-300",
+        isHome
+          ? "border-b border-white/5 bg-black/20 backdrop-blur-md"
+          : "border-b border-white/10 bg-forteca-navy/95 backdrop-blur-sm"
+      )}
+    >
       <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
@@ -85,7 +93,6 @@ export function Header() {
             </Link>
           )}
 
-          {/* Mobile: always show cart if items exist on store pages */}
           {isStorePage && (
             <Link
               href="/cart"
