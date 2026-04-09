@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { MapPin, X, Search } from "lucide-react";
+import { MapPin, X, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { PropertyCard, type PropertyCardData } from "@/components/property/PropertyCard";
 
 // ─── Haversine distance (miles) ──────────────────────────────────────────────
@@ -78,6 +78,7 @@ const typeFilters = [
 ] as const;
 
 const radiusOptions = [10, 25, 50, 100, 250];
+const ITEMS_PER_PAGE = 12;
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
@@ -95,6 +96,7 @@ export function PropertyFilters({
   } | null>(null);
   const [radius, setRadius] = useState(50);
   const [searching, setSearching] = useState(false);
+  const [page, setPage] = useState(1);
 
   const handleSearch = useCallback(async () => {
     if (!locationQuery.trim()) return;
@@ -102,6 +104,7 @@ export function PropertyFilters({
     const result = await geocode(locationQuery.trim());
     if (result) {
       setUserLocation({ ...result, label: locationQuery.trim() });
+      setPage(1);
     }
     setSearching(false);
   }, [locationQuery]);
@@ -109,6 +112,7 @@ export function PropertyFilters({
   const clearLocation = useCallback(() => {
     setUserLocation(null);
     setLocationQuery("");
+    setPage(1);
   }, []);
 
   // Filter + sort
@@ -131,6 +135,12 @@ export function PropertyFilters({
     return result;
   }, [properties, activeType, userLocation, radius]);
 
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  const paginatedItems = filtered.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE
+  );
+
   return (
     <>
       {/* Filters */}
@@ -142,7 +152,7 @@ export function PropertyFilters({
               <button
                 key={filter.label}
                 type="button"
-                onClick={() => setActiveType(i)}
+                onClick={() => { setActiveType(i); setPage(1); }}
                 className={
                   i === activeType
                     ? "rounded-full bg-forteca-gold px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-forteca-navy transition-colors"
@@ -236,9 +246,14 @@ export function PropertyFilters({
                 near {userLocation.label}
               </span>
             )}
+            {totalPages > 1 && (
+              <span className="text-forteca-slate/60">
+                {" "}· Page {page} of {totalPages}
+              </span>
+            )}
           </p>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filtered.map((property) => (
+            {paginatedItems.map((property) => (
               <PropertyCard
                 key={property.slug}
                 property={property}
@@ -246,6 +261,45 @@ export function PropertyFilters({
               />
             ))}
           </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="mt-10 flex items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={() => { setPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                disabled={page === 1}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-forteca-navy/10 text-forteca-navy transition-colors hover:bg-forteca-navy hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-forteca-navy"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold transition-colors ${
+                    p === page
+                      ? "bg-forteca-gold text-forteca-navy"
+                      : "border border-forteca-navy/10 text-forteca-navy hover:bg-forteca-navy hover:text-white"
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
+
+              <button
+                type="button"
+                onClick={() => { setPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                disabled={page === totalPages}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-forteca-navy/10 text-forteca-navy transition-colors hover:bg-forteca-navy hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-forteca-navy"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+
           {filtered.length === 0 && (
             <div className="py-12 text-center">
               <p className="text-forteca-slate">
@@ -253,7 +307,7 @@ export function PropertyFilters({
               </p>
               <button
                 type="button"
-                onClick={() => setRadius(250)}
+                onClick={() => { setRadius(250); setPage(1); }}
                 className="mt-3 text-sm font-semibold text-forteca-gold hover:underline"
               >
                 Expand to 250 miles
