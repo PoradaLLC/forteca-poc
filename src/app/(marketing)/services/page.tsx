@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Home,
   Key,
   Hammer,
   ArrowRight,
@@ -14,25 +13,10 @@ import {
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Forteca Estate offers vacation rentals, property management, home staging, and custom hot tub installations across PA, NY, and FL.",
+    "Forteca Estate offers property management, home staging, and custom hot tub installations across PA, NY, and FL.",
 };
 
 const services = [
-  {
-    icon: Home,
-    title: "Vacation Rentals",
-    tagline: "Premium stays, zero hassle",
-    description:
-      "44 handpicked cabins and villas across Pennsylvania, New York, and Florida. Every property is professionally managed, personally vetted, and equipped for an unforgettable stay.",
-    highlights: [
-      "Hot tubs, fireplaces, game rooms & full kitchens",
-      "Professionally cleaned between every stay",
-      "24/7 guest support",
-      "Book direct for the best rates",
-    ],
-    href: "/services/vacation-rentals",
-    image: "/images/brand/02-homepage-twilight-property.jpg",
-  },
   {
     icon: Key,
     title: "Property Management",
@@ -75,13 +59,13 @@ export default function ServicesPage() {
             What We Do
           </p>
           <h1 className="font-serif text-4xl font-bold text-white sm:text-5xl">
-            Full-Service Real Estate
-            <br />& Vacation Rentals
+            Services for
+            <br />Property Owners
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/50">
-            From weekend getaways to long-term property investment — Forteca
-            Estate is your single trusted partner for vacation properties. Four
-            services, one team, complete confidence.
+            From property management to home staging and custom hot tub
+            installations — Forteca Estate is your single trusted partner.
+            Three services, one team, complete confidence.
           </p>
         </div>
       </section>
