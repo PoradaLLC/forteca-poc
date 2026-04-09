@@ -121,44 +121,44 @@ export default async function HomePage() {
           {/* Split panels */}
           <div className="animate-fade-up delay-200 grid w-full max-w-4xl gap-4 sm:grid-cols-2">
             {/* For Guests */}
-            <Link
-              href="/properties"
-              className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-8 py-16 text-center backdrop-blur-sm transition-all duration-300 hover:border-forteca-gold/40 hover:bg-white/10"
-            >
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-white/20 transition-colors duration-300 group-hover:border-forteca-gold/50 group-hover:bg-forteca-gold/10">
-                <Home className="h-6 w-6 text-white/70 transition-colors group-hover:text-forteca-gold" />
+            <div className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-black/30 px-8 py-16 text-center backdrop-blur-md transition-all duration-500 hover:border-white/20 hover:bg-black/40">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-white/20 transition-all duration-500 group-hover:border-forteca-gold/50 group-hover:bg-forteca-gold/10 group-hover:scale-110">
+                <Home className="h-6 w-6 text-white/70 transition-colors duration-500 group-hover:text-forteca-gold" />
               </div>
-              <h2 className="font-serif text-2xl font-bold text-white sm:text-3xl">
+              <h2 className="font-serif text-2xl font-bold text-white transition-transform duration-500 group-hover:-translate-y-0.5 sm:text-3xl">
                 For Guests
               </h2>
               <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/50">
                 Browse 44 premium vacation rentals. Hot tubs, lake views, fireplaces — book direct and save.
               </p>
-              <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-forteca-gold px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-forteca-navy transition-all duration-200 group-hover:bg-forteca-gold-light">
+              <Link
+                href="/properties"
+                className="mt-6 inline-flex items-center gap-2 rounded-full bg-forteca-gold px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-forteca-navy transition-all duration-200 hover:bg-forteca-gold-light hover:shadow-lg hover:shadow-forteca-gold/20 hover:scale-105"
+              >
                 Browse Getaways
                 <ArrowRight className="h-3.5 w-3.5" />
-              </span>
-            </Link>
+              </Link>
+            </div>
 
             {/* For Owners */}
-            <Link
-              href="/services/property-management"
-              className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-8 py-16 text-center backdrop-blur-sm transition-all duration-300 hover:border-forteca-gold/40 hover:bg-white/10"
-            >
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-white/20 transition-colors duration-300 group-hover:border-forteca-gold/50 group-hover:bg-forteca-gold/10">
-                <Key className="h-6 w-6 text-white/70 transition-colors group-hover:text-forteca-gold" />
+            <div className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-black/30 px-8 py-16 text-center backdrop-blur-md transition-all duration-500 hover:border-white/20 hover:bg-black/40">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-white/20 transition-all duration-500 group-hover:border-forteca-gold/50 group-hover:bg-forteca-gold/10 group-hover:scale-110">
+                <Key className="h-6 w-6 text-white/70 transition-colors duration-500 group-hover:text-forteca-gold" />
               </div>
-              <h2 className="font-serif text-2xl font-bold text-white sm:text-3xl">
+              <h2 className="font-serif text-2xl font-bold text-white transition-transform duration-500 group-hover:-translate-y-0.5 sm:text-3xl">
                 For Owners
               </h2>
               <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/50">
                 Full-service property management. We handle bookings, guests, maintenance — you collect revenue.
               </p>
-              <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white/70 transition-all duration-200 group-hover:border-white/40 group-hover:text-white">
+              <Link
+                href="/services/property-management"
+                className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white/80 transition-all duration-200 hover:border-forteca-gold hover:bg-forteca-gold/10 hover:text-white hover:scale-105"
+              >
                 Learn More
                 <ArrowRight className="h-3.5 w-3.5" />
-              </span>
-            </Link>
+              </Link>
+            </div>
           </div>
         </div>
 
