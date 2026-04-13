@@ -32,6 +32,8 @@ export async function startCheckoutSession(items: CartItem[]) {
     };
   });
 
+  if (!stripe) throw new Error("Stripe is not configured");
+
   const session = await stripe.checkout.sessions.create({
     ui_mode: "embedded_page",
     redirect_on_completion: "never",
