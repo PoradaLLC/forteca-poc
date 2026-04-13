@@ -9,3 +9,14 @@ export const ContactSchema = z.object({
 });
 
 export type ContactInput = z.infer<typeof ContactSchema>;
+
+export const CheckoutSchema = z.object({
+  propertySlug: z.string(),
+  checkIn: z.string(),
+  checkOut: z.string(),
+  numGuests: z.number().positive(),
+  guestName: z.string().min(2),
+  guestEmail: z.string().email(),
+  guestPhone: z.string().optional(),
+  specialRequests: z.string().optional(),
+});
