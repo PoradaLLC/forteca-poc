@@ -27,8 +27,7 @@ export function BookingSidebar({
           <iframe
             src={hospitableWidgetUrl}
             sandbox="allow-top-navigation allow-scripts allow-same-origin allow-forms allow-popups"
-            className="w-full border-0"
-            style={{ height: 900 }}
+            className="mx-auto block h-[480px] w-[320px] border-0"
             title="Book this property"
           />
         ) : (
