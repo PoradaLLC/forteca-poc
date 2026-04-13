@@ -10,10 +10,10 @@ import {
   MapPin,
   Check,
   ArrowLeft,
-  Calendar,
 } from "lucide-react";
 import { getProperty, getPropertySlugs } from "@/lib/properties";
 import { createServiceClient } from "@/lib/supabase/server";
+import { BookingSidebar } from "@/components/booking/BookingSidebar";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -66,8 +66,6 @@ export default async function PropertyDetailPage({ params }: Props) {
   } catch {
     // Supabase not configured — no reviews
   }
-
-  const bookingUrl = `https://fortecaestate.directstays.com/property/${property.slug}`;
 
   return (
     <>
@@ -240,71 +238,15 @@ export default async function PropertyDetailPage({ params }: Props) {
 
           {/* Right: Booking sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-20 rounded-2xl bg-forteca-navy p-6 shadow-xl">
-              <div className="mb-1 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
-                Book Direct · Best Rate
-              </div>
-              <div className="mb-5 flex items-baseline gap-1">
-                <span className="font-serif text-3xl font-bold text-white">
-                  from ${property.base_price}
-                </span>
-                <span className="text-sm text-white/50">/ night</span>
-              </div>
-
-              {/*
-                TODO: Replace this button with embedded Hospitable booking
-                widget (iframe) once widget codes are available. This will
-                allow guests to select dates and book without leaving the site.
-                The widget handles payments, calendar sync, and availability.
-              */}
-
-              {/* Book Direct — best rate */}
-              <a
-                href={bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-forteca-gold py-3.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
-              >
-                <Calendar className="h-4 w-4" />
-                Book Direct
-              </a>
-
-              <div className="gold-rule my-4" />
-
-              <p className="mb-3 text-center text-[10px] font-semibold uppercase tracking-widest text-white/30">
-                Also available on
-              </p>
-
-              {/* Airbnb */}
-              <a
-                href={property.airbnb_url || `https://www.airbnb.com/s/${encodeURIComponent(property.name)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-semibold text-white/70 transition-all hover:border-[#FF5A5F]/40 hover:text-[#FF5A5F]"
-              >
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.7 18.5c-.4.8-1.1 1.4-2 1.4-.6 0-1.1-.2-1.7-.6-.7-.5-1.5-1.3-2.3-2.3-.6.8-1.2 1.5-1.8 2-.8.7-1.5 1-2.2 1s-1.5-.5-2-1.4c-1.7-3.5-3.4-8.6-1-10.2.6-.4 1.3-.6 2-.6 1.6 0 3 1.3 4 2.8.3.4.5.8.7 1.2.2-.4.5-.8.7-1.2 1-1.5 2.4-2.8 4-2.8.7 0 1.4.2 2 .6 2.4 1.6.7 6.7-1 10.1z" />
-                </svg>
-                Book on Airbnb
-              </a>
-
-              {/* VRBO */}
-              <a
-                href={property.vrbo_url || `https://www.vrbo.com/search?query=${encodeURIComponent(property.name)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-semibold text-white/70 transition-all hover:border-[#3B5998]/40 hover:text-[#5B9BD5]"
-              >
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M4.2 2L1 14.4l4.4 7.6h13.2l4.4-7.6L19.8 2H4.2zm7.8 16.2c-3.5 0-6.3-2.8-6.3-6.3S8.5 5.6 12 5.6s6.3 2.8 6.3 6.3-2.8 6.3-6.3 6.3z" />
-                </svg>
-                Book on VRBO
-              </a>
-
-              <p className="mt-4 text-center text-xs text-white/30">
-                Min. {property.min_nights} nights · Free cancellation
-              </p>
-            </div>
+            <BookingSidebar
+              propertyId={property.id}
+              propertySlug={property.slug}
+              basePrice={property.base_price}
+              cleaningFee={property.cleaning_fee}
+              minNights={property.min_nights}
+              airbnbUrl={property.airbnb_url}
+              vrboUrl={property.vrbo_url}
+            />
           </div>
         </div>
       </section>
