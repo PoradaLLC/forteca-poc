@@ -20,6 +20,7 @@ export interface Property {
   status: string;
   airbnb_url: string | null;
   vrbo_url: string | null;
+  hospitable_widget_url: string | null;
   latitude: number | null;
   longitude: number | null;
 }
@@ -43,6 +44,7 @@ function dbToProperty(row: Record<string, unknown>): Property {
     status: (row.status as string) ?? "active",
     airbnb_url: (row.airbnb_url as string) ?? null,
     vrbo_url: (row.vrbo_url as string) ?? null,
+    hospitable_widget_url: (row.hospitable_widget_url as string) ?? null,
     latitude: row.latitude ? Number(row.latitude) : null,
     longitude: row.longitude ? Number(row.longitude) : null,
   };
@@ -67,6 +69,7 @@ function mockToProperty(m: MockProperty): Property {
     status: "active",
     airbnb_url: m.airbnb_url ?? null,
     vrbo_url: null,
+    hospitable_widget_url: m.hospitable_widget_url ?? null,
     latitude: null,
     longitude: null,
   };

@@ -19,6 +19,8 @@ export interface MockProperty {
   review_count: number;
   reviews: { author: string; quote: string; rating: number }[];
   airbnb_url?: string;
+  /** Hospitable booking widget iframe URL */
+  hospitable_widget_url?: string;
   /** Real images — array of {src, alt} */
   images?: { src: string; alt: string }[];
   /** Hero/cover image path */
@@ -49,6 +51,7 @@ export const properties: MockProperty[] = [
       { author: "Sarah M.", quote: "Absolutely stunning. The hot tub under the stars was pure magic. Already booked our return trip.", rating: 5 },
       { author: "James T.", quote: "Incredibly well-appointed — felt like a boutique hotel in the woods. Spotlessly clean.", rating: 5 },
     ],
+    hospitable_widget_url: "https://booking.hospitable.com/widget/a187b055-e979-42cc-8aad-207e7978d254/1718148",
     heroImage: "/images/properties/blvck-cabin-i/blvck-cabin-1-01-hero-exterior-front.jpg",
     images: [
       { src: "/images/properties/blvck-cabin-i/blvck-cabin-1-01-hero-exterior-front.jpg", alt: "Blvck Cabin I exterior front view" },

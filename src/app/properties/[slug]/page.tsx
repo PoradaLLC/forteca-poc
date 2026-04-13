@@ -239,13 +239,12 @@ export default async function PropertyDetailPage({ params }: Props) {
           {/* Right: Booking sidebar */}
           <div className="lg:col-span-1">
             <BookingSidebar
-              propertyId={property.id}
               propertySlug={property.slug}
               basePrice={property.base_price}
-              cleaningFee={property.cleaning_fee}
               minNights={property.min_nights}
               airbnbUrl={property.airbnb_url}
               vrboUrl={property.vrbo_url}
+              hospitableWidgetUrl={property.hospitable_widget_url}
             />
           </div>
         </div>
