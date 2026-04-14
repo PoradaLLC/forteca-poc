@@ -1,5 +1,5 @@
 "use client";
-// test: verify Vercel auto-deploy on push
+
 import { Calendar as CalendarIcon } from "lucide-react";
 
 interface BookingSidebarProps {
