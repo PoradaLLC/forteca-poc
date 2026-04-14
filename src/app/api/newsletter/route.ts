@@ -50,10 +50,12 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Send welcome email (don't block the response if it fails)
-  sendNewsletterWelcome(email).catch((err) =>
-    console.error("[newsletter] Welcome email failed:", err)
-  );
+  // Send welcome email
+  try {
+    await sendNewsletterWelcome(email);
+  } catch (err) {
+    console.error("[newsletter] Welcome email failed:", err);
+  }
 
   return NextResponse.json({ success: true });
 }

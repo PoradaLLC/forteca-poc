@@ -85,6 +85,7 @@ export async function sendNewsletterWelcome(email: string) {
     console.log("[DEV EMAIL] Newsletter welcome →", email);
     return;
   }
+  console.log("[EMAIL] Sending newsletter welcome to:", email);
   const result = await resend.emails.send({
     from: `Forteca Estate <${FROM}>`,
     to: email,
@@ -117,7 +118,10 @@ export async function sendNewsletterWelcome(email: string) {
       </div>
     `,
   });
-  console.log("[EMAIL] Resend response:", JSON.stringify(result));
+  console.log("[EMAIL] Resend response for", email, ":", JSON.stringify(result));
+  if (result.error) {
+    console.error("[EMAIL] Resend error:", result.error);
+  }
 }
 
 export async function sendContactNotification(data: {
@@ -131,7 +135,7 @@ export async function sendContactNotification(data: {
     console.log("[DEV EMAIL] Contact form submission:", data);
     return;
   }
-  await resend.emails.send({
+  const result = await resend.emails.send({
     from: `Forteca Website <${FROM}>`,
     to: ADMIN_EMAIL,
     subject: `Contact Form: ${data.subject} — from ${data.name}`,
@@ -140,4 +144,8 @@ export async function sendContactNotification(data: {
            <strong>Subject:</strong> ${data.subject}</p>
            <p><strong>Message:</strong><br>${data.message.replace(/\n/g, "<br>")}</p>`,
   });
+  console.log("[EMAIL] Contact notification result:", JSON.stringify(result));
+  if (result.error) {
+    console.error("[EMAIL] Contact email error:", result.error);
+  }
 }
