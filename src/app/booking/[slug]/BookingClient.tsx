@@ -304,7 +304,7 @@ export function BookingClient({
                       </label>
                       <input
                         type="tel"
-                        placeholder="+1 (555) 000-0000"
+                        placeholder="(347) 556-0089"
                         {...register("guestPhone")}
                         className="w-full rounded-xl border border-forteca-navy/10 px-4 py-3 text-sm outline-none transition-all focus:border-forteca-gold focus:ring-2 focus:ring-forteca-gold/20"
                       />

@@ -124,7 +124,7 @@ export function ContactForm() {
           </label>
           <input
             type="tel"
-            placeholder="+1 (555) 000-0000"
+            placeholder="(347) 556-0089"
             {...register("phone")}
             className="w-full rounded-xl border border-forteca-navy/10 bg-forteca-cream/50 px-4 py-3 text-sm text-forteca-navy placeholder-forteca-slate/50 outline-none transition-all focus:border-forteca-gold focus:ring-2 focus:ring-forteca-gold/20"
           />

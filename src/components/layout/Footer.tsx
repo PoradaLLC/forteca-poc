@@ -27,9 +27,9 @@ const footerLinks = {
 };
 
 const socials = [
-  { href: "https://facebook.com", label: "Facebook" },
-  { href: "https://instagram.com", label: "Instagram" },
-  { href: "https://youtube.com", label: "YouTube" },
+  { href: "https://www.facebook.com/FortecaEstate/", label: "Facebook" },
+  { href: "https://www.instagram.com/fortecaestate/", label: "Instagram" },
+  { href: "https://www.youtube.com/channel/UC7VRaZDHymQho2eE9v___kQ", label: "YouTube" },
 ];
 
 export function Footer() {
@@ -44,6 +44,12 @@ export function Footer() {
             </Link>
             <p className="mt-3 text-sm leading-relaxed">
               Premium vacation rentals and property management across PA, NY, and FL.
+            </p>
+            <p className="mt-2 text-xs text-white/40">
+              814 Monroe St #205, Stroudsburg, PA 18360
+            </p>
+            <p className="mt-1 text-xs text-white/40">
+              <a href="tel:+13475560089" className="transition-colors hover:text-forteca-gold">(347) 556-0089</a>
             </p>
             <div className="mt-4 flex gap-4">
               {socials.map(({ href, label }) => (

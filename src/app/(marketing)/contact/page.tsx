@@ -18,14 +18,14 @@ const contactDetails = [
   {
     icon: Phone,
     label: "Phone",
-    value: "+1 (570) 555-0100",
-    href: "tel:+15705550100",
+    value: "(347) 556-0089",
+    href: "tel:+13475560089",
   },
   {
     icon: MapPin,
-    label: "Area",
-    value: "PA · NY · FL",
-    href: undefined,
+    label: "Address",
+    value: "814 Monroe St #205, Stroudsburg, PA 18360",
+    href: "https://maps.google.com/?q=814+Monroe+St+%23205+Stroudsburg+PA+18360",
   },
   {
     icon: Clock,

@@ -56,14 +56,30 @@ export default function RootLayout({
         <JsonLd
           data={{
             "@context": "https://schema.org",
-            "@type": "Organization",
+            "@type": ["Organization", "LocalBusiness"],
             name: "Forteca Estate",
             url: "https://fortecaestate.com",
             logo: "https://fortecaestate.com/og-default.png",
             description:
               "Premium vacation rentals and property management across Pennsylvania, New York, and Florida.",
+            telephone: "+1-347-556-0089",
+            email: "fortecaestate@gmail.com",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "814 Monroe St #205",
+              addressLocality: "Stroudsburg",
+              addressRegion: "PA",
+              postalCode: "18360",
+              addressCountry: "US",
+            },
+            sameAs: [
+              "https://www.facebook.com/FortecaEstate/",
+              "https://www.instagram.com/fortecaestate/",
+              "https://www.youtube.com/channel/UC7VRaZDHymQho2eE9v___kQ",
+            ],
             contactPoint: {
               "@type": "ContactPoint",
+              telephone: "+1-347-556-0089",
               email: "fortecaestate@gmail.com",
               contactType: "customer service",
             },
