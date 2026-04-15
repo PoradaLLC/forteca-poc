@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { createServiceClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 import { BlogImageGallery } from "./BlogImageGallery";
+import { JsonLd } from "@/components/JsonLd";
 
 interface BlogImage {
   url: string;
@@ -13,6 +14,19 @@ interface BlogImage {
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateStaticParams() {
+  try {
+    const supabase = await createServiceClient();
+    const { data } = await supabase
+      .from("blog_posts")
+      .select("slug")
+      .eq("status", "published");
+    return (data ?? []).map((post: { slug: string }) => ({ slug: post.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -31,6 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: post.title,
     description: post.excerpt ?? undefined,
     openGraph: images.length > 0 ? { images: [{ url: images[0].url }] } : undefined,
+    alternates: { canonical: `/blog/${slug}` },
   };
 }
 
@@ -53,6 +68,34 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description: post.excerpt ?? undefined,
+          datePublished: post.published_at ?? post.created_at,
+          author: { "@type": "Organization", name: "Forteca Estate" },
+          publisher: {
+            "@type": "Organization",
+            name: "Forteca Estate",
+            url: "https://fortecaestate.com",
+          },
+          image: images.length > 0 ? images[0].url : undefined,
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://fortecaestate.com" },
+            { "@type": "ListItem", position: 2, name: "Blog", item: "https://fortecaestate.com/blog" },
+            { "@type": "ListItem", position: 3, name: post.title },
+          ],
+        }}
+      />
+
       {/* Hero */}
       <div className="grain bg-gradient-to-br from-forteca-navy via-forteca-navy/90 to-forteca-navy/70 px-4 pb-16 pt-12">
         <div className="mx-auto max-w-3xl">

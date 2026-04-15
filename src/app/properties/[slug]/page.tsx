@@ -14,6 +14,7 @@ import {
 import { getProperty, getPropertySlugs } from "@/lib/properties";
 import { createServiceClient } from "@/lib/supabase/server";
 import { BookingSidebar } from "@/components/booking/BookingSidebar";
+import { JsonLd } from "@/components/JsonLd";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -31,6 +32,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: property.name,
     description: property.tagline,
+    openGraph: {
+      title: property.name,
+      description: property.tagline,
+      images: property.images?.[0]?.src
+        ? [{ url: property.images[0].src, width: 1200, height: 630, alt: property.name }]
+        : undefined,
+    },
+    alternates: { canonical: `/properties/${slug}` },
   };
 }
 
@@ -69,6 +78,47 @@ export default async function PropertyDetailPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": ["LodgingBusiness", "VacationRental"],
+          name: property.name,
+          description: property.description,
+          image: heroImage ?? undefined,
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: property.location,
+          },
+          numberOfRooms: property.bedrooms,
+          amenityFeature: property.amenities.map((a) => ({
+            "@type": "LocationFeatureSpecification",
+            name: a,
+            value: true,
+          })),
+          ...(reviewCount > 0
+            ? {
+                aggregateRating: {
+                  "@type": "AggregateRating",
+                  ratingValue: avgRating.toFixed(1),
+                  reviewCount,
+                  bestRating: 5,
+                },
+              }
+            : {}),
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://fortecaestate.com" },
+            { "@type": "ListItem", position: 2, name: "Properties", item: "https://fortecaestate.com/properties" },
+            { "@type": "ListItem", position: 3, name: property.name },
+          ],
+        }}
+      />
+
       {/* Back nav */}
       <div className="bg-forteca-navy px-4 py-3">
         <div className="mx-auto max-w-7xl">
