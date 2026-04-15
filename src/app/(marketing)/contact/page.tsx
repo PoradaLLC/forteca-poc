@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
-import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -64,7 +63,15 @@ export default function ContactPage() {
             <h2 className="mb-6 font-serif text-2xl font-bold text-forteca-navy">
               Send a Message
             </h2>
-            <ContactForm />
+            <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5">
+              <iframe
+                src="https://form.jotform.com/253237415466156"
+                className="w-full border-0"
+                style={{ minHeight: 600 }}
+                title="Contact Form"
+                allow="geolocation; microphone; camera; fullscreen; payment"
+              />
+            </div>
           </div>
 
           {/* Info */}
