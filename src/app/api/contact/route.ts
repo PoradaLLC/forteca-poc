@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
   // Save to Supabase if configured
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const serviceKey = process.env.SUPABASE_SECRET_KEY;
   if (supabaseUrl && serviceKey) {
     const supabase = await createServiceClient();
     await supabase.from("contact_submissions").insert({

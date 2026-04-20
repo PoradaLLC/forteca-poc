@@ -3,7 +3,7 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 
 export default async function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
   // If Supabase is not configured, show a helpful message instead of crashing
   if (!supabaseUrl || !supabaseKey || supabaseUrl.includes("your-project")) {
@@ -13,7 +13,7 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
           <h1 className="font-serif text-2xl font-bold text-white">Supabase Not Configured</h1>
           <p className="mt-3 text-sm text-white/50">
             Set <code className="text-forteca-gold">NEXT_PUBLIC_SUPABASE_URL</code> and{" "}
-            <code className="text-forteca-gold">NEXT_PUBLIC_SUPABASE_ANON_KEY</code> in your{" "}
+            <code className="text-forteca-gold">NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> in your{" "}
             <code className="text-white">.env.local</code> file to enable the admin panel.
           </p>
         </div>

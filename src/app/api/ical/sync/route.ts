@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const serviceKey = process.env.SUPABASE_SECRET_KEY;
   if (!supabaseUrl || !serviceKey) {
     return NextResponse.json({ skipped: "Supabase not configured" });
   }
