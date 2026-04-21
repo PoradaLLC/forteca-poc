@@ -181,6 +181,63 @@ export default function PropertyManagementPage() {
         </div>
       </section>
 
+      {/* Setup Guide teaser */}
+      <section className="bg-forteca-cream-dark px-4 py-20">
+        <div className="mx-auto max-w-5xl">
+          <div className="overflow-hidden rounded-3xl bg-forteca-navy shadow-lg">
+            <div className="grid gap-0 md:grid-cols-5">
+              <div className="p-10 md:col-span-3">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
+                  The Setup Guide
+                </p>
+                <h2 className="font-serif text-3xl font-bold text-white">
+                  Exactly what goes into every property we outfit
+                </h2>
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/60">
+                  The curated list of furnishings and supplies we use across
+                  Pocono Mountain rentals — from bathroom essentials to
+                  smart-home hardware. Tested in the field, updated
+                  continuously.
+                </p>
+                <Link
+                  href="/setup-guide"
+                  className="mt-8 inline-flex items-center gap-2 rounded-full bg-forteca-gold px-8 py-3.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
+                >
+                  Browse the Setup Guide
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-3 gap-px bg-white/10 md:col-span-2 md:grid-cols-1 md:grid-rows-3">
+                <div className="bg-forteca-navy p-6 text-center md:text-left">
+                  <div className="font-serif text-4xl font-bold text-forteca-gold">
+                    314
+                  </div>
+                  <div className="mt-1 text-xs font-medium uppercase tracking-widest text-white/50">
+                    Products
+                  </div>
+                </div>
+                <div className="bg-forteca-navy p-6 text-center md:text-left">
+                  <div className="font-serif text-4xl font-bold text-forteca-gold">
+                    29
+                  </div>
+                  <div className="mt-1 text-xs font-medium uppercase tracking-widest text-white/50">
+                    Categories
+                  </div>
+                </div>
+                <div className="bg-forteca-navy p-6 text-center md:text-left">
+                  <div className="font-serif text-4xl font-bold text-forteca-gold">
+                    60+
+                  </div>
+                  <div className="mt-1 text-xs font-medium uppercase tracking-widest text-white/50">
+                    Properties Tested
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="bg-forteca-cream px-4 py-20 text-center">
         <div className="mx-auto max-w-2xl">
