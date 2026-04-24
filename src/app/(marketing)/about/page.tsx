@@ -172,12 +172,12 @@ export default function AboutPage() {
           </div>
 
           {/* Group photo */}
-          <div className="relative mb-12 aspect-[21/9] overflow-hidden rounded-2xl shadow-xl">
+          <div className="relative mb-12 aspect-[16/10] overflow-hidden rounded-2xl shadow-xl lg:aspect-[21/10]">
             <Image
               src="/images/team/01-team-group-photo.jpg"
               alt="Forteca Estate team"
               fill
-              className="object-cover"
+              className="object-cover object-top"
               sizes="(max-width: 1024px) 100vw, 80vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-forteca-navy/40 to-transparent" />
@@ -206,13 +206,13 @@ export default function AboutPage() {
               },
             ].map((member) => (
               <div key={member.name} className="text-center">
-                <div className="relative mx-auto mb-5 h-48 w-48 overflow-hidden rounded-2xl shadow-lg">
+                <div className="relative mx-auto mb-5 aspect-[4/5] w-full max-w-[220px] overflow-hidden rounded-2xl shadow-lg">
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
-                    className="object-cover"
-                    sizes="192px"
+                    className="object-cover object-top"
+                    sizes="(max-width: 640px) 220px, 192px"
                   />
                 </div>
                 <h3 className="font-serif text-lg font-bold text-forteca-navy">
