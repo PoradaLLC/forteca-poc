@@ -156,77 +156,59 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="bg-forteca-cream px-4 py-20">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-12 text-center">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
-              The People Behind the Properties
-            </p>
-            <h2 className="font-serif text-3xl font-bold text-forteca-navy sm:text-4xl">
-              Meet the Team
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base text-forteca-slate">
-              A small, dedicated team passionate about hospitality.
-              We know our properties because we manage every detail personally.
-            </p>
-          </div>
+      <section className="bg-forteca-cream py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:grid lg:grid-cols-[3fr_2fr] lg:items-stretch lg:gap-6">
 
-          {/* Group photo */}
-          <div className="relative mb-12 aspect-[16/10] overflow-hidden rounded-2xl shadow-xl lg:aspect-[21/10]">
+          {/* Left — full photo, no fixed height, no cropping */}
+          <div className="relative min-h-[420px] overflow-hidden rounded-2xl shadow-xl lg:min-h-[560px]">
             <Image
               src="/images/team/01-team-group-photo.jpg"
               alt="Forteca Estate team"
               fill
               className="object-cover object-top"
-              sizes="(max-width: 1024px) 100vw, 80vw"
+              sizes="(max-width: 1024px) 100vw, 60vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-forteca-navy/40 to-transparent" />
           </div>
 
-          {/* Individual team members */}
-          <div className="grid gap-8 sm:grid-cols-3">
-            {[
-              {
-                name: "Justyna Rzeszuto",
-                role: "Co-Founder & Operations",
-                image: "/images/team/02-justyna-rzeszuto-headshot.jpg",
-                bio: "Oversees property standards, guest experience, and the day-to-day operations that keep every stay seamless.",
-              },
-              {
-                name: "Lukasz Kownacki",
-                role: "Co-Founder & Growth",
-                image: "/images/team/03-lukasz-kownacki-headshot.jpg",
-                bio: "Leads acquisitions, partnerships, and the strategic growth of the Forteca portfolio across multiple states.",
-              },
-              {
-                name: "Eryk Rachwal",
-                role: "Co-Founder & Technology",
-                image: "/images/team/04-eryk-rachwal-headshot.jpg",
-                bio: "Builds the systems and technology that power Forteca — from booking platforms to property management tools.",
-              },
-            ].map((member) => (
-              <div key={member.name} className="text-center">
-                <div className="relative mx-auto mb-5 aspect-[4/5] w-full max-w-[220px] overflow-hidden rounded-2xl shadow-lg">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover object-top"
-                    sizes="(max-width: 640px) 220px, 192px"
-                  />
+          {/* Right — navy info card */}
+          <div className="mt-6 flex flex-col justify-center gap-6 rounded-2xl bg-forteca-navy p-8 lg:mt-0 lg:p-10">
+            <div>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
+                The People Behind the Properties
+              </p>
+              <h2 className="font-serif text-3xl font-bold text-white">
+                Meet the Team
+              </h2>
+              <p className="mt-4 text-base text-white/70">
+                A small, dedicated team passionate about hospitality. We know
+                our properties because we manage every detail personally.
+              </p>
+            </div>
+
+            <div className="h-px bg-gradient-to-r from-forteca-gold/50 to-transparent" />
+
+            <div className="flex flex-col gap-5">
+              {[
+                { name: "Justyna Rzeszuto", role: "Co-Founder & Operations" },
+                { name: "Lukasz Kownacki", role: "Co-Founder & Growth" },
+                { name: "Eryk Rachwal", role: "Co-Founder & Technology" },
+              ].map((member) => (
+                <div key={member.name}>
+                  <p className="font-serif text-lg text-white">{member.name}</p>
+                  <p className="mt-0.5 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
+                    {member.role}
+                  </p>
                 </div>
-                <h3 className="font-serif text-lg font-bold text-forteca-navy">
-                  {member.name}
-                </h3>
-                <p className="mt-0.5 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
-                  {member.role}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-forteca-slate">
-                  {member.bio}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            <div className="h-px bg-gradient-to-r from-forteca-gold/50 to-transparent" />
+
+            <p className="text-xs font-semibold uppercase tracking-widest text-white/40">
+              44+ Properties · Est. 2018 · Pocono PA
+            </p>
           </div>
+
         </div>
       </section>
 

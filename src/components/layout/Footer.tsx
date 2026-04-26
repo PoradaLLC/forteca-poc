@@ -36,7 +36,7 @@ export function Footer() {
   return (
     <footer className="bg-forteca-navy text-white/70">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1">
             <Link href="/" className="text-xl font-bold text-white">
@@ -86,6 +86,46 @@ export function Footer() {
               </ul>
             </div>
           ))}
+
+          {/* Forteca Family */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
+              Forteca Family
+            </h3>
+            <ul className="mt-3 space-y-3">
+              {[
+                {
+                  href: "https://fortecacleaning.com",
+                  label: "Forteca Cleaning",
+                  sub: "Professional Property Cleaning",
+                },
+                {
+                  href: "https://poconopropertycare.com",
+                  label: "Pocono Property Care",
+                  sub: "Property Maintenance & Repair",
+                },
+                {
+                  href: "https://fortecacontracting.com",
+                  label: "Forteca Contracting",
+                  sub: "Renovation & Construction",
+                },
+              ].map(({ href, label, sub }) => (
+                <li key={href}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group text-sm transition-colors hover:text-forteca-gold"
+                  >
+                    {label}
+                    <span className="mt-0.5 block text-xs text-white/40 group-hover:text-forteca-gold/60">
+                      {sub}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Newsletter */}
