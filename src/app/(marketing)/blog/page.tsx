@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, FileText } from "lucide-react";
-import { createServiceClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ interface BlogPost {
 }
 
 export default async function BlogPage() {
-  const supabase = await createServiceClient();
+  const supabase = await createClient();
   const { data: posts } = await supabase
     .from("blog_posts")
     .select("id, slug, title, excerpt, status, published_at, created_at, images")

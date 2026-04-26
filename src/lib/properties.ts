@@ -1,4 +1,4 @@
-import { createServiceClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { properties as mockProperties } from "@/lib/mock-data";
 import type { MockProperty } from "@/lib/mock-data";
 
@@ -77,7 +77,7 @@ function mockToProperty(m: MockProperty): Property {
 
 export async function getProperties(): Promise<Property[]> {
   try {
-    const supabase = await createServiceClient();
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from("properties")
       .select("*")
@@ -96,7 +96,7 @@ export async function getProperties(): Promise<Property[]> {
 
 export async function getProperty(slug: string): Promise<Property | null> {
   try {
-    const supabase = await createServiceClient();
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from("properties")
       .select("*")
@@ -123,7 +123,7 @@ export async function getFeaturedProperties(): Promise<Property[]> {
 
 export async function getPropertySlugs(): Promise<string[]> {
   try {
-    const supabase = await createServiceClient();
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from("properties")
       .select("slug")

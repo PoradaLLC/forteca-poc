@@ -3,7 +3,7 @@ import { ArrowRight, Star, Home, Key, Hammer, Flame } from "lucide-react";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { getFeaturedProperties } from "@/lib/properties";
-import { createServiceClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 
 const stats = [
   { value: "44", label: "Properties" },
@@ -45,7 +45,7 @@ const services = [
 
 async function getHomepageReviews() {
   try {
-    const supabase = await createServiceClient();
+    const supabase = await createClient();
     const { data } = await supabase
       .from("reviews")
       .select("guest_name, rating, content, properties ( name )")

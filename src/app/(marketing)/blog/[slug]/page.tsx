@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { createServiceClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 import { BlogImageGallery } from "./BlogImageGallery";
 import { JsonLd } from "@/components/JsonLd";
@@ -20,7 +20,7 @@ interface Props {
 
 export async function generateStaticParams() {
   try {
-    const supabase = await createServiceClient();
+    const supabase = await createClient();
     const { data } = await supabase
       .from("blog_posts")
       .select("slug")
@@ -33,7 +33,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const supabase = await createServiceClient();
+  const supabase = await createClient();
   const { data: post } = await supabase
     .from("blog_posts")
     .select("title, excerpt, images")
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const supabase = await createServiceClient();
+  const supabase = await createClient();
   const { data: post } = await supabase
     .from("blog_posts")
     .select("id, title, slug, excerpt, content, published_at, created_at, images")

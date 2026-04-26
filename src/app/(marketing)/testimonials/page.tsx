@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Star, ArrowRight, Quote } from "lucide-react";
-import { createServiceClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Testimonials",
@@ -31,7 +31,7 @@ const sourceLabel: Record<string, string> = {
 };
 
 export default async function TestimonialsPage() {
-  const supabase = await createServiceClient();
+  const supabase = await createClient();
 
   const { data } = await supabase
     .from("reviews")
