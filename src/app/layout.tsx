@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
+import Script from "next/script";
 import { CartProvider } from "@/lib/cart-context";
 import { JsonLd } from "@/components/JsonLd";
 import "./globals.css";
+
+const GA_ID = "G-TD58MRLVZ2";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -52,6 +55,18 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${dmSans.variable} h-full`}
     >
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_ID}');
+        `}
+      </Script>
       <body className="flex min-h-full flex-col font-sans">
         <JsonLd
           data={{
