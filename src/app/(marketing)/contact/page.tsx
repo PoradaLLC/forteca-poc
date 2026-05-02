@@ -146,17 +146,15 @@ export default function ContactPage() {
             </div>
 
             {/* Right card */}
-            <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5">
+            <div className="rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5">
               <iframe
                 src="https://api.leadconnectorhq.com/widget/booking/mjafIT5kvPfbIRbwhCtc"
                 style={{
                   width: "100%",
                   border: "none",
-                  overflow: "hidden",
-                  minHeight: "700px",
+                  minHeight: "1050px",
                   display: "block",
                 }}
-                scrolling="no"
                 id="gnxrzHxJv22boLn6r2mq_1777741914490"
                 title="Book a Call"
               />
