@@ -91,74 +91,73 @@ export default function ContactPage() {
 
       <div className="gold-rule" />
 
-      {/* ── OPT-IN FORM ──────────────────────────────────────────────────── */}
+      {/* ── FORM + CALENDAR ──────────────────────────────────────────────── */}
       <section className="bg-forteca-cream px-4 py-16">
-        <div className="mx-auto max-w-4xl">
-          <div className="mb-8">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
-              Send Us a Message
-            </p>
-            <h2 className="font-serif text-3xl font-bold text-forteca-navy sm:text-4xl">
-              Fill out the form below
-            </h2>
-            <p className="mt-3 max-w-md text-base text-forteca-slate">
-              Tell us what you need — we&apos;ll match you with the right person and
-              get back to you within 24 hours.
-            </p>
-          </div>
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-10 lg:grid-cols-2">
 
-          <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5">
-            <iframe
-              src="https://api.leadconnectorhq.com/widget/form/tzOVDDrphRwwxVjUJKud"
-              style={{ width: "100%", height: "1029px", border: "none", display: "block" }}
-              id="inline-tzOVDDrphRwwxVjUJKud"
-              data-layout='{"id":"INLINE"}'
-              data-trigger-type="alwaysShow"
-              data-trigger-value=""
-              data-activation-type="alwaysActivated"
-              data-activation-value=""
-              data-deactivation-type="neverDeactivate"
-              data-deactivation-value=""
-              data-form-name="Opt-In Form"
-              data-height="1029"
-              data-layout-iframe-id="inline-tzOVDDrphRwwxVjUJKud"
-              data-form-id="tzOVDDrphRwwxVjUJKud"
-              title="Opt-In Form"
-            />
-          </div>
-        </div>
-      </section>
+            {/* Left: Opt-In Form */}
+            <div className="flex flex-col">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
+                Send Us a Message
+              </p>
+              <h2 className="mb-2 font-serif text-2xl font-bold text-forteca-navy sm:text-3xl">
+                Fill out the form below
+              </h2>
+              <p className="mb-6 text-sm text-forteca-slate">
+                Tell us what you need — we&apos;ll match you with the right person and
+                get back to you within 24 hours.
+              </p>
+              <div className="flex-1 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5">
+                <iframe
+                  src="https://api.leadconnectorhq.com/widget/form/tzOVDDrphRwwxVjUJKud"
+                  style={{ width: "100%", height: "1029px", border: "none", display: "block" }}
+                  id="inline-tzOVDDrphRwwxVjUJKud"
+                  data-layout='{"id":"INLINE"}'
+                  data-trigger-type="alwaysShow"
+                  data-trigger-value=""
+                  data-activation-type="alwaysActivated"
+                  data-activation-value=""
+                  data-deactivation-type="neverDeactivate"
+                  data-deactivation-value=""
+                  data-form-name="Opt-In Form"
+                  data-height="1029"
+                  data-layout-iframe-id="inline-tzOVDDrphRwwxVjUJKud"
+                  data-form-id="tzOVDDrphRwwxVjUJKud"
+                  title="Opt-In Form"
+                />
+              </div>
+            </div>
 
-      {/* ── BOOKING CALENDAR ─────────────────────────────────────────────── */}
-      <section className="grain bg-forteca-navy px-4 py-16">
-        <div className="mx-auto max-w-4xl">
-          <div className="relative mb-8">
-            <div className="pointer-events-none absolute -top-8 right-0 h-48 w-64 rounded-full bg-forteca-gold/5 blur-3xl" />
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
-              Schedule a Call
-            </p>
-            <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
-              Book Time With Us
-            </h2>
-            <p className="mt-3 max-w-md text-base text-white/50">
-              Prefer to talk? Pick a time that works and we&apos;ll make it happen.
-            </p>
-          </div>
+            {/* Right: Booking Calendar */}
+            <div className="flex flex-col">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
+                Schedule a Call
+              </p>
+              <h2 className="mb-2 font-serif text-2xl font-bold text-forteca-navy sm:text-3xl">
+                Book Time With Us
+              </h2>
+              <p className="mb-6 text-sm text-forteca-slate">
+                Prefer to talk? Pick a time that works and we&apos;ll make it happen.
+              </p>
+              <div className="flex-1 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-forteca-navy/5">
+                <iframe
+                  src="https://api.leadconnectorhq.com/widget/booking/mjafIT5kvPfbIRbwhCtc"
+                  style={{
+                    width: "100%",
+                    border: "none",
+                    overflow: "hidden",
+                    minHeight: "700px",
+                    height: "100%",
+                    display: "block",
+                  }}
+                  scrolling="no"
+                  id="gnxrzHxJv22boLn6r2mq_1777741914490"
+                  title="Book a Call"
+                />
+              </div>
+            </div>
 
-          <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-            <iframe
-              src="https://api.leadconnectorhq.com/widget/booking/mjafIT5kvPfbIRbwhCtc"
-              style={{
-                width: "100%",
-                border: "none",
-                overflow: "hidden",
-                minHeight: "700px",
-                display: "block",
-              }}
-              scrolling="no"
-              id="gnxrzHxJv22boLn6r2mq_1777741914490"
-              title="Book a Call"
-            />
           </div>
         </div>
       </section>
