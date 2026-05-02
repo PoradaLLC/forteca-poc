@@ -169,6 +169,8 @@ export function PropertyFilters({
             <div className="relative flex-1 min-w-[200px] max-w-md">
               <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
               <input
+                id="location-search"
+                name="location"
                 type="text"
                 value={locationQuery}
                 onChange={(e) => setLocationQuery(e.target.value)}
@@ -201,6 +203,8 @@ export function PropertyFilters({
             {/* Radius selector — only show when location is set */}
             {userLocation && (
               <select
+                id="radius-filter"
+                name="radius"
                 value={radius}
                 onChange={(e) => setRadius(Number(e.target.value))}
                 className="rounded-full border border-white/20 bg-transparent px-3 py-2 text-xs font-semibold text-white/60 outline-none transition-colors hover:border-white/40 focus:border-forteca-gold/50"

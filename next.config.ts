@@ -12,14 +12,18 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com",
-      "frame-src https://js.stripe.com https://booking.hospitable.com https://form.jotform.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live",
+      "frame-src https://js.stripe.com https://booking.hospitable.com https://form.jotform.com https://vercel.live",
       "frame-ancestors 'self' https://sierra-117.net https://www.sierra-117.net https://*.vercel.app",
-      "img-src 'self' https://res.cloudinary.com data: blob:",
+      "img-src 'self' https://res.cloudinary.com data: blob: https://www.google-analytics.com https://www.googletagmanager.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://nominatim.openstreetmap.org https://api.stripe.com",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://nominatim.openstreetmap.org https://api.stripe.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://vercel.live wss://ws-us3.pusher.com",
     ].join("; "),
+  },
+  {
+    key: "X-Forwarded-Proto",
+    value: "https",
   },
   {
     key: "Strict-Transport-Security",
@@ -52,6 +56,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.fortecaestate.com" }],
+        destination: "https://fortecaestate.com/:path*",
+        permanent: true,
+      },
       {
         source: "/blvck-cabin-poconos",
         destination: "/properties/blvck-cabin-i",

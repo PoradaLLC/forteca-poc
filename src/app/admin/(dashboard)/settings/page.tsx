@@ -58,6 +58,8 @@ export default function AdminSettingsPage() {
               <p className="text-xs text-white/30">Time shown to guests on confirmation</p>
             </div>
             <input
+              id="checkin-time"
+              name="checkin-time"
               type="time"
               defaultValue="16:00"
               className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-forteca-gold/50 focus:outline-none"
@@ -70,6 +72,8 @@ export default function AdminSettingsPage() {
               <p className="text-xs text-white/30">Time shown to guests on confirmation</p>
             </div>
             <input
+              id="checkout-time"
+              name="checkout-time"
               type="time"
               defaultValue="11:00"
               className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-forteca-gold/50 focus:outline-none"
@@ -82,6 +86,8 @@ export default function AdminSettingsPage() {
               <p className="text-xs text-white/30">Default minimum nights per booking</p>
             </div>
             <input
+              id="minimum-stay"
+              name="minimum-stay"
               type="number"
               defaultValue={2}
               min={1}

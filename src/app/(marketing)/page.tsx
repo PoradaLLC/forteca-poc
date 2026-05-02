@@ -97,7 +97,7 @@ export default async function HomePage() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           poster="/images/hero-poster.jpg"
           className="pointer-events-none absolute inset-0 h-full w-full object-cover"
         >
@@ -340,6 +340,56 @@ export default async function HomePage() {
           </p>
           <div className="mt-6">
             <NewsletterForm variant="inline" />
+          </div>
+        </div>
+      </section>
+
+      {/* ── SEO CONTENT ──────────────────────────────────────────────────── */}
+      <section className="bg-white px-4 py-20">
+        <div className="mx-auto max-w-4xl">
+          <p className="mb-3 text-center text-xs font-semibold uppercase tracking-widest text-forteca-gold">
+            Why Forteca Estate
+          </p>
+          <h2 className="mb-8 text-center font-serif text-3xl font-bold text-forteca-navy sm:text-4xl">
+            The Premier Vacation Rental Experience<br className="hidden sm:block" /> in the Pocono Mountains
+          </h2>
+          <div className="grid gap-8 text-forteca-slate sm:grid-cols-2">
+            <div>
+              <h3 className="mb-3 font-serif text-xl font-bold text-forteca-navy">Pocono Mountain Cabins & Vacation Homes</h3>
+              <p className="leading-relaxed">
+                Forteca Estate manages a curated portfolio of over 44 vacation rentals across Pennsylvania,
+                New York, and Florida. From private hot tub cabins in the Pocono Mountains to lakefront homes
+                and luxury villas, every property is professionally maintained, fully stocked, and ready for
+                your best getaway. Book directly and skip the platform fees.
+              </p>
+            </div>
+            <div>
+              <h3 className="mb-3 font-serif text-xl font-bold text-forteca-navy">Full-Service Property Management</h3>
+              <p className="leading-relaxed">
+                Own a vacation rental in Pennsylvania or beyond? Forteca Estate provides end-to-end
+                property management — from guest communication and turnover cleaning to maintenance
+                coordination and revenue optimization. Our owners earn more and worry less, backed by
+                the same high standards that define every guest experience.
+              </p>
+            </div>
+            <div>
+              <h3 className="mb-3 font-serif text-xl font-bold text-forteca-navy">Direct Booking Benefits</h3>
+              <p className="leading-relaxed">
+                When you book directly with Forteca Estate, you get the best available rate — no
+                platform service fees, no inflated cleaning charges, and direct access to our local
+                team before, during, and after your stay. We handle special requests, early check-ins,
+                and last-minute changes the way a real host should.
+              </p>
+            </div>
+            <div>
+              <h3 className="mb-3 font-serif text-xl font-bold text-forteca-navy">Serving the Pocono Region Since 2019</h3>
+              <p className="leading-relaxed">
+                Based in Stroudsburg, PA, Forteca Estate has been hosting guests and managing properties
+                across the Pocono Mountains since 2019. We know these communities, these roads, and these
+                seasons — and we bring that local knowledge to every stay and every property partnership
+                we take on.
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -62,6 +62,8 @@ export default function ManageBookingPage() {
                   Email Address
                 </label>
                 <input
+                  id="booking-email"
+                  name="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -75,6 +77,8 @@ export default function ManageBookingPage() {
                   Confirmation ID
                 </label>
                 <input
+                  id="confirmation-id"
+                  name="confirmation-id"
                   type="text"
                   value={bookingId}
                   onChange={(e) => setBookingId(e.target.value.toUpperCase())}

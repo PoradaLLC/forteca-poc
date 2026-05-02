@@ -49,6 +49,8 @@ export function NewsletterForm({ variant = "footer" }: NewsletterFormProps) {
   return (
     <form onSubmit={handleSubmit} className="flex gap-2">
       <input
+        id="newsletter-email"
+        name="email"
         type="email"
         value={email}
         onChange={(e) => {

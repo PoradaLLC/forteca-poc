@@ -21,12 +21,15 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://fortecaestate.com"),
+  alternates: {
+    canonical: "https://fortecaestate.com",
+  },
   title: {
     default: "Forteca Estate — Vacation Rentals & Property Management",
     template: "%s | Forteca Estate",
   },
   description:
-    "Premium vacation rentals and property management across Pennsylvania, New York, and Florida. Book directly and save.",
+    "Premium vacation rentals and property management across Pennsylvania, New York, and Florida. Book directly, skip the fees, and save on every stay.",
   keywords: [
     "vacation rental",
     "cabin rental",
@@ -55,6 +58,14 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${dmSans.variable} h-full`}
     >
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero-poster.jpg"
+          fetchPriority="high"
+        />
+      </head>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
         strategy="afterInteractive"
@@ -72,13 +83,22 @@ export default function RootLayout({
           data={{
             "@context": "https://schema.org",
             "@type": ["Organization", "LocalBusiness"],
+            "@id": "https://fortecaestate.com/#organization",
             name: "Forteca Estate",
             url: "https://fortecaestate.com",
-            logo: "https://fortecaestate.com/images/logo.png",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://fortecaestate.com/og-default.png",
+              width: 1200,
+              height: 630,
+            },
+            image: "https://fortecaestate.com/og-default.png",
             description:
               "Premium vacation rentals and property management across Pennsylvania, New York, and Florida.",
             telephone: "+1-484-286-3223",
             email: "fortecaestate@gmail.com",
+            foundingDate: "2019",
+            areaServed: ["Pennsylvania", "New York", "Florida"],
             address: {
               "@type": "PostalAddress",
               streetAddress: "814 Monroe St #205",
@@ -97,6 +117,7 @@ export default function RootLayout({
               telephone: "+1-484-286-3223",
               email: "fortecaestate@gmail.com",
               contactType: "customer service",
+              availableLanguage: "English",
             },
           }}
         />
