@@ -57,12 +57,6 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.fortecaestate.com" }],
-        destination: "https://fortecaestate.com/:path*",
-        permanent: true,
-      },
-      {
         source: "/blvck-cabin-poconos",
         destination: "/properties/blvck-cabin-i",
         permanent: true,
