@@ -49,7 +49,7 @@ export function Footer() {
               814 Monroe St #205, Stroudsburg, PA 18360
             </p>
             <p className="mt-1 text-xs text-white/40">
-              <a href="tel:+13475560089" className="transition-colors hover:text-forteca-gold">(347) 556-0089</a>
+              <a href="tel:+14842863223" className="transition-colors hover:text-forteca-gold">(484) 286-3223</a>
             </p>
             <div className="mt-4 flex gap-4">
               {socials.map(({ href, label }) => (

@@ -17,8 +17,8 @@ const contactDetails = [
   {
     icon: Phone,
     label: "Phone",
-    value: "(347) 556-0089",
-    href: "tel:+13475560089",
+    value: "(484) 286-3223",
+    href: "tel:+14842863223",
   },
   {
     icon: MapPin,

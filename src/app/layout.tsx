@@ -77,7 +77,7 @@ export default function RootLayout({
             logo: "https://fortecaestate.com/images/logo.png",
             description:
               "Premium vacation rentals and property management across Pennsylvania, New York, and Florida.",
-            telephone: "+1-347-556-0089",
+            telephone: "+1-484-286-3223",
             email: "fortecaestate@gmail.com",
             address: {
               "@type": "PostalAddress",
@@ -94,7 +94,7 @@ export default function RootLayout({
             ],
             contactPoint: {
               "@type": "ContactPoint",
-              telephone: "+1-347-556-0089",
+              telephone: "+1-484-286-3223",
               email: "fortecaestate@gmail.com",
               contactType: "customer service",
             },
