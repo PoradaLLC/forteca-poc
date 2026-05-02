@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { LeadConnectorEmbeds } from "@/components/contact/LeadConnectorEmbeds";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -58,27 +59,9 @@ export default function ContactPage() {
       {/* Content */}
       <section className="bg-forteca-cream px-4 py-16">
         <div className="mx-auto grid max-w-5xl gap-12 lg:grid-cols-5">
-          {/* Form */}
+          {/* Embeds — form + calendar */}
           <div className="lg:col-span-3">
-            <div className="flex flex-col items-center justify-center rounded-2xl bg-white p-12 shadow-sm ring-1 ring-forteca-navy/5 text-center">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-forteca-gold/10">
-                <Mail className="h-7 w-7 text-forteca-gold" />
-              </div>
-              <h2 className="font-serif text-2xl font-bold text-forteca-navy">
-                Send Us a Message
-              </h2>
-              <p className="mt-3 max-w-sm text-sm leading-relaxed text-forteca-slate">
-                Fill out our contact form and we&apos;ll get back to you within 24 hours.
-              </p>
-              <a
-                href="https://form.jotform.com/253237415466156"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 inline-flex items-center gap-2 rounded-xl bg-forteca-navy px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition-all hover:bg-forteca-navy-light"
-              >
-                Open Contact Form
-              </a>
-            </div>
+            <LeadConnectorEmbeds />
           </div>
 
           {/* Info */}
