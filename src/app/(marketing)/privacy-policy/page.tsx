@@ -116,7 +116,81 @@ export default function PrivacyPolicyPage() {
 
           <div>
             <h2 className="mb-3 font-serif text-xl font-bold text-forteca-navy">
-              8. Contact Us
+              8. SMS/Text Messaging Program
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <h3 className="mb-2 font-semibold text-forteca-navy">SMS Consent &amp; Opt-In</h3>
+                <p>
+                  By providing your phone number through our website forms, scheduling tools, or other
+                  communication channels, you consent to receive text messages from Forteca Estate. These
+                  messages may include responses to inquiries, appointment confirmations, reminders, service
+                  updates, and occasional marketing communications related to our services.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-2 font-semibold text-forteca-navy">Opt-In Method</h3>
+                <p>Users opt in to receive SMS messages by:</p>
+                <ul className="mt-2 list-disc space-y-1 pl-5">
+                  <li>Submitting a form on our website</li>
+                  <li>Requesting information or services</li>
+                  <li>Providing verbal or written consent</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="mb-2 font-semibold text-forteca-navy">Message Frequency</h3>
+                <p>
+                  Message frequency may vary depending on your interaction with us but typically ranges
+                  from 1–5 messages per week.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-2 font-semibold text-forteca-navy">Message &amp; Data Rates</h3>
+                <p>
+                  Message and data rates may apply depending on your mobile carrier and plan.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-2 font-semibold text-forteca-navy">Opt-Out Instructions</h3>
+                <p>You can opt out of receiving SMS messages at any time by replying:</p>
+                <ul className="mt-2 list-disc space-y-1 pl-5">
+                  <li><strong>STOP</strong> to unsubscribe</li>
+                  <li><strong>HELP</strong> for assistance</li>
+                </ul>
+                <p className="mt-2">
+                  After opting out, you will no longer receive SMS messages unless you opt back in.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-2 font-semibold text-forteca-navy">Data Usage</h3>
+                <p>
+                  We do not share or sell your mobile information with third parties for marketing
+                  purposes. Your information is used solely for communication related to your inquiries
+                  and our services.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-2 font-semibold text-forteca-navy">SMS Data Sharing &amp; Privacy</h3>
+                <p>
+                  We respect your privacy. No mobile information will be shared with third parties or
+                  affiliates for marketing or promotional purposes.
+                </p>
+                <p className="mt-2">
+                  Information sharing to subcontractors in support services (such as customer service,
+                  messaging platforms, or technical support) is permitted solely for the purpose of
+                  operating our business and providing services to you.
+                </p>
+                <p className="mt-2">
+                  All other use case categories exclude text messaging originator opt-in data and
+                  consent; this information will not be shared with any third parties.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="mb-3 font-serif text-xl font-bold text-forteca-navy">
+              9. Contact Us
             </h2>
             <p>
               If you have questions about this privacy policy or your personal
