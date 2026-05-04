@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Mail, Phone, MapPin, Clock, ArrowRight } from "lucide-react";
 import { LeadConnectorEmbeds } from "@/components/contact/LeadConnectorEmbeds";
+import PixelContact from "@/components/pixel/PixelContact";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -12,8 +13,8 @@ const contactDetails = [
   {
     icon: Mail,
     label: "Email",
-    value: "fortecaestate@gmail.com",
-    href: "mailto:fortecaestate@gmail.com",
+    value: "forteca@fortecaestate.com",
+    href: "mailto:forteca@fortecaestate.com",
   },
   {
     icon: Phone,
@@ -38,6 +39,7 @@ const contactDetails = [
 export default function ContactPage() {
   return (
     <>
+      <PixelContact />
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="grain bg-forteca-navy px-4 pb-20 pt-14">
         <div className="mx-auto max-w-4xl">
@@ -193,7 +195,7 @@ export default function ContactPage() {
                   Call Us Now
                 </a>
                 <a
-                  href="mailto:fortecaestate@gmail.com"
+                  href="mailto:forteca@fortecaestate.com"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-7 py-3 text-sm font-semibold text-white/70 transition-colors hover:border-white/40 hover:text-white"
                 >
                   Send an Email

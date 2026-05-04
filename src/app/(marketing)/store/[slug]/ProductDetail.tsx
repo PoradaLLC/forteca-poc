@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ShoppingCart, Check } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
@@ -12,6 +12,18 @@ export function ProductDetail({ product }: { product: StoreProduct }) {
   const [added, setAdded] = useState(false);
   const { addItem } = useCart();
 
+  useEffect(() => {
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", "ViewContent", {
+        content_name: product.name,
+        content_ids: [product.slug],
+        content_type: "product",
+        value: product.price,
+        currency: "USD",
+      });
+    }
+  }, [product.name, product.slug, product.price]);
+
   function handleAdd() {
     addItem({
       slug: product.slug,
@@ -22,6 +34,15 @@ export function ProductDetail({ product }: { product: StoreProduct }) {
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", "AddToCart", {
+        content_name: product.name,
+        content_ids: [product.slug],
+        content_type: "product",
+        value: product.price,
+        currency: "USD",
+      });
+    }
   }
 
   return (

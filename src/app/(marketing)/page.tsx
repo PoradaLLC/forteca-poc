@@ -89,6 +89,8 @@ export default async function HomePage() {
   ]);
   return (
     <>
+      {/* eslint-disable-next-line @next/next/no-head-element */}
+      <link rel="preload" as="image" href="/images/hero-poster.jpg" fetchPriority="high" />
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative -mt-16 flex min-h-screen flex-col overflow-hidden bg-forteca-navy">
         {/* Background video */}
@@ -164,6 +166,30 @@ export default async function HomePage() {
 
         {/* Bottom gold line */}
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-forteca-gold/30 to-transparent" />
+      </section>
+
+      {/* ── VIDEO ────────────────────────────────────────────────────────── */}
+      <section className="bg-forteca-navy px-4 py-20">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-10 text-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-forteca-gold">
+              See It For Yourself
+            </p>
+            <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
+              Experience Forteca Estate
+            </h2>
+          </div>
+          <div className="overflow-hidden rounded-2xl ring-1 ring-forteca-gold/20 shadow-2xl shadow-black/40">
+            <iframe
+              className="aspect-video w-full"
+              src="https://www.youtube.com/embed/V36dpv8-lQ8?si=-atWX7rmt4i9Hgpq"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        </div>
       </section>
 
       {/* ── STATS STRIP ──────────────────────────────────────────────────── */}

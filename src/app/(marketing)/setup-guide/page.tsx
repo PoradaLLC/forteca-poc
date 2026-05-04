@@ -112,7 +112,7 @@ export default function SetupGuidePage() {
           first-stay preparation.
         </p>
         <a
-          href="mailto:fortecaestate@gmail.com?subject=New%20Client%20Onboarding"
+          href="mailto:forteca@fortecaestate.com?subject=New%20Client%20Onboarding"
           className={styles.cta}
         >
           Schedule a Consultation

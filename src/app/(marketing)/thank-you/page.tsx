@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, ArrowRight } from "lucide-react";
+import PixelLead from "@/components/pixel/PixelLead";
 
 export const metadata: Metadata = {
   title: "Thank You | Forteca Estate",
@@ -16,6 +17,7 @@ const steps = [
 export default function ThankYouPage() {
   return (
     <>
+      <PixelLead />
       {/* Header */}
       <section className="grain bg-forteca-navy px-4 pb-16 pt-14">
         <div className="mx-auto max-w-3xl text-center">

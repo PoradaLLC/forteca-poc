@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { Send } from "lucide-react";
+import { trackLead } from "@/lib/meta-pixel";
 
 interface NewsletterFormProps {
   variant?: "footer" | "inline";
@@ -18,10 +19,12 @@ export function NewsletterForm({ variant = "footer" }: NewsletterFormProps) {
 
     startTransition(async () => {
       try {
+        const eventId = trackLead({ content_name: "Newsletter Signup", email });
+
         const res = await fetch("/api/newsletter", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email, event_id: eventId }),
         });
 
         if (res.ok) {

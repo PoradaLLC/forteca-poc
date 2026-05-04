@@ -33,10 +33,28 @@ export function CartView() {
   function handleCheckout() {
     setError(null);
     if (items.length === 0) return;
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", "InitiateCheckout", {
+        value: totalPrice,
+        currency: "USD",
+        content_type: "product",
+        num_items: items.reduce((sum, i) => sum + i.quantity, 0),
+        content_ids: items.map((i) => i.slug),
+      });
+    }
     setCheckoutOpen(true);
   }
 
   function handleComplete() {
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", "Purchase", {
+        value: totalPrice,
+        currency: "USD",
+        content_type: "product",
+        content_ids: items.map((i) => i.slug),
+        num_items: items.reduce((sum, i) => sum + i.quantity, 0),
+      });
+    }
     setCheckoutComplete(true);
     clearCart();
   }

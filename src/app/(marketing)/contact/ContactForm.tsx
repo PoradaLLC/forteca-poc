@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useState } from "react";
 import { Send, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { trackLead } from "@/lib/meta-pixel";
 
 const schema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -39,10 +40,17 @@ export function ContactForm() {
   });
 
   async function onSubmit(data: FormValues) {
+    const eventId = trackLead({
+      content_name: "Contact Form",
+      content_category: data.subject,
+      email: data.email,
+      phone: data.phone,
+    });
+
     const res = await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, event_id: eventId }),
     });
     if (!res.ok) throw new Error("Failed to send message");
     setSubmitted(true);
