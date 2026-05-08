@@ -45,6 +45,14 @@ export function BookingSidebar({
               href={`https://fortecaestate.directstays.com/property/${propertySlug}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                if (typeof (window as any).fbq === "function") {
+                  (window as any).fbq("track", "Schedule", {
+                    content_type: "hotel",
+                    content_ids: [propertySlug],
+                  });
+                }
+              }}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-forteca-gold py-3.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
             >
               <CalendarIcon className="h-4 w-4" />
@@ -70,6 +78,14 @@ export function BookingSidebar({
               href={airbnbUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                if (typeof (window as any).fbq === "function") {
+                  (window as any).fbq("track", "Schedule", {
+                    content_type: "hotel",
+                    content_ids: [propertySlug],
+                  });
+                }
+              }}
               className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-semibold text-white/70 transition-all hover:border-[#FF5A5F]/40 hover:text-[#FF5A5F]"
             >
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
@@ -85,6 +101,14 @@ export function BookingSidebar({
               href={vrboUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                if (typeof (window as any).fbq === "function") {
+                  (window as any).fbq("track", "Schedule", {
+                    content_type: "hotel",
+                    content_ids: [propertySlug],
+                  });
+                }
+              }}
               className={`${airbnbUrl ? "mt-2" : ""} flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-semibold text-white/70 transition-all hover:border-[#3B5998]/40 hover:text-[#5B9BD5]`}
             >
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">

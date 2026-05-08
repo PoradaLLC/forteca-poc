@@ -5,7 +5,7 @@ const resend = process.env.RESEND_API_KEY
   : null;
 
 const FROM = process.env.RESEND_FROM_EMAIL ?? "noreply@fortecaestate.com";
-const ADMIN_EMAIL = "fortecaestate@gmail.com";
+const ADMIN_EMAIL = "forteca@fortecaestate.com";
 
 export interface BookingEmailData {
   guestName: string;
@@ -42,7 +42,7 @@ function bookingConfirmationHtml(d: BookingEmailData): string {
         <p style="font-size:13px;color:#6b7280">Check-in time is 3:00 PM. Check-out is 11:00 AM. We'll be in touch with detailed instructions before your arrival.</p>
       </div>
       <div style="background:#0d1b2a;padding:24px;text-align:center">
-        <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0">Questions? Reply to this email or contact us at fortecaestate@gmail.com</p>
+        <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:0">Questions? Reply to this email or contact us at forteca@fortecaestate.com</p>
       </div>
     </div>
   `;

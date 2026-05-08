@@ -12,13 +12,13 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live https://connect.facebook.net",
-      "frame-src https://js.stripe.com https://booking.hospitable.com https://form.jotform.com https://vercel.live",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://www.googletagmanager.com https://www.google-analytics.com https://vercel.live https://connect.facebook.net https://www.facebook.com https://link.msgsndr.com https://stcdn.leadconnectorhq.com",
+      "frame-src https://js.stripe.com https://booking.hospitable.com https://form.jotform.com https://vercel.live https://api.leadconnectorhq.com https://www.youtube.com https://youtube.com https://www.facebook.com",
       "frame-ancestors 'self' https://sierra-117.net https://www.sierra-117.net https://*.vercel.app",
       "img-src 'self' https://res.cloudinary.com data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://nominatim.openstreetmap.org https://api.stripe.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://vercel.live wss://ws-us3.pusher.com https://www.facebook.com https://connect.facebook.net",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://nominatim.openstreetmap.org https://api.stripe.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://vercel.live wss://ws-us3.pusher.com https://www.facebook.com https://connect.facebook.net https://api.leadconnectorhq.com https://link.msgsndr.com https://stcdn.leadconnectorhq.com",
     ].join("; "),
   },
   {

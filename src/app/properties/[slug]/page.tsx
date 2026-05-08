@@ -15,6 +15,7 @@ import { getProperty, getPropertySlugs } from "@/lib/properties";
 import { createServiceClient } from "@/lib/supabase/server";
 import { BookingSidebar } from "@/components/booking/BookingSidebar";
 import { JsonLd } from "@/components/JsonLd";
+import PixelViewContent from "@/components/pixel/PixelViewContent";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -78,6 +79,7 @@ export default async function PropertyDetailPage({ params }: Props) {
 
   return (
     <>
+      <PixelViewContent name={property.name} slug={property.slug} />
       <JsonLd
         data={{
           "@context": "https://schema.org",

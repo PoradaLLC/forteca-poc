@@ -105,6 +105,9 @@ export function PropertyFilters({
     if (result) {
       setUserLocation({ ...result, label: locationQuery.trim() });
       setPage(1);
+      if (typeof (window as any).fbq === "function") {
+        (window as any).fbq("track", "Search");
+      }
     }
     setSearching(false);
   }, [locationQuery]);
@@ -152,7 +155,13 @@ export function PropertyFilters({
               <button
                 key={filter.label}
                 type="button"
-                onClick={() => { setActiveType(i); setPage(1); }}
+                onClick={() => {
+                  setActiveType(i);
+                  setPage(1);
+                  if (i !== 0 && typeof (window as any).fbq === "function") {
+                    (window as any).fbq("track", "Search");
+                  }
+                }}
                 className={
                   i === activeType
                     ? "rounded-full bg-forteca-gold px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-forteca-navy transition-colors"

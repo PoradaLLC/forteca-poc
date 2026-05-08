@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/JsonLd";
 import "./globals.css";
 
 const GA_ID = "G-TD58MRLVZ2";
-const FB_PIXEL_ID = "1487838802735379";
+const FB_PIXEL_ID = "1325589082840284";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -59,14 +59,7 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${dmSans.variable} h-full`}
     >
-      <head>
-        <link
-          rel="preload"
-          as="image"
-          href="/images/hero-poster.jpg"
-          fetchPriority="high"
-        />
-      </head>
+
       <body className="flex min-h-full flex-col font-sans">
         <JsonLd
           data={{
@@ -85,7 +78,7 @@ export default function RootLayout({
             description:
               "Premium vacation rentals and property management across Pennsylvania, New York, and Florida.",
             telephone: "+1-484-286-3223",
-            email: "fortecaestate@gmail.com",
+            email: "forteca@fortecaestate.com",
             foundingDate: "2019",
             areaServed: ["Pennsylvania", "New York", "Florida"],
             address: {
@@ -104,7 +97,7 @@ export default function RootLayout({
             contactPoint: {
               "@type": "ContactPoint",
               telephone: "+1-484-286-3223",
-              email: "fortecaestate@gmail.com",
+              email: "forteca@fortecaestate.com",
               contactType: "customer service",
               availableLanguage: "English",
             },

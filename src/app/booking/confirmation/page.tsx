@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle, Calendar, Users, ArrowRight, Home } from "lucide-react";
 import { stripe } from "@/lib/stripe";
+import PixelPurchaseBooking from "@/components/pixel/PixelPurchaseBooking";
+import { LeadTracker } from "./LeadTracker";
 
 export const metadata: Metadata = { title: "Booking Confirmed" };
 
@@ -69,6 +71,21 @@ export default async function ConfirmationPage({ searchParams }: Props) {
 
   return (
     <div className="min-h-screen bg-forteca-cream px-4 py-16">
+      {details && (
+        <>
+          <PixelPurchaseBooking
+            value={details.totalAmount}
+            propertyName={details.propertyName}
+            bookingId={details.bookingId}
+          />
+          <LeadTracker
+            email={details.guestEmail}
+            propertyName={details.propertyName}
+            totalAmount={details.totalAmount}
+            bookingId={details.bookingId}
+          />
+        </>
+      )}
       <div className="mx-auto max-w-lg text-center">
         {/* Icon */}
         <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-forteca-navy">
