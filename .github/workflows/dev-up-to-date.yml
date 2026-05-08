@@ -1,0 +1,28 @@
+name: Dev up-to-date with main
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+jobs:
+  check:
+    name: Verify dev contains main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fail if dev is behind main
+        run: |
+          git fetch origin main:refs/remotes/origin/main
+          BEHIND=$(git rev-list --count HEAD..origin/main)
+          if [ "$BEHIND" -gt 0 ]; then
+            echo "::error::dev is behind origin/main by $BEHIND commit(s). Rebase or merge main into dev before pushing."
+            git log --oneline HEAD..origin/main
+            exit 1
+          fi
+          echo "dev contains all commits from main."
