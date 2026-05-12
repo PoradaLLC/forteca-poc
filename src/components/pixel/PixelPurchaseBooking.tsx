@@ -11,8 +11,8 @@ export default function PixelPurchaseBooking({
   bookingId: string;
 }) {
   useEffect(() => {
-    if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "Purchase", {
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      window.fbq("track", "Purchase", {
         value,
         currency: "USD",
         content_name: propertyName,

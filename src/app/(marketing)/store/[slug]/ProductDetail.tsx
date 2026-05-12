@@ -13,8 +13,8 @@ export function ProductDetail({ product }: { product: StoreProduct }) {
   const { addItem } = useCart();
 
   useEffect(() => {
-    if (typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "ViewContent", {
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "ViewContent", {
         content_name: product.name,
         content_ids: [product.slug],
         content_type: "product",
@@ -34,8 +34,8 @@ export function ProductDetail({ product }: { product: StoreProduct }) {
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
-    if (typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "AddToCart", {
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "AddToCart", {
         content_name: product.name,
         content_ids: [product.slug],
         content_type: "product",

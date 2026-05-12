@@ -9,8 +9,8 @@ export default function PixelViewContent({
   slug: string;
 }) {
   useEffect(() => {
-    if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "ViewContent", {
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      window.fbq("track", "ViewContent", {
         content_name: name,
         content_ids: [slug],
         content_type: "hotel",

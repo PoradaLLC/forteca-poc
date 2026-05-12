@@ -105,8 +105,8 @@ export function PropertyFilters({
     if (result) {
       setUserLocation({ ...result, label: locationQuery.trim() });
       setPage(1);
-      if (typeof (window as any).fbq === "function") {
-        (window as any).fbq("track", "Search");
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "Search");
       }
     }
     setSearching(false);
@@ -158,8 +158,8 @@ export function PropertyFilters({
                 onClick={() => {
                   setActiveType(i);
                   setPage(1);
-                  if (i !== 0 && typeof (window as any).fbq === "function") {
-                    (window as any).fbq("track", "Search");
+                  if (i !== 0 && typeof window.fbq === "function") {
+                    window.fbq("track", "Search");
                   }
                 }}
                 className={

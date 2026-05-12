@@ -33,8 +33,8 @@ export function CartView() {
   function handleCheckout() {
     setError(null);
     if (items.length === 0) return;
-    if (typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "InitiateCheckout", {
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "InitiateCheckout", {
         value: totalPrice,
         currency: "USD",
         content_type: "product",
@@ -46,8 +46,8 @@ export function CartView() {
   }
 
   function handleComplete() {
-    if (typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "Purchase", {
+    if (typeof window.fbq === "function") {
+      window.fbq("track", "Purchase", {
         value: totalPrice,
         currency: "USD",
         content_type: "product",

@@ -46,8 +46,8 @@ export function BookingSidebar({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
-                if (typeof (window as any).fbq === "function") {
-                  (window as any).fbq("track", "Schedule", {
+                if (typeof window.fbq === "function") {
+                  window.fbq("track", "Schedule", {
                     content_type: "hotel",
                     content_ids: [propertySlug],
                   });
@@ -79,8 +79,8 @@ export function BookingSidebar({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
-                if (typeof (window as any).fbq === "function") {
-                  (window as any).fbq("track", "Schedule", {
+                if (typeof window.fbq === "function") {
+                  window.fbq("track", "Schedule", {
                     content_type: "hotel",
                     content_ids: [propertySlug],
                   });
@@ -102,8 +102,8 @@ export function BookingSidebar({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
-                if (typeof (window as any).fbq === "function") {
-                  (window as any).fbq("track", "Schedule", {
+                if (typeof window.fbq === "function") {
+                  window.fbq("track", "Schedule", {
                     content_type: "hotel",
                     content_ids: [propertySlug],
                   });
