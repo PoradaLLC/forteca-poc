@@ -89,7 +89,6 @@ export default async function HomePage() {
   ]);
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-head-element */}
       <link rel="preload" as="image" href="/images/hero-poster.jpg" fetchPriority="high" />
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative -mt-16 flex min-h-screen flex-col overflow-hidden bg-forteca-navy">
