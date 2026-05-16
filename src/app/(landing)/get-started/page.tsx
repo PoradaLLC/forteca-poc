@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LeadConnectorEmbeds } from "@/components/contact/LeadConnectorEmbeds";
+import { ServicesSection } from "@/components/marketing/ServicesSection";
 import PixelContact from "@/components/pixel/PixelContact";
 
 export const metadata: Metadata = {
@@ -72,6 +73,8 @@ export default function GetStartedLandingPage() {
           </div>
         </div>
       </section>
+
+      <ServicesSection />
 
       <LeadConnectorEmbeds />
     </>
