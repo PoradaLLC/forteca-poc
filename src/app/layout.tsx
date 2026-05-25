@@ -130,7 +130,7 @@ export default function RootLayout({
             fbq('track', 'PageView');
           `}
         </Script>
-        <noscript>
+        <noscript suppressHydrationWarning>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             height="1"

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { LeadConnectorEmbeds } from "@/components/contact/LeadConnectorEmbeds";
 import { ServicesSection } from "@/components/marketing/ServicesSection";
 import PixelContact from "@/components/pixel/PixelContact";
@@ -23,16 +24,25 @@ export default function GetStartedLandingPage() {
             <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center">
               <div className="h-40 w-[500px] rounded-full bg-forteca-gold/5 blur-3xl" />
             </div>
+            <div className="relative mb-6 flex justify-center">
+              <Image
+                src="/images/logo.png"
+                alt="Forteca Estate"
+                width={160}
+                height={48}
+                priority
+              />
+            </div>
             <p className="relative mb-3 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
-              Forteca Estate
+              Rental Property Owners
             </p>
             <h1 className="relative font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-              Stress-Free Short-Term Rental Management Starts Here
+              Tired of Managing Your Short-Term Rental Alone?
             </h1>
             <p className="relative mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/60">
-              Forteca Estate is a local, 24/7 property management company that
-              helps short-term rental owners save time, improve the guest
-              experience, and keep their properties running smoothly.
+              Forteca Estate helps rental property owners save time, reduce
+              guest headaches, and keep their properties running smoothly with
+              local, 24/7 management support.
             </p>
           </div>
         </div>
@@ -45,10 +55,10 @@ export default function GetStartedLandingPage() {
         <div className="mx-auto max-w-2xl">
           <div className="mb-6 text-center">
             <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
-              Get Started
+              Get A Free Property Management Review
             </p>
             <h2 className="font-serif text-2xl font-bold text-forteca-navy sm:text-3xl">
-              Fill out the form below
+              By filling out the form below
             </h2>
           </div>
 
