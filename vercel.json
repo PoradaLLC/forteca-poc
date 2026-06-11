@@ -4,5 +4,8 @@
       "path": "/api/ical/sync",
       "schedule": "*/15 * * * *"
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": false
+  }
 }

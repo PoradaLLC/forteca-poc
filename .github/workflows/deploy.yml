@@ -1,0 +1,30 @@
+name: Deploy via Vercel Deploy Hook
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  trigger-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deploy hook for ${{ github.ref_name }}
+        env:
+          BRANCH: ${{ github.ref_name }}
+          HOOK_MAIN: ${{ secrets.VERCEL_DEPLOY_HOOK_MAIN }}
+          HOOK_DEV: ${{ secrets.VERCEL_DEPLOY_HOOK_DEV }}
+        run: |
+          if [ "$BRANCH" = "main" ]; then
+            HOOK="$HOOK_MAIN"
+            SECRET_NAME="VERCEL_DEPLOY_HOOK_MAIN"
+          else
+            HOOK="$HOOK_DEV"
+            SECRET_NAME="VERCEL_DEPLOY_HOOK_DEV"
+          fi
+          if [ -z "$HOOK" ]; then
+            echo "::error::Secret $SECRET_NAME is not set; cannot trigger Vercel deploy for branch $BRANCH."
+            exit 1
+          fi
+          curl --fail -s -X POST "$HOOK"
