@@ -1,30 +1,31 @@
-name: Deploy via Vercel Deploy Hook
+name: Deploy to Vercel
 
 on:
   push:
-    branches:
-      - main
-      - dev
+    branches: [main, dev]
 
 jobs:
-  trigger-deploy:
+  deploy:
     runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: team_eJsW3DchQ3pSJJccAbdK3yKx
+      VERCEL_PROJECT_ID: prj_CcPBGcHsfEIoOoHysBiSREC7wMvz
     steps:
-      - name: Trigger Vercel deploy hook for ${{ github.ref_name }}
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Deploy
         env:
-          BRANCH: ${{ github.ref_name }}
-          HOOK_MAIN: ${{ secrets.VERCEL_DEPLOY_HOOK_MAIN }}
-          HOOK_DEV: ${{ secrets.VERCEL_DEPLOY_HOOK_DEV }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          if [ "$BRANCH" = "main" ]; then
-            HOOK="$HOOK_MAIN"
-            SECRET_NAME="VERCEL_DEPLOY_HOOK_MAIN"
-          else
-            HOOK="$HOOK_DEV"
-            SECRET_NAME="VERCEL_DEPLOY_HOOK_DEV"
-          fi
-          if [ -z "$HOOK" ]; then
-            echo "::error::Secret $SECRET_NAME is not set; cannot trigger Vercel deploy for branch $BRANCH."
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::Secret VERCEL_TOKEN is not set."
             exit 1
           fi
-          curl --fail -s -X POST "$HOOK"
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            vercel deploy --prod --yes --token="$VERCEL_TOKEN"
+          else
+            vercel deploy --yes --token="$VERCEL_TOKEN"
+          fi
