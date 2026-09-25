@@ -316,6 +316,20 @@ export async function deleteMessage(messageId: string) {
 
 // ─── PROPERTIES ───────────────────────────────────────────────────────────────
 
+/**
+ * Revalidate every route that reflects a property change: the admin views and
+ * the public catalog. The public `/properties` list and the `/properties/[slug]`
+ * detail pages are statically generated (see generateStaticParams), so without
+ * this a status change would not surface publicly until a redeploy. The detail
+ * route is a dynamic segment, so it needs the "page" type argument.
+ */
+function revalidatePropertyPaths() {
+  revalidatePath("/admin/properties");
+  revalidatePath("/admin");
+  revalidatePath("/properties");
+  revalidatePath("/properties/[slug]", "page");
+}
+
 export async function updatePropertyStatus(propertyId: string, status: string) {
   await requireAdmin();
   const validStatuses = ["active", "inactive", "maintenance"];
@@ -327,8 +341,25 @@ export async function updatePropertyStatus(propertyId: string, status: string) {
     .update({ status, updated_at: new Date().toISOString() })
     .eq("id", propertyId);
   if (error) throw new Error(error.message);
-  revalidatePath("/admin/properties");
-  revalidatePath("/admin");
+  revalidatePropertyPaths();
+}
+
+/**
+ * Publish every inactive property in one shot (status → active). Used to make
+ * a freshly-imported batch of listings live without flipping each row by hand.
+ * Returns the number of rows published so the UI can report it.
+ */
+export async function publishAllInactiveProperties(): Promise<{ published: number }> {
+  await requireAdmin();
+  const supabase = await createServiceClient();
+  const { data, error } = await supabase
+    .from("properties")
+    .update({ status: "active", updated_at: new Date().toISOString() })
+    .eq("status", "inactive")
+    .select("id");
+  if (error) throw new Error(error.message);
+  revalidatePropertyPaths();
+  return { published: data?.length ?? 0 };
 }
 
 export async function deleteProperty(propertyId: string) {
@@ -339,7 +370,6 @@ export async function deleteProperty(propertyId: string) {
     .delete()
     .eq("id", propertyId);
   if (error) throw new Error(error.message);
-  revalidatePath("/admin/properties");
-  revalidatePath("/admin");
+  revalidatePropertyPaths();
 }
 

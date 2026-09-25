@@ -1,6 +1,7 @@
 "use client";
 
 import { Calendar as CalendarIcon } from "lucide-react";
+import { hasDisplayPrice, PRICE_UNAVAILABLE_LABEL } from "@/lib/utils";
 
 interface BookingSidebarProps {
   propertySlug: string;
@@ -35,12 +36,20 @@ export function BookingSidebar({
             <div className="mb-1 text-xs font-semibold uppercase tracking-widest text-forteca-gold">
               Book Direct · Best Rate
             </div>
-            <div className="mb-5 flex items-baseline gap-1">
-              <span className="font-serif text-3xl font-bold text-white">
-                from ${basePrice}
-              </span>
-              <span className="text-sm text-white/50">/ night</span>
-            </div>
+            {hasDisplayPrice(basePrice) ? (
+              <div className="mb-5 flex items-baseline gap-1">
+                <span className="font-serif text-3xl font-bold text-white">
+                  from ${basePrice}
+                </span>
+                <span className="text-sm text-white/50">/ night</span>
+              </div>
+            ) : (
+              <div className="mb-5">
+                <span className="font-serif text-2xl font-bold text-white">
+                  {PRICE_UNAVAILABLE_LABEL}
+                </span>
+              </div>
+            )}
             <a
               href={`https://fortecaestate.directstays.com/property/${propertySlug}`}
               target="_blank"

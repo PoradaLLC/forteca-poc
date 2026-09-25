@@ -5,6 +5,18 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/** Label shown when a listing has no nightly price set — booking still works via the live Hospitable widget. */
+export const PRICE_UNAVAILABLE_LABEL = "Check availability";
+
+/**
+ * Whether a listing has a real nightly price worth displaying.
+ * Imported (scraped) listings arrive with base_price = 0; the true price lives
+ * in the Hospitable booking widget, so we show a CTA instead of "$0".
+ */
+export function hasDisplayPrice(basePrice: number): boolean {
+  return typeof basePrice === "number" && basePrice > 0;
+}
+
 /** Format a price in USD cents to a display string, e.g. 25000 → "$250" */
 export function formatPrice(amount: number, currency = "USD"): string {
   return new Intl.NumberFormat("en-US", {

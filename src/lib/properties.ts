@@ -1,6 +1,16 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { properties as mockProperties } from "@/lib/mock-data";
 import type { MockProperty } from "@/lib/mock-data";
+
+/**
+ * When true, the public catalog also shows draft (inactive/maintenance) listings.
+ * On by default for local development (`next dev`) so drafts can be reviewed on
+ * localhost, and opt-in elsewhere via PREVIEW_DRAFTS=1. NEVER true in a normal
+ * production deploy, so the live site keeps hiding drafts. Requires the
+ * service-role client because RLS blocks the anon key from reading non-active rows.
+ */
+const PREVIEW_DRAFTS =
+  process.env.NODE_ENV === "development" || process.env.PREVIEW_DRAFTS === "1";
 
 export interface Property {
   id: string;
@@ -77,12 +87,13 @@ function mockToProperty(m: MockProperty): Property {
 
 export async function getProperties(): Promise<Property[]> {
   try {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("properties")
-      .select("*")
-      .eq("status", "active")
-      .order("name");
+    // Local preview: read every listing (drafts included) via the service client,
+    // which bypasses the "active only" RLS policy. Production uses the anon client
+    // and only ever sees active rows.
+    const supabase = PREVIEW_DRAFTS ? await createServiceClient() : await createClient();
+    let query = supabase.from("properties").select("*").order("name");
+    if (!PREVIEW_DRAFTS) query = query.eq("status", "active");
+    const { data, error } = await query;
 
     if (error || !data || data.length === 0) {
       return mockProperties.map(mockToProperty);
@@ -96,7 +107,8 @@ export async function getProperties(): Promise<Property[]> {
 
 export async function getProperty(slug: string): Promise<Property | null> {
   try {
-    const supabase = await createClient();
+    // Local preview uses the service client so draft detail pages resolve too.
+    const supabase = PREVIEW_DRAFTS ? await createServiceClient() : await createClient();
     const { data, error } = await supabase
       .from("properties")
       .select("*")
@@ -112,6 +124,26 @@ export async function getProperty(slug: string): Promise<Property | null> {
   } catch {
     const mock = mockProperties.find((p) => p.slug === slug);
     return mock ? mockToProperty(mock) : null;
+  }
+}
+
+/**
+ * Fetch a property by slug regardless of status, using the service-role client
+ * (bypasses RLS). For admin draft previews ONLY — callers must verify the request
+ * is an authenticated admin (see isAdmin) before exposing the result.
+ */
+export async function getPropertyPreview(slug: string): Promise<Property | null> {
+  try {
+    const supabase = await createServiceClient();
+    const { data, error } = await supabase
+      .from("properties")
+      .select("*")
+      .eq("slug", slug)
+      .single();
+    if (error || !data) return null;
+    return dbToProperty(data);
+  } catch {
+    return null;
   }
 }
 

@@ -8,6 +8,7 @@ import {
   toggleFeaturedReview,
   updatePropertyStatus,
   deleteProperty,
+  publishAllInactiveProperties,
 } from "@/app/admin/actions";
 
 // ─── REVIEWS ──────────────────────────────────────────────────────────────────
@@ -74,6 +75,37 @@ export function ToggleFeaturedButton({
 }
 
 // ─── PROPERTIES ───────────────────────────────────────────────────────────────
+
+export function PublishAllButton({ inactiveCount }: { inactiveCount: number }) {
+  const [pending, startTransition] = useTransition();
+  const disabled = pending || inactiveCount === 0;
+  const label = inactiveCount > 0 ? `Publish all (${inactiveCount})` : "All published";
+
+  return (
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={() => {
+        if (inactiveCount === 0) return;
+        const plural = inactiveCount === 1 ? "" : "s";
+        if (
+          confirm(
+            `Publish ${inactiveCount} inactive listing${plural}? They will become visible on the public site.`
+          )
+        ) {
+          startTransition(async () => {
+            const { published } = await publishAllInactiveProperties();
+            alert(`Published ${published} listing${published === 1 ? "" : "s"}.`);
+          });
+        }
+      }}
+      className="flex items-center gap-2 rounded-xl border border-forteca-gold/40 bg-forteca-gold/10 px-4 py-2.5 text-sm font-bold uppercase tracking-widest text-forteca-gold transition-all hover:bg-forteca-gold/20 disabled:cursor-not-allowed disabled:opacity-40"
+    >
+      <Sparkles className="h-4 w-4" />
+      {pending ? "Publishing…" : label}
+    </button>
+  );
+}
 
 export function PropertyStatusSelect({
   propertyId,
