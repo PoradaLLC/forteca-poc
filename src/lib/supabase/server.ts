@@ -26,6 +26,21 @@ export async function createClient() {
   );
 }
 
+/** Whether the current request is authenticated as an admin. Non-throwing; safe in pages. */
+export async function isAdmin(): Promise<boolean> {
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return false;
+    const role = user.app_metadata?.role ?? user.user_metadata?.role;
+    return role === "admin";
+  } catch {
+    return false;
+  }
+}
+
 /** Service-role client for trusted server-side operations only. Never expose to client. */
 export async function createServiceClient() {
   const { createClient: createSupabaseClient } = await import("@supabase/supabase-js");

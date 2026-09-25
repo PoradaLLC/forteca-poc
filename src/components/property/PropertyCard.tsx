@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Star, Users, BedDouble, Bath, ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, hasDisplayPrice, PRICE_UNAVAILABLE_LABEL } from "@/lib/utils";
 
 export interface PropertyCardData {
   slug: string;
@@ -124,10 +124,18 @@ export function PropertyCard({
         {/* Price + CTA */}
         <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
           <div>
-            <span className="text-xl font-bold text-white">
-              ${property.base_price}
-            </span>
-            <span className="ml-1 text-xs text-white/50">/ night</span>
+            {hasDisplayPrice(property.base_price) ? (
+              <>
+                <span className="text-xl font-bold text-white">
+                  ${property.base_price}
+                </span>
+                <span className="ml-1 text-xs text-white/50">/ night</span>
+              </>
+            ) : (
+              <span className="text-sm font-semibold text-white/80">
+                {PRICE_UNAVAILABLE_LABEL}
+              </span>
+            )}
           </div>
           <span className="flex items-center gap-1 text-xs font-semibold text-forteca-gold transition-transform duration-200 group-hover:translate-x-1">
             View

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { createServiceClient } from "@/lib/supabase/server";
 import { BedDouble, Bath, Users, ExternalLink, Plus } from "lucide-react";
-import { PropertyStatusSelect } from "@/components/admin/AdminActions";
+import { PropertyStatusSelect, PublishAllButton } from "@/components/admin/AdminActions";
 
 export const metadata: Metadata = { title: "Properties" };
 
@@ -13,6 +13,10 @@ export default async function AdminPropertiesPage() {
     .select("id, slug, name, tagline, bedrooms, bathrooms, max_guests, base_price, status, airbnb_url")
     .order("name");
 
+  const inactiveCount = (properties ?? []).filter(
+    (p: { status: string }) => p.status === "inactive"
+  ).length;
+
   return (
     <div className="p-8">
       <div className="mb-6 flex items-center justify-between">
@@ -20,13 +24,16 @@ export default async function AdminPropertiesPage() {
           <h1 className="font-serif text-3xl font-bold text-white">Properties</h1>
           <p className="mt-1 text-sm text-white/40">{properties?.length ?? 0} total</p>
         </div>
-        <button
-          type="button"
-          className="flex items-center gap-2 rounded-xl bg-forteca-gold px-4 py-2.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
-        >
-          <Plus className="h-4 w-4" />
-          Add Property
-        </button>
+        <div className="flex items-center gap-3">
+          <PublishAllButton inactiveCount={inactiveCount} />
+          <button
+            type="button"
+            className="flex items-center gap-2 rounded-xl bg-forteca-gold px-4 py-2.5 text-sm font-bold uppercase tracking-widest text-forteca-navy transition-all hover:bg-forteca-gold-light"
+          >
+            <Plus className="h-4 w-4" />
+            Add Property
+          </button>
+        </div>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-white/5 bg-white/5">
@@ -82,8 +89,13 @@ export default async function AdminPropertiesPage() {
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
                     <Link
-                      href={`/properties/${p.slug}`}
+                      href={
+                        p.status === "active"
+                          ? `/properties/${p.slug}`
+                          : `/properties/${p.slug}?preview=1`
+                      }
                       target="_blank"
+                      title={p.status === "active" ? "View public page" : "Preview draft"}
                       className="text-xs text-white/40 hover:text-white transition-colors"
                     >
                       <ExternalLink className="h-4 w-4" />

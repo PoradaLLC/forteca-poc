@@ -11,15 +11,22 @@ import {
   Check,
   ArrowLeft,
 } from "lucide-react";
-import { getProperty, getPropertySlugs } from "@/lib/properties";
-import { createServiceClient } from "@/lib/supabase/server";
+import { getProperty, getPropertyPreview, getPropertySlugs } from "@/lib/properties";
+import { createServiceClient, isAdmin } from "@/lib/supabase/server";
 import { BookingSidebar } from "@/components/booking/BookingSidebar";
 import { JsonLd } from "@/components/JsonLd";
 import PixelViewContent from "@/components/pixel/PixelViewContent";
 
 interface Props {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ preview?: string }>;
 }
+
+// Render on-demand for slugs not produced by generateStaticParams at build time.
+// generateStaticParams only lists currently-active slugs, so a listing published
+// after the last build (e.g. via the admin "Publish all" action) must be allowed
+// to render on first visit rather than 404.
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const slugs = await getPropertySlugs();
@@ -44,9 +51,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function PropertyDetailPage({ params }: Props) {
+export default async function PropertyDetailPage({ params, searchParams }: Props) {
   const { slug } = await params;
-  const property = await getProperty(slug);
+  const { preview } = await searchParams;
+
+  let property = await getProperty(slug);
+  // Draft preview: inactive/maintenance listings are hidden by RLS, so getProperty
+  // returns null. Reveal them only to an authenticated admin who asked for a preview.
+  let isDraftPreview = false;
+  if (!property && preview && (await isAdmin())) {
+    property = await getPropertyPreview(slug);
+    isDraftPreview = property != null && property.status !== "active";
+  }
   if (!property) notFound();
 
   const heroImage = property.images?.[0]?.src;
@@ -79,6 +95,11 @@ export default async function PropertyDetailPage({ params }: Props) {
 
   return (
     <>
+      {isDraftPreview && (
+        <div className="sticky top-0 z-50 bg-forteca-gold px-4 py-2 text-center text-sm font-bold uppercase tracking-widest text-forteca-navy">
+          Draft preview · status: {property.status} · not visible to the public
+        </div>
+      )}
       <PixelViewContent name={property.name} slug={property.slug} />
       <JsonLd
         data={{
