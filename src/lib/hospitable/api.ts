@@ -74,11 +74,61 @@ export interface PricingData {
   sampledNights: number; // how many bookable nights we saw
 }
 
-interface CalendarDay {
+export interface CalendarDay {
   price?: number;
   currency?: string;
   available?: boolean;
   min_stay?: number;
+}
+
+export interface NightAvailability {
+  available: boolean;
+  minStay: number | null;
+}
+
+/**
+ * Per-night availability for a listing over [start, end] from the public
+ * calendar endpoint. Returns a map keyed by "YYYY-MM-DD". Returns null on HTTP
+ * error — callers must treat null as "unknown" (not bookable), never available.
+ */
+export async function fetchWidgetAvailability(
+  listingId: string,
+  start: string, // YYYY-MM-DD
+  end: string, // YYYY-MM-DD
+  retries = 0
+): Promise<Record<string, NightAvailability> | null> {
+  const url = `${API_BASE}/${listingId}/calendar?start_date=${start}&end_date=${end}`;
+  let res: Response | null = null;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    res = await fetch(url, {
+      headers: {
+        Authorization: "Bearer null",
+        Origin: "https://booking.hospitable.com",
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    }).catch(() => null);
+    // Retry transient failures (network, rate limit, 5xx); succeed or give up otherwise.
+    if (res && (res.ok || (res.status !== 429 && res.status < 500))) break;
+    if (attempt < retries) await new Promise((r) => setTimeout(r, 300 * (attempt + 1)));
+  }
+  if (!res || !res.ok) return null;
+  const json = (await res.json()) as { data?: Record<string, CalendarDay> };
+  // The calendar map is sometimes top-level, sometimes under `data`.
+  const data = json?.data ?? (json as unknown as Record<string, CalendarDay>);
+  if (!data || typeof data !== "object") return null;
+
+  const out: Record<string, NightAvailability> = {};
+  for (const [key, day] of Object.entries(data)) {
+    if (!day || typeof day !== "object") continue;
+    // Keys arrive as "YYYY-MM-DDTHH:MM" — normalize to the date part.
+    const date = key.slice(0, 10);
+    out[date] = {
+      available: day.available === true,
+      minStay: typeof day.min_stay === "number" ? day.min_stay : null,
+    };
+  }
+  return out;
 }
 
 /**
