@@ -1,8 +1,20 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { MapPin, X, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, X, Search, ChevronLeft, ChevronRight, Calendar as CalendarIcon, Users } from "lucide-react";
+import type { DateRange } from "react-day-picker";
 import { PropertyCard, type PropertyCardData } from "@/components/property/PropertyCard";
+import { AvailabilityCalendar } from "@/components/booking/AvailabilityCalendar";
+
+/** Local-midnight "YYYY-MM-DD" for the availability API (avoids TZ drift). */
+function toDateStr(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+const guestOptions = [0, 2, 4, 6, 8, 10, 12, 16, 20];
 
 // ─── Haversine distance (miles) ──────────────────────────────────────────────
 
@@ -43,40 +55,6 @@ async function geocode(
   return null;
 }
 
-// ─── Type filters ────────────────────────────────────────────────────────────
-
-const typeFilters = [
-  { label: "All", match: () => true },
-  { label: "Cabin", match: (p: PropertyCardData) => /cabin/i.test(p.name) },
-  {
-    label: "Villa / Estate",
-    match: (p: PropertyCardData) =>
-      /villa|estate/i.test(p.name) || p.badge === "Estate",
-  },
-  {
-    label: "Waterfront",
-    match: (p: PropertyCardData) =>
-      p.badge === "Waterfront" ||
-      p.amenities.some((a) => /lake|water|kayak/i.test(a)),
-  },
-  {
-    label: "Hot Tub",
-    match: (p: PropertyCardData) =>
-      p.amenities.some((a) => /hot tub/i.test(a)),
-  },
-  {
-    label: "Pool",
-    match: (p: PropertyCardData) =>
-      p.amenities.some((a) => /pool/i.test(a)) || /pool/i.test(p.name),
-  },
-  {
-    label: "Pet Friendly",
-    match: (p: PropertyCardData) =>
-      p.badge === "Pet Friendly" ||
-      p.amenities.some((a) => /dog|pet/i.test(a)),
-  },
-] as const;
-
 const radiusOptions = [10, 25, 50, 100, 250];
 const ITEMS_PER_PAGE = 12;
 
@@ -87,7 +65,6 @@ export function PropertyFilters({
 }: {
   properties: PropertyCardData[];
 }) {
-  const [activeType, setActiveType] = useState(0);
   const [locationQuery, setLocationQuery] = useState("");
   const [userLocation, setUserLocation] = useState<{
     lat: number;
@@ -97,6 +74,50 @@ export function PropertyFilters({
   const [radius, setRadius] = useState(50);
   const [searching, setSearching] = useState(false);
   const [page, setPage] = useState(1);
+
+  // Availability (date) search
+  const [range, setRange] = useState<DateRange | undefined>(undefined);
+  const [showCal, setShowCal] = useState(false);
+  const [guests, setGuests] = useState(0); // 0 = any
+  const [availSlugs, setAvailSlugs] = useState<Set<string> | null>(null);
+  const [availLoading, setAvailLoading] = useState(false);
+  const [availError, setAvailError] = useState<string | null>(null);
+
+  const searchAvailability = useCallback(async () => {
+    if (!range?.from || !range?.to) return;
+    const start = toDateStr(range.from);
+    const end = toDateStr(range.to);
+    setAvailLoading(true);
+    setAvailError(null);
+    try {
+      const res = await fetch(`/api/availability/search?start=${start}&end=${end}`);
+      const data = await res.json();
+      if (!res.ok) {
+        setAvailError(
+          data?.error === "cache_unavailable"
+            ? "Availability isn't ready yet — try again shortly."
+            : "Couldn't check availability. Try again."
+        );
+        setAvailSlugs(null);
+      } else {
+        setAvailSlugs(new Set<string>(data.availableSlugs ?? []));
+        setPage(1);
+        setShowCal(false);
+        if (typeof window.fbq === "function") window.fbq("track", "Search");
+      }
+    } catch {
+      setAvailError("Couldn't check availability. Try again.");
+    }
+    setAvailLoading(false);
+  }, [range]);
+
+  const clearDates = useCallback(() => {
+    setRange(undefined);
+    setAvailSlugs(null);
+    setAvailError(null);
+    setShowCal(false);
+    setPage(1);
+  }, []);
 
   const handleSearch = useCallback(async () => {
     if (!locationQuery.trim()) return;
@@ -120,7 +141,15 @@ export function PropertyFilters({
 
   // Filter + sort
   const filtered = useMemo(() => {
-    let result = properties.filter(typeFilters[activeType].match);
+    let result: PropertyCardData[] = properties;
+
+    if (guests > 0) {
+      result = result.filter((p) => (p.max_guests ?? 0) >= guests);
+    }
+
+    if (availSlugs) {
+      result = result.filter((p) => availSlugs.has(p.slug));
+    }
 
     if (userLocation) {
       result = result
@@ -136,7 +165,7 @@ export function PropertyFilters({
     }
 
     return result;
-  }, [properties, activeType, userLocation, radius]);
+  }, [properties, userLocation, radius, guests, availSlugs]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginatedItems = filtered.slice(
@@ -149,29 +178,73 @@ export function PropertyFilters({
       {/* Filters */}
       <div className="bg-forteca-navy px-4 pb-8">
         <div className="mx-auto max-w-7xl space-y-4">
-          {/* Type filters */}
-          <div className="flex flex-wrap gap-2">
-            {typeFilters.map((filter, i) => (
+          {/* Date + guests availability search */}
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="relative">
               <button
-                key={filter.label}
                 type="button"
-                onClick={() => {
-                  setActiveType(i);
-                  setPage(1);
-                  if (i !== 0 && typeof window.fbq === "function") {
-                    window.fbq("track", "Search");
-                  }
-                }}
-                className={
-                  i === activeType
-                    ? "rounded-full bg-forteca-gold px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-forteca-navy transition-colors"
-                    : "rounded-full border border-white/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white/60 transition-colors hover:border-white/40 hover:text-white"
-                }
+                onClick={() => setShowCal((s) => !s)}
+                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm text-white/80 transition-colors hover:border-forteca-gold/50"
               >
-                {filter.label}
+                <CalendarIcon className="h-4 w-4 text-white/40" />
+                {range?.from && range?.to
+                  ? `${range.from.toLocaleDateString(undefined, { month: "short", day: "numeric" })} – ${range.to.toLocaleDateString(undefined, { month: "short", day: "numeric" })}`
+                  : "Any dates"}
               </button>
-            ))}
+              {showCal && (
+                <div className="absolute left-0 top-full z-30 mt-2 rounded-2xl border border-black/10 bg-forteca-cream p-4 shadow-2xl">
+                  <AvailabilityCalendar onRangeChange={setRange} initialRange={range} />
+                  <div className="mt-3 flex items-center justify-between gap-2">
+                    <button
+                      type="button"
+                      onClick={clearDates}
+                      className="text-xs font-semibold text-forteca-slate hover:text-forteca-navy"
+                    >
+                      Clear
+                    </button>
+                    <button
+                      type="button"
+                      onClick={searchAvailability}
+                      disabled={!range?.from || !range?.to || availLoading}
+                      className="rounded-full bg-forteca-gold px-4 py-2 text-xs font-bold uppercase tracking-widest text-forteca-navy transition-colors hover:bg-forteca-gold-light disabled:opacity-40"
+                    >
+                      {availLoading ? "Checking…" : "Search dates"}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Guests */}
+            <div className="relative">
+              <Users className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
+              <select
+                id="guests-filter"
+                name="guests"
+                value={guests}
+                onChange={(e) => { setGuests(Number(e.target.value)); setPage(1); }}
+                className="rounded-full border border-white/20 bg-transparent py-2 pl-9 pr-3 text-sm font-semibold text-white/70 outline-none transition-colors hover:border-white/40 focus:border-forteca-gold/50"
+              >
+                {guestOptions.map((g) => (
+                  <option key={g} value={g} className="bg-forteca-navy text-white">
+                    {g === 0 ? "Any guests" : `${g}+ guests`}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {availSlugs && range?.from && range?.to && (
+              <span className="inline-flex items-center gap-2 rounded-full bg-forteca-gold/15 px-3 py-1.5 text-xs font-semibold text-forteca-gold">
+                Available {range.from.toLocaleDateString(undefined, { month: "short", day: "numeric" })}–{range.to.toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                <button type="button" onClick={clearDates} title="Clear dates" className="hover:text-white">
+                  <X className="h-3 w-3" />
+                </button>
+              </span>
+            )}
           </div>
+          {availError && (
+            <p className="text-xs text-red-300">{availError}</p>
+          )}
 
           {/* Location search */}
           <div className="flex flex-wrap items-center gap-2">
@@ -315,16 +388,36 @@ export function PropertyFilters({
 
           {filtered.length === 0 && (
             <div className="py-12 text-center">
-              <p className="text-forteca-slate">
-                No properties found within {radius} miles.
-              </p>
-              <button
-                type="button"
-                onClick={() => { setRadius(250); setPage(1); }}
-                className="mt-3 text-sm font-semibold text-forteca-gold hover:underline"
-              >
-                Expand to 250 miles
-              </button>
+              {availSlugs ? (
+                <>
+                  <p className="text-forteca-slate">
+                    No stays available for these dates{guests > 0 ? ` for ${guests}+ guests` : ""}
+                    {userLocation ? ` within ${radius} miles of ${userLocation.label}` : ""}.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={clearDates}
+                    className="mt-3 text-sm font-semibold text-forteca-gold hover:underline"
+                  >
+                    Clear dates
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="text-forteca-slate">
+                    No properties found{userLocation ? ` within ${radius} miles` : ""}.
+                  </p>
+                  {userLocation && (
+                    <button
+                      type="button"
+                      onClick={() => { setRadius(250); setPage(1); }}
+                      className="mt-3 text-sm font-semibold text-forteca-gold hover:underline"
+                    >
+                      Expand to 250 miles
+                    </button>
+                  )}
+                </>
+              )}
             </div>
           )}
         </div>

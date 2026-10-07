@@ -3,6 +3,10 @@
     {
       "path": "/api/ical/sync",
       "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/availability/refresh",
+      "schedule": "0 * * * *"
     }
   ]
 }
