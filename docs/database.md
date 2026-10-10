@@ -37,7 +37,7 @@ Main table storing all vacation rental listings.
 | created_at | TIMESTAMPTZ | Auto-set |
 | updated_at | TIMESTAMPTZ | Auto-updated via trigger |
 
-**Current data**: 44 properties across PA, NY, FL.
+**Current data**: 73 properties across PA, NY, FL.
 
 ### `reviews`
 Guest reviews linked to properties.
@@ -105,7 +105,7 @@ Contact form entries.
 ## Storage Buckets
 
 ### `property-images` (public)
-- Contains 528 property photos (12 per property, 44 properties)
+- Contains ~876 property photos (12 per property, 73 properties)
 - Public read access, no auth required
 - Images referenced in `properties.images` JSONB column
 - URL pattern: `https://<project>.supabase.co/storage/v1/object/public/property-images/<filename>`

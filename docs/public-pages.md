@@ -23,7 +23,7 @@ All public pages (except admin) are wrapped with the `Header` and `Footer` compo
 ## Homepage (`/`)
 
 1. **Hero**: Full-viewport video background (`hero.mp4`), overlay, mountain SVG silhouette. "Your Getaway Starts Here" headline with "Pennsylvania · New York · Florida" badge.
-2. **Stats strip**: 44 Properties / 3 States / 1000+ Happy Guests / Est. 2019
+2. **Stats strip**: 73 Properties / 3 States / 1000+ Happy Guests / Est. 2019
 3. **Featured properties**: Grid of 4 `PropertyCard` components (feature variant). Data from `getFeaturedProperties()`.
 4. **Amenity marquee**: Auto-scrolling horizontal strip (Hot Tubs, Lakefront Access, etc.)
 5. **Services**: 4 cards (Vacation Rentals, Property Management, Home Staging, Hot Tubs)
@@ -107,7 +107,7 @@ All public pages (except admin) are wrapped with the `Header` and `Footer` compo
 ## About (`/about`)
 
 - Hero: "We Love What We Do."
-- Stats strip: Founded 2019, 44 Properties, 1000+ Stays, 3 States
+- Stats strip: Founded 2019, 73 Properties, 1000+ Stays, 3 States
 - Story section: founding narrative
 - Values: 4 value cards (Genuine Hospitality, Uncompromising Standards, Curated Excellence, The Forteca Difference)
 - Team section: group photo + 3 individual headshots (Justyna Rzeszuto, Lukasz Kownacki, Eryk Rachwal)

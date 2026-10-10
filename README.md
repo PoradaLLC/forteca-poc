@@ -4,7 +4,7 @@
 
 ## What this is
 
-Forteca-poc is the proof-of-concept (and increasingly the production) replacement for the Forteca Estate Squarespace site. It runs a 44-property vacation-rental portfolio across PA / NY / FL with a public marketing surface, a property catalog, a date-pick → guest-info → Stripe-checkout booking flow, and an admin dashboard for properties, bookings, calendars, guests, and reviews.
+Forteca-poc is the proof-of-concept (and increasingly the production) replacement for the Forteca Estate Squarespace site. It runs a 73-property vacation-rental portfolio across PA / NY / FL with a public marketing surface, a property catalog, a date-pick → guest-info → Stripe-checkout booking flow, and an admin dashboard for properties, bookings, calendars, guests, and reviews.
 
 It's also the architectural parent of the rest of the Porada Next.js sites — `porada` was forked from this repo and slimmed down, and the shared `formula/` template (see [Formula doc](https://github.com/PoradaLLC/docs/blob/main/src/content/docs/repos/formula.md)) lives here in its richest form.
 

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 const stats = [
   { value: "2019", label: "Founded" },
-  { value: "44", label: "Properties" },
+  { value: "73", label: "Properties" },
   { value: "1000+", label: "Stays Hosted" },
   { value: "3", label: "States" },
 ];
@@ -115,7 +115,7 @@ export default function AboutPage() {
               operator in the vacation rental space. It was to become the best one.
             </p>
             <p>
-              Seven years later, the portfolio has grown to 44 properties — each
+              Seven years later, the portfolio has grown to 73 properties — each
               one selected with the same standards, managed with the same care,
               and reviewed by guests who return season after season.
             </p>
@@ -205,7 +205,7 @@ export default function AboutPage() {
             <div className="h-px bg-gradient-to-r from-forteca-gold/50 to-transparent" />
 
             <p className="text-xs font-semibold uppercase tracking-widest text-white/40">
-              44+ Properties · Est. 2018 · Pocono PA
+              73+ Properties · Est. 2018 · Pocono PA
             </p>
           </div>
 
