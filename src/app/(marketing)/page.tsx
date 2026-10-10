@@ -7,7 +7,7 @@ import { getFeaturedProperties } from "@/lib/properties";
 import { createClient } from "@/lib/supabase/server";
 
 const stats = [
-  { value: "44", label: "Properties" },
+  { value: "73", label: "Properties" },
   { value: "3", label: "States" },
   { value: "1000+", label: "Happy Guests" },
   { value: "2019", label: "Est." },
@@ -100,7 +100,7 @@ export default async function HomePage() {
                 For Guests
               </h2>
               <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/50">
-                Browse 44 premium vacation rentals. Hot tubs, lake views, fireplaces — book direct and save.
+                Browse 73 premium vacation rentals. Hot tubs, lake views, fireplaces — book direct and save.
               </p>
               <Link
                 href="/properties"
@@ -314,7 +314,7 @@ export default async function HomePage() {
             <div>
               <h3 className="mb-3 font-serif text-xl font-bold text-forteca-navy">Pocono Mountain Cabins & Vacation Homes</h3>
               <p className="leading-relaxed">
-                Forteca Estate manages a curated portfolio of over 44 vacation rentals across Pennsylvania,
+                Forteca Estate manages a curated portfolio of over 73 vacation rentals across Pennsylvania,
                 New York, and Florida. From private hot tub cabins in the Pocono Mountains to lakefront homes
                 and luxury villas, every property is professionally maintained, fully stocked, and ready for
                 your best getaway. Book directly and skip the platform fees.

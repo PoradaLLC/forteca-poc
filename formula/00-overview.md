@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A step-by-step guide for an LLM (or developer) to build a production-grade business website. Based on a proven architecture that powers a 44-property vacation rental platform. The same tech stack, patterns, and structure — just swap the branding, data, and content for any business type.
+A step-by-step guide for an LLM (or developer) to build a production-grade business website. Based on a proven architecture that powers a 73-property vacation rental platform. The same tech stack, patterns, and structure — just swap the branding, data, and content for any business type.
 
 ## Tech Stack Summary
 
