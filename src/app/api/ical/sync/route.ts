@@ -2,11 +2,13 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import { parseICS, expandDateRange } from "@/lib/ical";
 
-// Called by Vercel Cron every 15 minutes
+// Called by Vercel Cron every 15 minutes (cron sends GET; POST kept for manual triggers)
 export async function POST(req: NextRequest) {
   // Verify cron secret to prevent unauthorized triggers
+  // (an unset CRON_SECRET must not make "Bearer undefined" a valid token).
+  const cronSecret = process.env.CRON_SECRET;
   const authHeader = req.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -82,3 +84,5 @@ export async function POST(req: NextRequest) {
     errors,
   });
 }
+
+export const GET = POST;
