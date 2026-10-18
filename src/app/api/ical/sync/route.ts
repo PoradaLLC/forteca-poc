@@ -2,7 +2,10 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import { parseICS, expandDateRange } from "@/lib/ical";
 
-// Called by Vercel Cron every 15 minutes (cron sends GET; POST kept for manual triggers)
+// Legacy iCal import. No longer scheduled: the ical_syncs/availability tables
+// (0001) weren't carried over by 0004_recreate_schema and don't exist in the
+// production DB; availability now comes from Hospitable via
+// /api/availability/refresh.
 export async function POST(req: NextRequest) {
   // Verify cron secret to prevent unauthorized triggers
   // (an unset CRON_SECRET must not make "Bearer undefined" a valid token).
@@ -84,5 +87,3 @@ export async function POST(req: NextRequest) {
     errors,
   });
 }
-
-export const GET = POST;
