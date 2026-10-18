@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { MapPin, X, Search, ChevronLeft, ChevronRight, Calendar as CalendarIcon, Users } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 import { PropertyCard, type PropertyCardData } from "@/components/property/PropertyCard";
@@ -83,15 +83,22 @@ export function PropertyFilters({
   const [availLoading, setAvailLoading] = useState(false);
   const [availError, setAvailError] = useState<string | null>(null);
 
-  const searchAvailability = useCallback(async () => {
-    if (!range?.from || !range?.to) return;
-    const start = toDateStr(range.from);
-    const end = toDateStr(range.to);
+  // Guards against out-of-order responses when the range changes quickly.
+  const searchSeq = useRef(0);
+
+  const searchAvailability = useCallback(async (r: DateRange | undefined) => {
+    if (!r?.from || !r?.to) return;
+    const start = toDateStr(r.from);
+    const end = toDateStr(r.to);
+    // A single-day pick (from === to) is zero nights — wait for a checkout date.
+    if (start >= end) return;
+    const seq = ++searchSeq.current;
     setAvailLoading(true);
     setAvailError(null);
     try {
       const res = await fetch(`/api/availability/search?start=${start}&end=${end}`);
       const data = await res.json();
+      if (seq !== searchSeq.current) return;
       if (!res.ok) {
         setAvailError(
           data?.error === "cache_unavailable"
@@ -106,12 +113,33 @@ export function PropertyFilters({
         if (typeof window.fbq === "function") window.fbq("track", "Search");
       }
     } catch {
+      if (seq !== searchSeq.current) return;
       setAvailError("Couldn't check availability. Try again.");
     }
     setAvailLoading(false);
-  }, [range]);
+  }, []);
+
+  // Apply the date filter as soon as a full check-in/check-out range is picked,
+  // instead of relying on the "Search dates" button inside the popover.
+  const handleRangeChange = useCallback(
+    (r: DateRange | undefined) => {
+      setRange(r);
+      if (r?.from && r?.to && toDateStr(r.from) < toDateStr(r.to)) {
+        searchAvailability(r);
+      } else {
+        // Incomplete range — drop any stale results so the grid isn't filtered
+        // for dates that are no longer selected.
+        searchSeq.current++;
+        setAvailSlugs(null);
+        setAvailLoading(false);
+      }
+    },
+    [searchAvailability]
+  );
 
   const clearDates = useCallback(() => {
+    searchSeq.current++;
+    setAvailLoading(false);
     setRange(undefined);
     setAvailSlugs(null);
     setAvailError(null);
@@ -193,7 +221,7 @@ export function PropertyFilters({
               </button>
               {showCal && (
                 <div className="absolute left-0 top-full z-30 mt-2 rounded-2xl border border-black/10 bg-forteca-cream p-4 shadow-2xl">
-                  <AvailabilityCalendar onRangeChange={setRange} initialRange={range} />
+                  <AvailabilityCalendar onRangeChange={handleRangeChange} initialRange={range} />
                   <div className="mt-3 flex items-center justify-between gap-2">
                     <button
                       type="button"
@@ -204,7 +232,7 @@ export function PropertyFilters({
                     </button>
                     <button
                       type="button"
-                      onClick={searchAvailability}
+                      onClick={() => searchAvailability(range)}
                       disabled={!range?.from || !range?.to || availLoading}
                       className="rounded-full bg-forteca-gold px-4 py-2 text-xs font-bold uppercase tracking-widest text-forteca-navy transition-colors hover:bg-forteca-gold-light disabled:opacity-40"
                     >
