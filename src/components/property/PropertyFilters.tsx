@@ -14,6 +14,11 @@ function toDateStr(d: Date): string {
   return `${y}-${m}-${day}`;
 }
 
+/** A real stay: both dates set and at least one night. */
+function isFullRange(r: DateRange | undefined): r is { from: Date; to: Date } {
+  return !!r?.from && !!r?.to && toDateStr(r.from) < toDateStr(r.to);
+}
+
 const guestOptions = [0, 2, 4, 6, 8, 10, 12, 16, 20];
 
 // ─── Haversine distance (miles) ──────────────────────────────────────────────
@@ -86,15 +91,19 @@ export function PropertyFilters({
   // Guards against out-of-order responses when the range changes quickly.
   const searchSeq = useRef(0);
 
+  // Runs the availability search for a full range; for an incomplete one it
+  // drops any results/errors so the grid isn't filtered for unselected dates.
   const searchAvailability = useCallback(async (r: DateRange | undefined) => {
-    if (!r?.from || !r?.to) return;
+    const seq = ++searchSeq.current;
+    setAvailError(null);
+    if (!isFullRange(r)) {
+      setAvailSlugs(null);
+      setAvailLoading(false);
+      return;
+    }
     const start = toDateStr(r.from);
     const end = toDateStr(r.to);
-    // A single-day pick (from === to) is zero nights — wait for a checkout date.
-    if (start >= end) return;
-    const seq = ++searchSeq.current;
     setAvailLoading(true);
-    setAvailError(null);
     try {
       const res = await fetch(`/api/availability/search?start=${start}&end=${end}`);
       const data = await res.json();
@@ -120,19 +129,11 @@ export function PropertyFilters({
   }, []);
 
   // Apply the date filter as soon as a full check-in/check-out range is picked,
-  // instead of relying on the "Search dates" button inside the popover.
+  // instead of relying on a button inside the popover.
   const handleRangeChange = useCallback(
     (r: DateRange | undefined) => {
       setRange(r);
-      if (r?.from && r?.to && toDateStr(r.from) < toDateStr(r.to)) {
-        searchAvailability(r);
-      } else {
-        // Incomplete range — drop any stale results so the grid isn't filtered
-        // for dates that are no longer selected.
-        searchSeq.current++;
-        setAvailSlugs(null);
-        setAvailLoading(false);
-      }
+      searchAvailability(r);
     },
     [searchAvailability]
   );
@@ -221,7 +222,7 @@ export function PropertyFilters({
               </button>
               {showCal && (
                 <div className="absolute left-0 top-full z-30 mt-2 rounded-2xl border border-black/10 bg-forteca-cream p-4 shadow-2xl">
-                  <AvailabilityCalendar onRangeChange={handleRangeChange} initialRange={range} />
+                  <AvailabilityCalendar onRangeChange={handleRangeChange} initialRange={range} restartCompleteRange />
                   <div className="mt-3 flex items-center justify-between gap-2">
                     <button
                       type="button"
@@ -232,11 +233,15 @@ export function PropertyFilters({
                     </button>
                     <button
                       type="button"
-                      onClick={() => searchAvailability(range)}
-                      disabled={!range?.from || !range?.to || availLoading}
+                      // Search runs automatically on a full range; this retries a
+                      // failed search, otherwise it just closes the popover.
+                      onClick={() =>
+                        availError && isFullRange(range) ? searchAvailability(range) : setShowCal(false)
+                      }
+                      disabled={availLoading}
                       className="rounded-full bg-forteca-gold px-4 py-2 text-xs font-bold uppercase tracking-widest text-forteca-navy transition-colors hover:bg-forteca-gold-light disabled:opacity-40"
                     >
-                      {availLoading ? "Checking…" : "Search dates"}
+                      {availLoading ? "Checking…" : availError && isFullRange(range) ? "Retry" : "Done"}
                     </button>
                   </div>
                 </div>

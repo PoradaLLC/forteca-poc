@@ -33,6 +33,10 @@ function isAuthorized(req: NextRequest): boolean {
 }
 
 export async function GET(req: NextRequest) {
+  if (!process.env.CRON_SECRET) {
+    // Make the misconfiguration obvious in logs instead of a silent hourly 401.
+    console.error("[availability/refresh] CRON_SECRET is not set; Vercel cron cannot authenticate");
+  }
   if (!isAuthorized(req)) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
@@ -64,7 +68,7 @@ export async function GET(req: NextRequest) {
 
   const rows = await mapLimit(withId, CONCURRENCY, async ({ slug, listingId }, i) => {
     if (i >= CONCURRENCY) await new Promise((r) => setTimeout(r, DELAY_MS));
-    const cal = await fetchWidgetAvailability(listingId, start, end, 2).catch(() => null);
+    const cal = await fetchWidgetAvailability(listingId, start, end, 1).catch(() => null);
     if (!cal) return { listingId, error: true as const };
     const availableDates = Object.entries(cal)
       .filter(([, v]) => v.available)
