@@ -16,6 +16,13 @@ function fmtLocal(d: Date): string {
   return `${y}-${m}-${day}`;
 }
 
+/** Nights in [start, end), counted on calendar dates (DST-safe). */
+function nightsBetween(start: string, end: string): number {
+  const [sy, sm, sd] = start.split("-").map(Number);
+  const [ey, em, ed] = end.split("-").map(Number);
+  return Math.round((Date.UTC(ey, em - 1, ed) - Date.UTC(sy, sm - 1, sd)) / 86_400_000);
+}
+
 /** Every night in [start, end) must be in the available-date set. */
 function isRangeBookable(available: Set<string>, start: string, end: string): boolean {
   const cursor = new Date(`${start}T00:00:00`);
@@ -69,6 +76,8 @@ export async function GET(req: NextRequest) {
     if (u && (!freshestUpdatedAt || u > freshestUpdatedAt)) freshestUpdatedAt = u;
   }
 
+  const nights = nightsBetween(start, end);
+
   let checked = 0;
   let uncached = 0;
   const availableSlugs: string[] = [];
@@ -82,6 +91,9 @@ export async function GET(req: NextRequest) {
     }
     checked++;
     if (guests && guests > 0 && (p.max_guests ?? 0) < guests) continue;
+    // Skip listings whose minimum stay is longer than the requested stay
+    // (e.g. a 1-night search shouldn't list 2-night-minimum properties).
+    if ((p.min_nights ?? 1) > nights) continue;
     if (isRangeBookable(set, start, end)) availableSlugs.push(p.slug);
   }
 
