@@ -9,6 +9,9 @@ interface AvailabilityCalendarProps {
   minNights?: number;
   onRangeChange?: (range: DateRange | undefined) => void;
   initialRange?: DateRange;
+  /** When a full range is already selected, the next click starts a new range
+   *  (check-in) instead of stretching the existing one. */
+  restartCompleteRange?: boolean;
 }
 
 type AvailState = { blockedDates: Date[]; loading: boolean };
@@ -33,6 +36,7 @@ export function AvailabilityCalendar({
   minNights = 2,
   onRangeChange,
   initialRange,
+  restartCompleteRange = false,
 }: AvailabilityCalendarProps) {
   const [range, setRange] = useState<DateRange | undefined>(initialRange);
   const [avail, dispatch] = useReducer(availReducer, {
@@ -62,9 +66,12 @@ export function AvailabilityCalendar({
     };
   }, [propertyId]);
 
-  function handleSelect(r: DateRange | undefined) {
-    setRange(r);
-    onRangeChange?.(r);
+  function handleSelect(r: DateRange | undefined, triggerDate: Date) {
+    const hadFullRange =
+      range?.from && range?.to && range.from.getTime() !== range.to.getTime();
+    const next = restartCompleteRange && hadFullRange ? { from: triggerDate, to: undefined } : r;
+    setRange(next);
+    onRangeChange?.(next);
   }
 
   const today = new Date();

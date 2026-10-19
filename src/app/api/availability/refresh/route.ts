@@ -23,12 +23,9 @@ function isAuthorized(req: NextRequest): boolean {
   const cronSecret = process.env.CRON_SECRET;
   const syncSecret = process.env.HOSPITABLE_SYNC_SECRET;
   const auth = req.headers.get("authorization");
-  // Vercel cron: when CRON_SECRET is set, Vercel attaches it as a Bearer token.
+  // Vercel cron: the only documented auth is CRON_SECRET, which Vercel attaches
+  // as a Bearer token. Without it set, cron invocations carry no credentials.
   if (cronSecret && auth === `Bearer ${cronSecret}`) return true;
-  // Vercel injects x-vercel-cron on cron invocations and strips any incoming
-  // x-vercel-* headers from external requests, so this reliably marks a real
-  // cron run even when CRON_SECRET isn't configured.
-  if (req.headers.get("x-vercel-cron")) return true;
   // Manual trigger with the shared sync secret.
   if (syncSecret && auth === `Bearer ${syncSecret}`) return true;
   if (syncSecret && req.nextUrl.searchParams.get("secret") === syncSecret) return true;
@@ -36,6 +33,10 @@ function isAuthorized(req: NextRequest): boolean {
 }
 
 export async function GET(req: NextRequest) {
+  if (!process.env.CRON_SECRET) {
+    // Make the misconfiguration obvious in logs instead of a silent hourly 401.
+    console.error("[availability/refresh] CRON_SECRET is not set; Vercel cron cannot authenticate");
+  }
   if (!isAuthorized(req)) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
@@ -67,7 +68,7 @@ export async function GET(req: NextRequest) {
 
   const rows = await mapLimit(withId, CONCURRENCY, async ({ slug, listingId }, i) => {
     if (i >= CONCURRENCY) await new Promise((r) => setTimeout(r, DELAY_MS));
-    const cal = await fetchWidgetAvailability(listingId, start, end).catch(() => null);
+    const cal = await fetchWidgetAvailability(listingId, start, end, 1).catch(() => null);
     if (!cal) return { listingId, error: true as const };
     const availableDates = Object.entries(cal)
       .filter(([, v]) => v.available)

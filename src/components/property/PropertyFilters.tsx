@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { MapPin, X, Search, ChevronLeft, ChevronRight, Calendar as CalendarIcon, Users } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 import { PropertyCard, type PropertyCardData } from "@/components/property/PropertyCard";
@@ -12,6 +12,11 @@ function toDateStr(d: Date): string {
   const m = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
   return `${y}-${m}-${day}`;
+}
+
+/** A real stay: both dates set and at least one night. */
+function isFullRange(r: DateRange | undefined): r is { from: Date; to: Date } {
+  return !!r?.from && !!r?.to && toDateStr(r.from) < toDateStr(r.to);
 }
 
 const guestOptions = [0, 2, 4, 6, 8, 10, 12, 16, 20];
@@ -83,15 +88,26 @@ export function PropertyFilters({
   const [availLoading, setAvailLoading] = useState(false);
   const [availError, setAvailError] = useState<string | null>(null);
 
-  const searchAvailability = useCallback(async () => {
-    if (!range?.from || !range?.to) return;
-    const start = toDateStr(range.from);
-    const end = toDateStr(range.to);
-    setAvailLoading(true);
+  // Guards against out-of-order responses when the range changes quickly.
+  const searchSeq = useRef(0);
+
+  // Runs the availability search for a full range; for an incomplete one it
+  // drops any results/errors so the grid isn't filtered for unselected dates.
+  const searchAvailability = useCallback(async (r: DateRange | undefined) => {
+    const seq = ++searchSeq.current;
     setAvailError(null);
+    if (!isFullRange(r)) {
+      setAvailSlugs(null);
+      setAvailLoading(false);
+      return;
+    }
+    const start = toDateStr(r.from);
+    const end = toDateStr(r.to);
+    setAvailLoading(true);
     try {
       const res = await fetch(`/api/availability/search?start=${start}&end=${end}`);
       const data = await res.json();
+      if (seq !== searchSeq.current) return;
       if (!res.ok) {
         setAvailError(
           data?.error === "cache_unavailable"
@@ -106,12 +122,25 @@ export function PropertyFilters({
         if (typeof window.fbq === "function") window.fbq("track", "Search");
       }
     } catch {
+      if (seq !== searchSeq.current) return;
       setAvailError("Couldn't check availability. Try again.");
     }
     setAvailLoading(false);
-  }, [range]);
+  }, []);
+
+  // Apply the date filter as soon as a full check-in/check-out range is picked,
+  // instead of relying on a button inside the popover.
+  const handleRangeChange = useCallback(
+    (r: DateRange | undefined) => {
+      setRange(r);
+      searchAvailability(r);
+    },
+    [searchAvailability]
+  );
 
   const clearDates = useCallback(() => {
+    searchSeq.current++;
+    setAvailLoading(false);
     setRange(undefined);
     setAvailSlugs(null);
     setAvailError(null);
@@ -193,7 +222,7 @@ export function PropertyFilters({
               </button>
               {showCal && (
                 <div className="absolute left-0 top-full z-30 mt-2 rounded-2xl border border-black/10 bg-forteca-cream p-4 shadow-2xl">
-                  <AvailabilityCalendar onRangeChange={setRange} initialRange={range} />
+                  <AvailabilityCalendar onRangeChange={handleRangeChange} initialRange={range} restartCompleteRange />
                   <div className="mt-3 flex items-center justify-between gap-2">
                     <button
                       type="button"
@@ -204,11 +233,15 @@ export function PropertyFilters({
                     </button>
                     <button
                       type="button"
-                      onClick={searchAvailability}
-                      disabled={!range?.from || !range?.to || availLoading}
+                      // Search runs automatically on a full range; this retries a
+                      // failed search, otherwise it just closes the popover.
+                      onClick={() =>
+                        availError && isFullRange(range) ? searchAvailability(range) : setShowCal(false)
+                      }
+                      disabled={availLoading}
                       className="rounded-full bg-forteca-gold px-4 py-2 text-xs font-bold uppercase tracking-widest text-forteca-navy transition-colors hover:bg-forteca-gold-light disabled:opacity-40"
                     >
-                      {availLoading ? "Checking…" : "Search dates"}
+                      {availLoading ? "Checking…" : availError && isFullRange(range) ? "Retry" : "Done"}
                     </button>
                   </div>
                 </div>
